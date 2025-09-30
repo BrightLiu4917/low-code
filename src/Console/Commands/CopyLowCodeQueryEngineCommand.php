@@ -48,7 +48,7 @@ use BrightLiu\LowCode\Core\Abstracts\QueryEngineAbstract;
  * @created: 2025-09-30 17:23:48
  * @modifier: 2025-09-30 17:23:48
  */
-final class QueryEngineService extends QueryEngineAbstract
+abstract class LowCodeQueryEngineService extends QueryEngineAbstract
 {
     use InstanceMake;
 }
