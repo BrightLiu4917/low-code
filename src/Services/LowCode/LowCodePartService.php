@@ -6,28 +6,26 @@ namespace BrightLiu\LowCode\Services\LowCode;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\LowCode\LowCodePart;
-use App\Traits\CastDefaultFixHelper;
+use BrightLiu\LowCode\Traits\CastDefaultFixHelper;
+use BrightLiu\LowCode\Services\LowCodeBaseService;
 use Gupo\BetterLaravel\Exceptions\ServiceException;
-use App\Entities\Model\LowCode\LowCodePartEntity;
-use Gupo\BetterLaravel\Service\BaseService;
-use App\Enums\Model\LowCode\LowCodePart\PartTypeEnum;
+use BrightLiu\LowCode\Enums\Model\LowCodePart\PartTypeEnum;
 
 /**
  * 低代码-零件
  */
-final class LowCodePartService extends BaseService
+final class LowCodePartService extends LowCodeBaseService
 {
     use CastDefaultFixHelper;
     /**
-     * @param array|LowCodePartEntity $data
+     * @param array $data
      *
      * @return LowCodePart|null
      */
-    public function create(array|LowCodePartEntity $data): LowCodePart|null
+    public function create(array $data): ?LowCodePart
     {
-        $args = LowCodePartEntity::make($data);
-        $inputArgs = $this->fixInputDataByCasts($args->toArray(),(new LowCodePart())->getCasts());
-        return LowCodePart::query()->create($inputArgs);
+        $filterArgs = $this->fixInputDataByCasts($data,LowCodePart::class);
+        return LowCodePart::query()->create($filterArgs);
     }
 
     public function show(int $id = 0): LowCodePart|null
@@ -39,21 +37,20 @@ final class LowCodePartService extends BaseService
     }
 
     /**
-     * @param array|LowCodePartEntity $data
+     * @param array $data
      * @param int                     $id
      *
      * @return bool|int
      * @throws ServiceException
      */
-    public function update(array|LowCodePartEntity $data, int $id = 0)
+    public function update(array $data, int $id = 0)
     {
-        $args = LowCodePartEntity::make($data);
         if (empty($result = LowCodePart::query()->where('id',$id)->first())) {
             throw new ServiceException("数据{$id}不存在");
         }
-        $inputArgs = $this->fixInputDataByCasts($args->toArray(),(new LowCodePart())->getCasts());
+        $filterArgs = $this->fixInputDataByCasts($data,LowCodePart::class);
         $this->clearCache($result->code);
-        return $result->update($inputArgs);
+        return $result->update($filterArgs);
     }
 
     /**

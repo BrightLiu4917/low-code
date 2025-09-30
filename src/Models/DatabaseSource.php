@@ -6,6 +6,7 @@ namespace App\Models\LowCode;
 
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use BrightLiu\LowCode\Models\Traits\ModelFetch;
 use BrightLiu\LowCode\Models\Traits\DiseaseRelation;
 use BrightLiu\LowCode\Models\Traits\Cacheable\CacheableModel;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -20,7 +21,7 @@ use BrightLiu\LowCode\Models\Traits\AdministratorRelation;
 final class DatabaseSource extends LowCodeBaseModel
 {
     use
-        SoftDeletes, AdministratorRelation, CacheableModel, DiseaseRelation, UniqueCodeRelation;
+        SoftDeletes, AdministratorRelation, CacheableModel, DiseaseRelation, UniqueCodeRelation,ModelFetch;
 
     /**
      * @var string[]

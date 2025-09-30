@@ -7,30 +7,28 @@ namespace BrightLiu\LowCode\Services\LowCode;
 use Illuminate\Support\Facades\DB;
 use App\Models\LowCode\LowCodePart;
 use App\Models\LowCode\LowCodeList;
-use App\Traits\CastDefaultFixHelper;
+use BrightLiu\LowCode\Traits\CastDefaultFixHelper;
+use BrightLiu\LowCode\Services\LowCodeBaseService;
 use Gupo\BetterLaravel\Exceptions\ServiceException;
 use App\Models\LowCode\LowCodeTemplate;
-use Gupo\BetterLaravel\Service\BaseService;
-use App\Entities\Model\LowCode\LowCodeTemplateEntity;
-use App\Support\LowCode\Core\TemplatePartCacheManager;
+use BrightLiu\LowCode\Core\TemplatePartCacheManager;
 
 /**
  * 低代码-模板
  */
-final class LowCodeTemplateService extends BaseService
+final class LowCodeTemplateService extends LowCodeBaseService
 {
     use CastDefaultFixHelper;
 
     /**
-     * @param array|LowCodeTemplateEntity $data
+     * @param array $data
      *
      * @return LowCodeTemplate|null
      */
-    public function create(array|LowCodeTemplateEntity $data,
+    public function create(array $data,
     ): LowCodeTemplate|null {
-        $args = LowCodeTemplateEntity::make($data);
-        $inputArgs = $this->fixInputDataByCasts($args->toArray(),(new LowCodeTemplate())->getCasts());
-        return LowCodeTemplate::query()->create($inputArgs);
+        $filterArgs = $this->fixInputDataByCasts($data,LowCodeTemplate::class);
+        return LowCodeTemplate::query()->create($filterArgs);
     }
 
     /**
@@ -50,30 +48,28 @@ final class LowCodeTemplateService extends BaseService
         ) {
             throw new ServiceException("数据{$id}不存在");
         }
-//        dd($result->toArray());
         return $result;
     }
 
     /**
-     * @param array|LowCodeTemplateEntity $data
+     * @param array $data
      * @param int                         $id
      *
      * @return mixed
      * @throws ServiceException
      */
-    public function update(array|LowCodeTemplateEntity $data, int $id = 0)
+    public function update(array $data, int $id = 0)
     {
-        $args = LowCodeTemplateEntity::make($data);
         if (empty(
-        $result = LowCodeTemplate::query()->where('id', $id)->first()
+            $result = LowCodeTemplate::query()->where('id', $id)->first()
         )
         ) {
             throw new ServiceException("数据{$id}不存在");
         }
-        $inputArgs = $this->fixInputDataByCasts($args,LowCodeTemplate::class);
+        $filterArgs = $this->fixInputDataByCasts($data,LowCodeTemplate::class);
         $templateCode = $result->code;
         $this->clearCache($templateCode);
-        return $result->update($inputArgs);
+        return $result->update($filterArgs);
     }
 
     /**
@@ -135,7 +131,6 @@ final class LowCodeTemplateService extends BaseService
                 ? 1 : 0,];
             $syncData[$code] = ['weight' => ((++$key) * 10)];
         }
-//        dd($syncData);
         //执行同步 并刷新缓存
         try {
             //安全代理无法使用事物
@@ -151,6 +146,14 @@ final class LowCodeTemplateService extends BaseService
         return true;
     }
 
+    /**
+     * 同步模板零件
+     * @param $template
+     * @param $syncData
+     * @param $templateCode
+     *
+     * @return void
+     */
     protected function syncTemplateParts($template, $syncData, $templateCode): void
     {
         $template->bindPartList()->sync($syncData);
@@ -169,6 +172,12 @@ final class LowCodeTemplateService extends BaseService
         );
     }
 
+    /**
+     * 清理缓存
+     * @param string $templateCode
+     *
+     * @return void
+     */
     public function clearCache(string $templateCode = '')
     {
         $listCodes = LowCodeList::query()->orwhere(

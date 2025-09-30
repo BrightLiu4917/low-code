@@ -4,11 +4,12 @@ declare(strict_types = 1);
 
 namespace BrightLiu\LowCode\Services\LowCode;
 
-use BrightLiu\LowCode\LowCodeList;
+use App\Models\LowCode\LowCodeList;
 use BrightLiu\LowCode\Traits\CastDefaultFixHelper;
+use BrightLiu\LowCode\Services\LowCodeBaseService;
 use Gupo\BetterLaravel\Exceptions\ServiceException;
 use BrightLiu\LowCode\Enums\Model\LowCodeList\ListTypeEnum;
-use App\Support\LowCode\Core\TemplatePartCacheManager;
+use BrightLiu\LowCode\Core\TemplatePartCacheManager;
 use App\Services\Common\QueryEngine\QueryEngineService;
 use BrightLiu\LowCode\Exceptions\QueryEngineException;
 
@@ -20,14 +21,14 @@ class LowCodeListService extends LowCodeBaseService
     use CastDefaultFixHelper;
 
     /**
-     * @param array|LowCodeListEntity $data
+     * @param array $data
      *
      * @return LowCodeList|null
      */
     public function create(array $data = []): LowCodeList|null
     {
-        $inputArgs = $this->fixInputDataByCasts($data, LowCodeList::class);
-        return LowCodeList::query()->create($inputArgs);
+        $filterArgs = $this->fixInputDataByCasts($data, LowCodeList::class);
+        return LowCodeList::query()->create($filterArgs);
     }
 
     public function show(int $id = 0): LowCodeList|null
@@ -43,19 +44,15 @@ class LowCodeListService extends LowCodeBaseService
         )->first();
     }
 
-    public function update(array|LowCodeListEntity $data, int $id = 0)
+    public function update(array $data, int $id = 0)
     {
-        $args = LowCodeListEntity::make($data);
-        if (empty(
-        $result = LowCodeList::query()->where('id', $id)->first(['id', 'code'])
-        )
-        ) {
+        if (empty($result = LowCodeList::query()->where('id', $id)->first(['id', 'code']))) {
             throw new ServiceException("数据{$id}不存在");
         }
-        $inputArgs = $this->fixInputDataByCasts(
-            $args->toArray(), (new LowCodeList())->getCasts()
+        $filterArgs = $this->fixInputDataByCasts(
+            $data, LowCodeList::class
         );
-        if ($result->update($inputArgs)) {
+        if ($result->update($filterArgs)) {
             TemplatePartCacheManager::clearListCache($result->code);
             return true;
         }
