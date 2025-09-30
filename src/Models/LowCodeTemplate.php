@@ -11,6 +11,7 @@ use BrightLiu\LowCode\Models\Traits\AdministratorRelation;
 use BrightLiu\LowCode\Models\Traits\DiseaseRelationQueries;
 use BrightLiu\LowCode\Enums\Model\LowCodePart\ContentTypeEnum;
 use BrightLiu\LowCode\Enums\Model\LowCodeTemplate\TemplateTypeEnum;
+use BrightLiu\LowCode\Models\Traits\Cacheable\CacheableModel;
 
 /**
  * @mixin IdeHelperLowCodeTemplate

@@ -7,7 +7,7 @@ namespace App\Models\LowCode;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use BrightLiu\LowCode\Models\Traits\DiseaseRelation;
-use App\Models\Traits\Cacheable\CacheableModel;
+use BrightLiu\LowCode\Models\Traits\Cacheable\CacheableModel;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use BrightLiu\LowCode\Models\Traits\UniqueCodeRelation;
 use BrightLiu\LowCode\Enums\Model\DatabaseSource\SourceTypeEnum;

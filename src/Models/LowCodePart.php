@@ -10,6 +10,7 @@ use BrightLiu\LowCode\Models\Traits\UniqueCodeRelation;
 use BrightLiu\LowCode\Models\Traits\AdministratorRelation;
 use BrightLiu\LowCode\Enums\Model\LowCodePart\PartTypeEnum;
 use BrightLiu\LowCode\Enums\Model\LowCodePart\ContentTypeEnum;
+use BrightLiu\LowCode\Models\Traits\Cacheable\CacheableModel;
 
 /**
  * @mixin IdeHelperLowCodePart
