@@ -12,15 +12,6 @@
   "require": {
     "php": "^8.0",
     "laravel/framework": "^9.0",
-    "gupo/better-laravel": "^1.1",
-    "gupo/laravel-database-logger": "^1.2.0",
-    "gupo/laravel-db-query": "^1.0.0",
-    "gupo/laravel-debugging": "^1.0",
-    "gupo/laravel-enum": "^1.1.0",
-    "gupo/middle-office": "^1.4",
-    "gupo/middle-office-mc": "^1.1",
-    "gupo/middle-office-mr": "^1.2",
-    "gupo/middle-office-storage": "^3.0",
     "illuminate/support": "^9.0|^10.0",
     "illuminate/database": "^9.0|^10.0"
   },
