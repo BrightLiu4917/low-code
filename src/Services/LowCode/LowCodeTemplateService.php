@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace App\Services\Business\LowCode;
+namespace BrightLiu\LowCode\Services\LowCode;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\LowCode\LowCodePart;

@@ -2,13 +2,13 @@
 
 declare(strict_types = 1);
 
-namespace BrightLiu\LowCode\Services;
+namespace BrightLiu\LowCode\Services\LowCode;
 
 use BrightLiu\LowCode\Traits\CastDefaultFixHelper;
 use Illuminate\Support\Facades\Cache;
-use BrightLiu\LowCode\DatabaseSource;
+use App\Models\LowCode\DatabaseSource;
 use CacheableModel;
-use Gupo\BetterLaravel\Exceptions\ApiException;
+use Gupo\BetterLaravel\Exceptions\ServiceException;
 use BrightLiu\LowCode\Models\Traits\DiseaseRelation;
 use BrightLiu\LowCode\Core\DbConnectionManager;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -20,14 +20,13 @@ final class LowCodeDatabaseSourceService extends LowCodeBaseService
 {
     use CacheableModel, DiseaseRelation,CastDefaultFixHelper;
 
-    public function create(array|DatabaseSourceEntity $data): ?DatabaseSource
+    public function create(array $data): ?DatabaseSource
     {
         try {
-            $args = DatabaseSourceEntity::make($data);
-            $inputArgs = $this->fixInputDataByCasts($args,DatabaseSource::class);
-            $result = DatabaseSource::query()->create($inputArgs);
+            $filterArgs = $this->fixInputDataByCasts($data,DatabaseSource::class);
+            $result = DatabaseSource::query()->create($filterArgs);
             if (!$result) {
-                throw new ApiException("创建失败");
+                throw new ServiceException("创建失败");
             }
             return $result;
         } catch (\Throwable $e) {
@@ -63,9 +62,9 @@ final class LowCodeDatabaseSourceService extends LowCodeBaseService
     public function delete(int $id = 0): bool
     {
         try {
-            $result = DatabaseSource::fetch($id);
+            $result = DatabaseSource::query()->where('id',$id)->first();
             if (!$result) {
-                throw new ModelNotFoundException("数据库源ID：{$id}不存在");
+                throw new ServiceException("数据库源ID：{$id}不存在");
             }
             $result->delete();
         } catch (\Throwable $e) {
@@ -76,12 +75,10 @@ final class LowCodeDatabaseSourceService extends LowCodeBaseService
 
     /**
      * @param int                        $id
-     * @param array|DatabaseSourceEntity $data
      *
      * @return DatabaseSource|null
      */
-    public function update(int $id, array|DatabaseSourceEntity $data,
-    ): ?DatabaseSource {
+    public function update(int $id, array $data,): ?DatabaseSource {
         $result = DatabaseSource::fetch($id);
         if (!$result) {
             throw new ModelNotFoundException("数据库源{$id}不存在");
@@ -108,7 +105,6 @@ final class LowCodeDatabaseSourceService extends LowCodeBaseService
             ['name', 'host', 'database', 'table', 'port', 'options', 'username',
              'password']
         )->first();
-
     }
 
     public function getDataByDiseaseCode(string $diseaseCode = '')

@@ -5,7 +5,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use SplFileInfo;
 
-class CopyModelsCommand extends Command
+class CopyLowCodeModelsCommand extends Command
 {
     protected $signature = 'lowcode:copy-models 
                             {package? : The name of the Composer package}

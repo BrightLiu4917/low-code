@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace BrightLiu\LowCode\Services;
+namespace BrightLiu\LowCode\Services\LowCode;
 
 use BrightLiu\LowCode\LowCodeList;
 use BrightLiu\LowCode\Traits\CastDefaultFixHelper;

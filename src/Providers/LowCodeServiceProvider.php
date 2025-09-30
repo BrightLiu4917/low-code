@@ -2,7 +2,9 @@
 namespace BrightLiu\LowCode\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use BrightLiu\LowCode\Console\Commands\CopyModelsCommand;
+use BrightLiu\LowCode\Console\Commands\CopyLowCodeModelsCommand;
+use BrightLiu\LowCode\Console\Commands\CopyLowCodeCacheObserverCommand;
+
 
 class LowCodeServiceProvider extends ServiceProvider
 {
@@ -22,7 +24,8 @@ class LowCodeServiceProvider extends ServiceProvider
         // 注册命令行
         if ($this->app->runningInConsole()) {
             $this->commands([
-                CopyModelsCommand::class,
+                CopyLowCodeModelsCommand::class,
+                CopyLowCodeCacheObserverCommand::class, // 添加这行
             ]);
         }
     }
