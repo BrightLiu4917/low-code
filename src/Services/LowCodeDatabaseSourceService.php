@@ -1,0 +1,120 @@
+<?php
+
+declare(strict_types = 1);
+
+namespace BrightLiu\LowCode\Services;
+
+use BrightLiu\LowCode\Traits\CastDefaultFixHelper;
+use Illuminate\Support\Facades\Cache;
+use BrightLiu\LowCode\DatabaseSource;
+use CacheableModel;
+use Gupo\BetterLaravel\Exceptions\ApiException;
+use BrightLiu\LowCode\Models\Traits\DiseaseRelation;
+use BrightLiu\LowCode\Core\DbConnectionManager;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+/**
+ * 数据库源
+ */
+final class LowCodeDatabaseSourceService extends LowCodeBaseService
+{
+    use CacheableModel, DiseaseRelation,CastDefaultFixHelper;
+
+    public function create(array|DatabaseSourceEntity $data): ?DatabaseSource
+    {
+        try {
+            $args = DatabaseSourceEntity::make($data);
+            $inputArgs = $this->fixInputDataByCasts($args,DatabaseSource::class);
+            $result = DatabaseSource::query()->create($inputArgs);
+            if (!$result) {
+                throw new ApiException("创建失败");
+            }
+            return $result;
+        } catch (\Throwable $e) {
+            return null;
+        }
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return DatabaseSource|null
+     */
+    public function show(int $id = 0): ?DatabaseSource
+    {
+        if ($id <= 0) {
+            return null; // 防止无效id继续查询和缓存
+        }
+
+        return DatabaseSource::query()->select(
+            ['id', 'disease_code', 'code', 'name', 'host', 'database',
+             'source_type', 'table', 'port', 'options', 'updater_id',
+             'username', 'password', 'created_at', 'updated_at', 'creator_id']
+        )->with(
+            ['creator:id,realname', 'updater:id,realname', 'disease:code,name']
+        )->find($id);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return bool
+     */
+    public function delete(int $id = 0): bool
+    {
+        try {
+            $result = DatabaseSource::fetch($id);
+            if (!$result) {
+                throw new ModelNotFoundException("数据库源ID：{$id}不存在");
+            }
+            $result->delete();
+        } catch (\Throwable $e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @param int                        $id
+     * @param array|DatabaseSourceEntity $data
+     *
+     * @return DatabaseSource|null
+     */
+    public function update(int $id, array|DatabaseSourceEntity $data,
+    ): ?DatabaseSource {
+        $result = DatabaseSource::fetch($id);
+        if (!$result) {
+            throw new ModelNotFoundException("数据库源{$id}不存在");
+        }
+        $args = DatabaseSourceEntity::make($data);
+        $inputArgs = $this->fixInputDataByCasts($args,DatabaseSource::class);
+        if ($result->update($inputArgs)) {
+            Cache::forget(
+                DbConnectionManager::CONFIG_CACHE_KEY_PREFIX.$result['code']
+            );
+        }
+        return $result->refresh();
+    }
+
+
+    /**
+     * @param string $code
+     *
+     * @return mixed
+     */
+    public function fetchDataByCode(string $code = '')
+    {
+        return DatabaseSource::query()->where('code', $code)->select(
+            ['name', 'host', 'database', 'table', 'port', 'options', 'username',
+             'password']
+        )->first();
+
+    }
+
+    public function getDataByDiseaseCode(string $diseaseCode = '')
+    {
+        return DatabaseSource::query()->where(
+            'disease_code', $diseaseCode
+        )->value('code');
+    }
+}
