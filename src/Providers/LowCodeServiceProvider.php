@@ -2,7 +2,6 @@
 namespace BrightLiu\LowCode\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use BrightLiu\LowCode\Console\Commands\GenerateCommand;
 use BrightLiu\LowCode\Console\Commands\CopyModelsCommand;
 
 class LowCodeServiceProvider extends ServiceProvider
