@@ -7,7 +7,7 @@ use SplFileInfo;
 
 class CopyLowCodeModelsCommand extends Command
 {
-    protected $signature = 'lowcode:copy-models 
+    protected $signature = 'lowcode:install-models 
                             {package? : The name of the Composer package}
                             {--a|all : Copy all models from all packages}
                             {--f|force : Overwrite existing files}
