@@ -1,6 +1,6 @@
 <?php
 
-namespace BrightLiu\LowCode;
+namespace App\Models\LowCode;
 
 use BrightLiu\LowCode\Models\Traits\OrgRelation;
 use Illuminate\Database\Eloquent\SoftDeletes;

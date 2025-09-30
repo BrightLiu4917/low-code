@@ -1,6 +1,6 @@
 <?php
 
-namespace BrightLiu\LowCode;
+namespace App\Models\LowCode;
 
 class LowCodeBaseModel
 {
