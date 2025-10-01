@@ -5,7 +5,7 @@ namespace App\Models\LowCode;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use BrightLiu\LowCode\Enums\Model\LowCodeList\ListTypeEnum;
+use BrightLiu\LowCode\Enums\Model\LowCode\LowCodeList\ListTypeEnum;
 use BrightLiu\LowCode\Models\Traits\OrgDiseaseRelation;
 use BrightLiu\LowCode\Models\Traits\OrgRelation;
 use BrightLiu\LowCode\Models\Traits\Cacheable\CacheableModel;

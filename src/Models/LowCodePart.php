@@ -4,8 +4,8 @@ namespace App\Models\LowCode;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use BrightLiu\LowCode\Enums\Model\LowCodePart\PartTypeEnum;
-use BrightLiu\LowCode\Enums\Model\LowCodePart\ContentTypeEnum;
+use BrightLiu\LowCode\Enums\Model\LowCode\LowCodePart\PartTypeEnum;
+use BrightLiu\LowCode\Enums\Model\LowCode\LowCodePart\ContentTypeEnum;
 use BrightLiu\LowCode\Models\Traits\OrgDiseaseRelation;
 use BrightLiu\LowCode\Models\Traits\OrgRelation;
 use BrightLiu\LowCode\Models\Traits\Cacheable\CacheableModel;

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use BrightLiu\LowCode\Models\Traits\DiseaseRelationQueries;
-use BrightLiu\LowCode\Enums\Model\LowCodePart\ContentTypeEnum;
+use BrightLiu\LowCode\Enums\Model\LowCode\LowCodePart\ContentTypeEnum;
 use BrightLiu\LowCode\Models\Traits\OrgDiseaseRelation;
 use BrightLiu\LowCode\Models\Traits\OrgRelation;
 use BrightLiu\LowCode\Models\Traits\Cacheable\CacheableModel;
