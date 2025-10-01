@@ -13,7 +13,7 @@ class CopyLowCodeQueryResourceCommand extends Command
     public function handle()
     {
         $className = 'QuerySource';
-        $dir = "Http/Resources/LowCode";
+        $dir = "Http/Resources/LowCode/LowCodeList";
         $targetPath = app_path($dir . $className . '.php');
 
         // 确保目录存在
@@ -34,7 +34,7 @@ class CopyLowCodeQueryResourceCommand extends Command
 
 declare(strict_types = 1);
 
-namespace App\Resources\LowCode\LowCodeList;
+namespace App\Http\Resources\LowCode\LowCodeList;
 
 use BrightLiu\LowCode\Tools\Mask;
 use Illuminate\Http\Request;

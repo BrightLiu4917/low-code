@@ -35,7 +35,7 @@ class CopyLowCodeListControllerCommand extends Command
 
 declare(strict_types = 1);
 
-namespace pp\Http\Controllers\Controllers\LowCode;
+namespace App\Http\Controllers\LowCode;
 
 use Illuminate\Http\Request;
 use App\Models\LowCode\LowCodeList;
