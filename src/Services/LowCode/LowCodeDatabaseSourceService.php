@@ -101,7 +101,7 @@ final class LowCodeDatabaseSourceService extends LowCodeBaseService
      */
     public function fetchDataByCode(string $code = '')
     {
-        return \App\Models\Foundation\DatabaseSource::query()->where('code', $code)->select(
+        return DatabaseSource::query()->where('code', $code)->select(
             ['name', 'host', 'database', 'table', 'port', 'options', 'username',
              'password']
         )->first();
