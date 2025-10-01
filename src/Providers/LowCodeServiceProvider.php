@@ -2,7 +2,9 @@
 namespace BrightLiu\LowCode\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use BrightLiu\LowCode\Console\Commands\LowCodeInitCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodeModelsCommand;
+use BrightLiu\LowCode\Console\Commands\CopyLowCodeListServiceCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodeQueryResourceCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodeQueryEngineCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodeCacheObserverCommand;
@@ -35,7 +37,9 @@ class LowCodeServiceProvider extends ServiceProvider
                 CopyLowCodeCacheObserverCommand::class,
                 CopyLowCodeQueryEngineCommand::class,
                 CopyLowCodeQueryResourceCommand::class,
-                CopyLowCodeListControllerCommand::class
+                CopyLowCodeListControllerCommand::class,
+                CopyLowCodeListServiceCommand::class,
+                LowCodeInitCommand::class
             ]);
         }
     }
