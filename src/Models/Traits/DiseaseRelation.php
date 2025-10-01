@@ -6,6 +6,7 @@ namespace BrightLiu\LowCode\Models\Traits;
 
 use App\Models\Foundation\Disease;
 use App\Support\Context\DiseaseContext;
+use App\Models\LowCode\LowCodeDisease;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -52,7 +53,7 @@ trait DiseaseRelation
     public function disease(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         /** @var Model $this */
-        return $this->belongsTo(Disease::class, 'disease_code', 'code');
+        return $this->belongsTo(LowCodeDisease::class, 'disease_code', 'code');
     }
 
     /**

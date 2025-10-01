@@ -13,6 +13,7 @@ use BrightLiu\LowCode\Core\TemplatePartCacheManager;
 use App\Services\Common\QueryEngine\QueryEngineService;
 use BrightLiu\LowCode\Exceptions\QueryEngineException;
 use App\Services\LowCode\LowCodeQueryEngineService;
+use Gupo\BetterLaravel\Database\CustomLengthAwarePaginator;
 
 /**
  * 低代码-列表
@@ -106,17 +107,31 @@ class LowCodeListService extends LowCodeBaseService
         try {
             $list = LowCodeList::query()->whereIn(
                 'code', collect($inputArgs)->pluck('code')->toArray()
-            )->get(['id', 'crowd_type_code', 'default_order_by_json', 'code'])
+            )->get(['id', 'crowd_type_code', 'default_order_by_json', 'code','preset_condition_json'])
                 ->keyBy('code')->toArray();
 
             $query = LowCodeQueryEngineService::instance()->autoClient();
             foreach ($inputArgs as $value) {
-                $crowdTypeCode = $list[$value['code']]['crowd_type_code'] ?? '';
+                $uniqueCode = $value['unique_code'] ?? '';
+                if (empty($uniqueCode) || empty($list[$uniqueCode])) {
+                    return CustomLengthAwarePaginator::toEmpty();
+                }
+
                 $filter = $value['filters'] ?? [];
-                //合并条件
-                $mergeFilter = array_merge(
-                    [['ptt_crwd_clsf_cd', '=', $crowdTypeCode]], $filter
-                );
+
+                //业务自己维护人群时候
+                $crowdTypeCode = $list[$value['code']]['crowd_type_code'] ?? '';
+                $mergeFilter = [];
+                if (!empty($crowdTypeCode)){
+                    //合并条件
+                    $mergeFilter = array_merge(
+                        [['ptt_crwd_clsf_cd', '=', $crowdTypeCode]], $filter
+                    );
+                }else{
+
+                }
+
+
                 //筛选项
                 if (!empty($mergeFilter)) {
                     $query->whereMixed($mergeFilter);
