@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\V1\Resources\LowCode\LowCodePart;
+namespace BrightLiu\LowCode\Resources\LowCode\LowCodePart;
 
 use Illuminate\Http\Request;
 use App\Models\LowCode\LowCodePart;

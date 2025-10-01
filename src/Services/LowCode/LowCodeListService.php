@@ -110,8 +110,7 @@ class LowCodeListService extends LowCodeBaseService
 
             $query = QueryEngineService::instance()->autoClient();
             foreach ($inputArgs as $value) {
-                $crowdTypeCode = $list[$value['code']]['crowd_type_code'] ??
-                    '';//$value['code'] ?? '';
+                $crowdTypeCode = $list[$value['code']]['crowd_type_code'] ?? '';
                 $filter = $value['filters'] ?? [];
                 //合并条件
                 $mergeFilter = array_merge(

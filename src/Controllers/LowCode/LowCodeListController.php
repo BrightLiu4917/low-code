@@ -2,18 +2,18 @@
 
 declare(strict_types = 1);
 
-namespace App\Http\V1\Controllers\LowCode;
+namespace BrightLiu\LowCode\Controllers\LowCode;
 
 use Illuminate\Http\Request;
 use App\Models\LowCode\LowCodeList;
-use App\Http\V1\Requests\LowCode\LowCodeListRequest;
+use BrightLiu\LowCode\Requests\LowCode\LowCodeListRequest;
 use Gupo\BetterLaravel\Http\BaseController;
 use Illuminate\Http\JsonResponse;
 use BrightLiu\LowCode\Services\LowCode\LowCodeListService;
 use BrightLiu\LowCode\Enums\Model\LowCodeList\ListTypeEnum;
-use App\Http\V1\Resources\LowCode\LowCodeList\ListSource;
-use App\Http\V1\Resources\LowCode\LowCodeList\QuerySource;
-use App\Http\V1\Resources\LowCode\LowCodeList\simpleListSource;
+use BrightLiu\LowCode\Resources\LowCode\LowCodeList\ListSource;
+use BrightLiu\LowCode\Resources\LowCode\LowCodeList\QuerySource;
+use BrightLiu\LowCode\Resources\LowCode\LowCodeList\simpleListSource;
 
 /**
  * 低代码-列表

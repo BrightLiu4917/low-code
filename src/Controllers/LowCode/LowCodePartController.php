@@ -2,17 +2,17 @@
 
 declare(strict_types = 1);
 
-namespace App\Http\V1\Controllers\LowCode;
+namespace BrightLiu\LowCode\Controllers\LowCode;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\LowCode\LowCodePart;
 use Gupo\BetterLaravel\Http\BaseController;
 use BrightLiu\LowCode\Services\LowCode\LowCodePartService;
-use App\Services\LowCode\LowCodeQueryEngineService;
-use App\Http\V1\Resources\LowCode\LowCodePart\ListSource;
-use App\Http\V1\Requests\LowCode\LowCodePartRequest;
-use App\Http\V1\Resources\LowCode\LowCodePart\ShowSource;
+use LowCodeQueryEngineService;
+use BrightLiu\LowCode\Resources\LowCode\LowCodePart\ListSource;
+use BrightLiu\LowCode\Requests\LowCode\LowCodePartRequest;
+use BrightLiu\LowCode\Resources\LowCode\LowCodePart\ShowSource;
 
 /**
  * 低代码-零件

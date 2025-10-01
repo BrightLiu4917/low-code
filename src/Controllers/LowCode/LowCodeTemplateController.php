@@ -2,16 +2,16 @@
 
 declare(strict_types = 1);
 
-namespace App\Http\V1\Controllers\LowCode;
+namespace BrightLiu\LowCode\Controllers\LowCode;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\LowCode\LowCodeTemplate;
 use Gupo\BetterLaravel\Http\BaseController;
-use App\Http\V1\Requests\LowCode\LowCodeTemplateRequest;
+use BrightLiu\LowCode\Requests\LowCode\LowCodeTemplateRequest;
 use BrightLiu\LowCode\Services\LowCode\LowCodeTemplateService;
-use App\Http\V1\Resources\LowCode\LowCodeTemplate\ListSource;
-use App\Http\V1\Resources\LowCode\LowCodeTemplate\ShowSource;
+use BrightLiu\LowCode\Resources\LowCode\LowCodeTemplate\ListSource;
+use BrightLiu\LowCode\Resources\LowCode\LowCodeTemplate\ShowSource;
 
 /**
  * 低代码-模板

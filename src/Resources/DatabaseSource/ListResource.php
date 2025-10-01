@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\V1\Resources\DatabaseSource;
+namespace BrightLiu\LowCode\Resources\DatabaseSource;
 
 use Illuminate\Http\Request;
 use App\Models\Foundation\DatabaseSource;

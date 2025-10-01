@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\V1\Resources\Disease;
+namespace BrightLiu\LowCode\Resources\Disease;
 
 use Illuminate\Http\Request;
 use App\Models\Foundation\Disease;
