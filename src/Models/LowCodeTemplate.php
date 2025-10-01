@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use BrightLiu\LowCode\Models\Traits\DiseaseRelationQueries;
+use BrightLiu\LowCode\Models\Traits\Cacheable\NewEloquentBuilder;
 use BrightLiu\LowCode\Enums\Model\LowCode\LowCodePart\ContentTypeEnum;
 use BrightLiu\LowCode\Models\Traits\OrgDiseaseRelation;
 use BrightLiu\LowCode\Models\Traits\OrgRelation;
@@ -24,6 +25,7 @@ class LowCodeTemplate extends LowCodeBaseModel
 {
 
     use
+//        NewEloquentBuilder,
         OrgRelation,
         SoftDeletes,
         UniqueCodeRelation,

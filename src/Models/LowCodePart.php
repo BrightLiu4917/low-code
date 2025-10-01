@@ -4,6 +4,7 @@ namespace App\Models\LowCode;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use BrightLiu\LowCode\Models\Traits\Cacheable\NewEloquentBuilder;
 use BrightLiu\LowCode\Enums\Model\LowCode\LowCodePart\PartTypeEnum;
 use BrightLiu\LowCode\Enums\Model\LowCode\LowCodePart\ContentTypeEnum;
 use BrightLiu\LowCode\Models\Traits\OrgDiseaseRelation;
@@ -33,6 +34,7 @@ class LowCodePart extends LowCodeBaseModel
 
 
     use
+//        NewEloquentBuilder,
         SoftDeletes,
         OrgRelation,
         UniqueCodeRelation,

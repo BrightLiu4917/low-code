@@ -9,7 +9,7 @@ use BrightLiu\LowCode\Models\Traits\Cacheable\CacheableModel;
  * CustomBuilder 类扩展了 Laravel 的 Eloquent Builder，提供了缓存功能。
  * 该类通过缓存查询结果来优化数据库查询性能。
  */
-class CustomBuilder extends Builder
+class CustomBuilderService extends Builder
 {
     /**
      * 根据主键查找单个模型实例。
