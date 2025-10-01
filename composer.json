@@ -14,7 +14,11 @@
     "laravel/framework": "^9.0",
     "illuminate/support": "^9.0|^10.0",
     "illuminate/database": "^9.0|^10.0",
-    "gupo/better-laravel": "^1.1"
+    "gupo/better-laravel": "^1.1",
+    "gupo/laravel-database-logger": "^1.2.0",
+    "gupo/laravel-db-query": "^1.0.0",
+    "gupo/laravel-debugging": "^1.0",
+    "gupo/laravel-enum": "^1.1.0"
   },
   "autoload": {
     "psr-4": {
