@@ -9,7 +9,7 @@ class CopyLowCodeQueryEngineCommand extends Command
 {
     protected $signature = 'lowcode:install-query-engine';
 
-    protected $description = 'Install CacheableModelObserver to app/Observers';
+    protected $description = '安装查询引擎服务';
 
     public function handle()
     {

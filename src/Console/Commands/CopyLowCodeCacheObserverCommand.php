@@ -9,7 +9,7 @@ class CopyLowCodeCacheObserverCommand extends Command
     protected $signature = 'lowcode:install-cache-observer 
                             {--f|force : Overwrite existing file}';
 
-    protected $description = 'Install CacheableModelObserver to app/Observers';
+    protected $description = '安装缓存观察者';
 
     public function handle()
     {

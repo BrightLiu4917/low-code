@@ -13,7 +13,7 @@ class CopyLowCodeModelsCommand extends Command
                             {--f|force : Overwrite existing files}
                             {--m|merge : Merge changes instead of overwriting}';
 
-    protected $description = 'Copy model files from Composer packages to app/Models/LowCode';
+    protected $description = '安装模型';
 
     public function handle()
     {
