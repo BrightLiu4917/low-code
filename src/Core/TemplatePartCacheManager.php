@@ -2,10 +2,10 @@
 
 namespace BrightLiu\LowCode\Core;
 
-use App\Enums\Foundation\Logger;
+use BrightLiu\LowCode\Enums\Foundation\Logger;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use BrightLiu\LowCode\LowCodeList;
+use App\Models\LowCode\LowCodeList;
 
 /**
  * @Class

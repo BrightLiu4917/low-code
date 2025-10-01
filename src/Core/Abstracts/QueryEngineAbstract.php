@@ -3,7 +3,7 @@
 namespace BrightLiu\LowCode\Core\Abstracts;
 
 use Illuminate\Support\Arr;
-use App\Enums\Foundation\Logger;
+use BrightLiu\LowCode\Enums\Foundation\Logger;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Query\Builder;
@@ -15,7 +15,7 @@ use App\Support\LowCode\Traits\DynamicMultiOrderTrait;
 use BrightLiu\LowCode\Exceptions\QueryEngineException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use BrightLiu\LowCode\Core\Contracts\QueryEngineContract;
-use DatabaseSourceService;
+use BrightLiu\LowCode\Services\LowCode\LowCodeDatabaseSourceService;
 
 /**
  * 查询引擎抽象类
@@ -25,7 +25,9 @@ use DatabaseSourceService;
 abstract class QueryEngineAbstract implements QueryEngineContract
 {
     use
-        DynamicWhereTrait, WithDiseaseContext, DynamicMultiOrderTrait;
+        DynamicWhereTrait,
+//        WithDiseaseContext,
+        DynamicMultiOrderTrait;
 
     // 查询构建器
     protected ?Builder $queryBuilder = null;
