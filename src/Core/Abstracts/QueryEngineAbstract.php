@@ -7,14 +7,14 @@ use BrightLiu\LowCode\Enums\Foundation\Logger;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Query\Builder;
-use WithDiseaseContext;
+//use WithDiseaseContext;
 use App\Support\Foundation\DbConnectionManager;
-use App\Support\LowCode\Traits\DynamicWhereTrait;
 use Gupo\BetterLaravel\Exceptions\ServiceException;
-use App\Support\LowCode\Traits\DynamicMultiOrderTrait;
+use BrightLiu\LowCode\Core\Traits\DynamicWhereTrait;
 use BrightLiu\LowCode\Exceptions\QueryEngineException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use BrightLiu\LowCode\Core\Contracts\QueryEngineContract;
+use BrightLiu\LowCode\Core\Traits\DynamicMultiOrderTrait;
 use BrightLiu\LowCode\Services\LowCode\LowCodeDatabaseSourceService;
 
 /**

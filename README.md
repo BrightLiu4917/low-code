@@ -14,7 +14,7 @@ php artisan vendor:publish --provider="BrightLiu\LowCode\Providers\LowCodeServic
 3. 运行
 ```text
 //创建缓存观察者
-php artisan lowcode:install-cache-observer /
+php artisan lowcode:install-cache-observer 
 
 //创建列表控制器
 php artisan lowcode:install-list-controller
@@ -26,5 +26,5 @@ php artisan lowcode:install-models --all
 php artisan lowcode:install-query-engine
 
 //创建列表查询资源
-php artisan lowcode:install-list-query-resource --force
+php artisan lowcode:install-list-query-resource
 ```
