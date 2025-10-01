@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\LowCode\LowCodePart;
 use Gupo\BetterLaravel\Http\BaseController;
+use App\Services\LowCode\LowCodeQueryEngineService;
 use BrightLiu\LowCode\Services\LowCode\LowCodePartService;
 use BrightLiu\LowCode\Resources\LowCode\LowCodePart\ListSource;
 use BrightLiu\LowCode\Requests\LowCode\LowCodePartRequest;
@@ -121,7 +122,7 @@ final class LowCodePartController extends BaseController
     public function getTableFields(): JsonResponse
     {
         //todo 这里是写死的编码 应该根据 疾病编码 动态获取编码
-        $query = QueryEngineService::instance()
+        $query = LowCodeQueryEngineService::instance()
            ->autoClient();
         $fields = $query->setCache(60*60)->getRawResult(
             rawSql:
