@@ -4,7 +4,6 @@ namespace BrightLiu\LowCode\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 
-
 class CopyLowCodeListControllerCommand extends Command
 {
     protected $signature = 'lowcode:install-list-controller';
@@ -15,17 +14,18 @@ class CopyLowCodeListControllerCommand extends Command
     {
         $className = 'LowCodeListController';
         $dir = "Http/Controllers/LowCode";
-        $targetPath = app_path($dir . $className . '.php');
+        $targetDir = app_path($dir);
+        $targetPath = $targetDir . DIRECTORY_SEPARATOR . $className . '.php';
 
         // 确保目录存在
-        if (!File::exists(app_path($dir))) {
-            File::makeDirectory(app_path($dir), 0755, true);
-            $this->info("Created directory: {$dir}");
+        if (!File::exists($targetDir)) {
+            File::makeDirectory($targetDir, 0755, true);
+            $this->info("Created directory: {$targetDir}");
         }
 
         // 检查文件是否已存在
         if (File::exists($targetPath)) {
-            $this->error("{$className} already exists!");
+            $this->error("{$className} already exists at {$targetPath}!");
             return;
         }
 
@@ -215,16 +215,12 @@ final class LowCodeListController extends BaseController
         $inputArgs = $request->input('input_args');
         return $this->responseData($this->service->query($inputArgs), QuerySource::class);
     }
-
-
 }
-
-
 EOT;
 
         // 写入文件
         File::put($targetPath, $content);
 
-        $this->info("Controller installed successfully: {$dir}/{$className}");
+        $this->info("Controller installed successfully: {$targetPath}");
     }
 }

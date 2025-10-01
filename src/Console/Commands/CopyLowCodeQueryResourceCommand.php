@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\File;
 
 class CopyLowCodeQueryResourceCommand extends Command
 {
-    protected $signature = 'lowcode:install-list-query-resource';
+    protected $signature = 'lowcode:install-list-query-resource {--force : 覆盖已存在的文件}';
 
     protected $description = '安装列表数据源';
 
@@ -14,17 +14,20 @@ class CopyLowCodeQueryResourceCommand extends Command
     {
         $className = 'QuerySource';
         $dir = "Http/Resources/LowCode/LowCodeList";
-        $targetPath = app_path($dir . $className . '.php');
+
+        // 构建正确的目标路径
+        $targetDir = app_path($dir);
+        $targetPath = $targetDir . DIRECTORY_SEPARATOR . $className . '.php';
 
         // 确保目录存在
-        if (!File::exists(app_path($dir))) {
-            File::makeDirectory(app_path($dir), 0755, true);
-            $this->info("Created directory: {$dir}");
+        if (!File::exists($targetDir)) {
+            File::makeDirectory($targetDir, 0755, true);
+            $this->info("已创建目录: {$targetDir}");
         }
 
         // 检查文件是否已存在
-        if (File::exists($targetPath)) {
-            $this->error("{$className} already exists!");
+        if (File::exists($targetPath) && !$this->option('force')) {
+            $this->error("{$className} 已存在于 {$targetPath}! 使用 --force 选项覆盖");
             return;
         }
 
@@ -53,274 +56,168 @@ final class QuerySource extends JsonResource
      */
     public function toArray($request)
     {
-        //以下列是数据库字段，请自行修改
+        // 以下字段是数据库字段，请根据实际需求修改
         return [
-        "ptt_nm"               => $this->ptt_nm ?? '',
-                //varchar(255) COMMENT '本人姓名',
-                "id_crd_no"            => $this->id_crd_no ?? '',
-                "masked_id_crd_no"     => Mask::idcard(
-                    ($this->id_crd_no ?? '')
-                ), "masked_slf_tel_no" => Mask::phone(
-                ($this->slf_tel_no ?? '')
-            ),
-
-                //varchar(50) COMMENT '身份证件号码',
-                "user_id"              => $this->user_id ?? '',
-                //varchar(100) COMMENT '身份证件号码加密',
-                "bth_dt"               => $this->bth_dt ?? null,
-                //date COMMENT '出生日期',
-                "age"                  => $this->age ?? 0,
-                //varchar(10) COMMENT '年龄',
-                "slf_tel_no"           => $this->slf_tel_no ?? '',
-                //varchar(20) COMMENT '本人电话号码',
-                "gdr_cd"               => $this->gdr_cd ?? 9,
-                "gdr_nm"               => $this->gdr_nm ?? '',
-                //varchar(10) COMMENT '性别名称',
-                "bld_cd"               => $this->bld_cd ?? '',
-                //varchar(10) COMMENT '血型代码',
-                "bld_nm"               => $this->bld_nm ?? '',
-                //varchar(20) COMMENT '血型名称',
-                "fml_chrnc_dses_hst"   => $this->fml_chrnc_dses_hst ?? '',
-                //varchar(255) COMMENT '家族史',
-                "fml_hst"              => $this->fml_hst ?? '',
-                //varchar(255) COMMENT '家族慢病史',
-                "smk_hst"              => $this->smk_hst ?? '',
-                //varchar(255) COMMENT '吸烟史',
-                "past_hst"             => $this->past_hst ?? '',
-                //varchar(255) COMMENT '既往史',
-                "algn_src"             => $this->algn_src ?? '',
-                //varchar(255) COMMENT '过敏源',
-                "liv_hbt"              => $this->liv_hbt ?? '',
-                //varchar(255) COMMENT '生活习惯',
-                "hgt"                  => $this->hgt ?? 0.00,
-                //varchar(20) COMMENT '身高（cm）',
-                "wgt"                  => $this->wgt ?? 0.00,
-                //varchar(20) COMMENT '体重（kg）',
-                "bmi"                  => $this->bmi ?? '',
-                //varchar(10) COMMENT 'BMI',
-                "curr_addr"            => $this->curr_addr ?? '',
-                //varchar(255) COMMENT '现住地址',
-                "curr_addr_prv_cd"     => $this->curr_addr_prv_cd ?? '',
-                //varchar(20) COMMENT '现住址-省（自治区、直辖市）编码',
-                "curr_addr_prv_nm"     => $this->curr_addr_prv_nm ?? '',
-                //varchar(255) COMMENT '现住址-省（自治区、直辖市）名称',
-                "curr_addr_cty_cd"     => $this->curr_addr_cty_cd ?? '',
-                //varchar(20) COMMENT '现住址-市（地区、州）编码',
-                "curr_addr_cty_nm"     => $this->curr_addr_cty_nm ?? '',
-                //varchar(255) COMMENT '现住址-市（地区、州）名称',
-                "curr_addr_cnty_cd"    => $this->curr_addr_cnty_cd ?? "",
-                //varchar(20) COMMENT '现住址-县（区）编码',
-                "curr_addr_cnty_nm"    => $this->curr_addr_cnty_nm ?? '',
-                //varchar(255) COMMENT '现住址-县（区）名称',
-                "curr_addr_twn_cd"     => $this->curr_addr_twn_cd ?? '',
-                //varchar(20) COMMENT '现住址-乡（镇、街道办事处）编码',
-                "curr_addr_twn_nm"     => $this->curr_addr_twn_nm ?? '',
-                //varchar(255) COMMENT '现住址-乡（镇、街道办事处）名称',
-                "curr_addr_vlg_cd"     => $this->curr_addr_vlg_cd ?? "",
-                //varchar(20) COMMENT '现住址-村（街、路、弄）编码',
-                "curr_addr_vlg_nm"     => $this->curr_addr_vlg_nm ?? "",
-                //varchar(255) COMMENT '现住址-村（街、路、弄）名称',
-                "pblc_hlth_flg"        => $this->pblc_hlth_flg ?? '',
-                //int COMMENT '公卫标识@0否/1是',
-                "dth_flg"              => $this->dth_flg ?? "",
-                //int COMMENT '死亡标识@0否/1是',
-                "dth_flg_nm"           => match ($this->dth_flg) {
-                    0       => '否',
-                    1       => '是',
-                    default => '--',
-                },
-
-                "dth_dt"          => $this->dth_dt ?? null,
-                //datetime COMMENT '死亡日期',
-                "psn_adtn_flg"    => $this->psn_adtn_flg ?? 0,
-                //int COMMENT '人员新增标识@0否/1是',
-                "psn_adtn_flg_nm" => match ($this->psn_adtn_flg) {
-                    0       => '否',
-                    1       => '是',
-                    default => '--',
-                },
-
-                "psn_adtn_tm"         => $this->psn_adtn_tm ?? null,
-                //datetime COMMENT '人员新增时间',
-                "spcl_crt_rcd_flg"    => $this->spcl_crt_rcd_flg ?? 0,
-                //int COMMENT '专项建档标识@0否/1是',
-                "spcl_crt_rcd_flg_nm" => match ($this->spcl_crt_rcd_flg) {
-                    0       => '否',
-                    1       => '是',
-                    default => '--',
-                },
-
-                "rcd_mng_cmnt_cd"       => $this->rcd_mng_cmnt_cd ?? '',
-                //varchar(50) COMMENT '档案管理机构所属医共体编码',
-                "rcd_mng_cmnt_nm"       => $this->rcd_mng_cmnt_nm ?? '',
-                //varchar(255) COMMENT '档案管理机构所属医共体名称',
-                "rcd_mng_org_cd"        => $this->rcd_mng_org_cd ?? '',
-                //varchar(50) COMMENT '档案管理机构编码',
-                "rcd_mng_org_nm"        => $this->rcd_mng_org_nm ?? '',
-                //varchar(255) COMMENT '档案管理机构名称',
-                "rcd_mng_team_cd"       => $this->rcd_mng_team_cd ?? '',
-                //varchar(50) COMMENT '档案管理团队编码',
-                "rcd_mng_team_nm"       => $this->rcd_mng_team_nm ?? '',
-                //varchar(255) COMMENT '档案管理团队名称',
-                "rspsblt_dct_cd"        => $this->rspsblt_dct_cd ?? '',
-                //varchar(50) COMMENT '责任医生编码',
-                "rspsblt_dct_nm"        => $this->rspsblt_dct_nm ?? '',
-                //varchar(255) COMMENT '责任医生名称',
-                "rspsblt_dct_id_crd_no" => $this->rspsblt_dct_id_crd_no ?? '',
-                //varchar(50) COMMENT '责任医生身份证号码',
-                "rspsblt_dct_tel_no"    => $this->rspsblt_dct_tel_no ?? '',
-                //varchar(50) COMMENT '责任医生电话号码',
-                "sgn_ctrct_stts_cd"     => $this->sgn_ctrct_stts_cd ?? '',
-                //int COMMENT '签约状态编码@3正式签约/5到期/7未签约',
-
-                "sgn_ctrct_stts_cd_nm" => match ($this->sgn_ctrct_stts_cd) {
-                    3       => '正式签约',
-                    5       => '到期',
-                    7       => '未签约',
-                    default => '--',
-                },
-
-
-                "sgn_ctrct_stts_nm"      => $this->sgn_ctrct_stts_nm ?? '',
-                //varchar(50) COMMENT '签约状态名称',
-                "sgn_ctrct_dt"           => $this->sgn_ctrct_dt ?? null,
-                //datetime COMMENT '签约日期',
-                "sgn_ctrct_org_cd"       => $this->sgn_ctrct_org_cd ?? '',
-                //varchar(50) COMMENT '签约机构编码',
-                "sgn_ctrct_org_nm"       => $this->sgn_ctrct_org_nm ?? '',
-                //varchar(255) COMMENT '签约机构名称',
-                "sgn_ctrct_dct_cd"       => $this->sgn_ctrct_dct_cd ?? '',
-                //varchar(50) COMMENT '签约医生编码（家庭医生）',
-                "sgn_ctrct_dct_nm"       => $this->sgn_ctrct_dct_nm ?? '',
-                //varchar(255) COMMENT '签约医生姓名（家庭医生）',
-                "sgst_sgn_ctrct_team_cd" => $this->sgst_sgn_ctrct_team_cd ?? '',
-                //varchar(50) COMMENT '推荐签约团队编码',
-                "sgst_sgn_ctrct_team_nm" => $this->sgst_sgn_ctrct_team_nm ?? '',
-                //varchar(255) COMMENT '推荐签约团队名称',
-                "spcl_dses_dct_nm"       => $this->spcl_dses_dct_nm ?? '',
-                //varchar(255) COMMENT '专病医生',
-                "cfm_diag_flg"           => $this->cfm_diag_flg ?? -1,
-                //int COMMENT '专病确诊标识@0否/1是',
-                "cfm_diag_flg_nm"        => match ($this->cfm_diag_flg) {
-                    1       => '是',
-                    0       => '否',
-                    9       => '其他',
-                    default => '--',
-                },
-
-
-                "cfm_diag_dt"            => $this->cfm_diag_dt ?? null,
-                //datetime COMMENT '确诊时间',
-                "spcl_dses_year_vst_tm"  => $this->spcl_dses_year_vst_tm ??
-                    null,        //varchar(255) COMMENT '最近一年专病就诊次数',
-                "last_spcl_dses_vst_tm"  => $this->last_spcl_dses_vst_tm ??
-                    null,        //datetime COMMENT '最近一次专病就诊时间',
-                "rmrk"                   => $this->rmrk ?? '',
-                //varchar(255) COMMENT '备注',
-                "rsk_elmt"               => $this->rsk_elmt ?? '',
-                //varchar(255) COMMENT '风险因素',
-                "ptt_crwd_clsf_cd"       => $this->ptt_crwd_clsf_cd ?? '',
-                //int COMMENT '人群分类代码',
-                "ptt_crwd_clsf_nm"       => $this->ptt_crwd_clsf_nm ?? '',
-                //varchar(50) COMMENT '人群分类名称',
-                "ptt_crwd_clsf_tm"       => $this->ptt_crwd_clsf_tm ?? null,
-                //datetime COMMENT '人群分类时间',
-                "incprt_into_mng_flg"    => $this->incprt_into_mng_flg ?? -1,
-                //int COMMENT '纳管标识@0待纳管/1已纳管/2推荐纳管/9出组',
-                "incprt_into_mng_flg_nm" => match ($this->incprt_into_mng_flg) {
-                    1       => '已纳管',
-                    0       => '待纳管',
-                    2       => '推荐纳管',
-                    9       => '出组',
-                    default => '--',
-                },
-
-                "incprt_into_mng_tm" => $this->incprt_into_mng_tm ?? '',
-                //datetime COMMENT '纳管时间',
-                "out_grp_tm"         => $this->out_grp_tm ?? null,
-                //datetime COMMENT '出组时间',
-                "out_grp_cas"        => $this->out_grp_cas ?? '',
-                //varchar(255) COMMENT '出组原因',
-                "infmd_agr_rcd_stts" => $this->infmd_agr_rcd_stts ?? "",
-                //int COMMENT '知情同意书签署状态@0未签署/1已签署',
-
-                "infmd_agr_rcd_stts_nm" => match ($this->infmd_agr_rcd_stts) {
-                    1       => '已签署',
-                    0       => '未签署',
-                    9       => '其他',
-                    default => '--',
-                },
-
-
-                "incprt_into_mng_org_cd"      => $this->incprt_into_mng_org_cd
-                    ?? '',        //varchar(50) COMMENT '纳管机构代码',
-                "incprt_into_mng_org_nm"      => $this->incprt_into_mng_org_nm
-                    ?? '',        //varchar(255) COMMENT '纳管机构名称',
-                "incprt_into_mng_dct_cd"      => $this->incprt_into_mng_dct_cd
-                    ?? '',        //varchar(50) COMMENT '纳管医生编码',
-                "incprt_into_mng_dct_nm"      => $this->incprt_into_mng_dct_nm
-                    ?? '',        //varchar(255) COMMENT '纳管医生姓名',
-                "incprt_into_mng_dct_team_cd" => $this->incprt_into_mng_dct_team_cd
-                    ?? '', //varchar(50) COMMENT '纳管医生团队编码',
-                "incprt_into_mng_dct_team_nm" => $this->incprt_into_mng_dct_team_nm
-                    ?? '', //varchar(255) COMMENT '纳管医生团队名称',
-                "fst_vst_tm"                  => $this->fst_vst_tm ?? null,
-                //datetime COMMENT '初诊时间',
-                "sbsqt_vst_tm"                => $this->sbsqt_vst_tm ?? null,
-                //datetime COMMENT '复诊时间',
-                "next_rvw_tm"                 => $this->next_rvw_tm ?? null,
-                //datetime COMMENT '下次复查时间',
-                "rvw_flg"                     => $this->rvw_flg ?? 9,
-                //int COMMENT '复查标识@0否/1是/9其他',
-                "rvw_flg_nm"                  => match ($this->rvw_flg) {
-                    1       => '是',
-                    0       => '否',
-                    9       => '其他',
-                    default => '--',
-                },
-
-                "on_tm_rvw_flg" => $this->on_tm_rvw_flg ?? 9,
-                //int COMMENT '按时复查标识@0否/1是/9未知',
-
-                "on_tm_rvw_flg_nm" => match ($this->on_tm_rvw_flg) {
-                    1       => '是',
-                    0       => '否',
-                    9       => '未知',
-                    default => '--',
-                },
-
-
-                "cplct_dses_nms" => $this->cplct_dses_nms ?? '',
-                //varchar(255) COMMENT '并发症疾名称（多个疾病以、分割）',
-                "upd_dt"         => $this->upd_dt ?? null,
-                //datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-                "crt_tm"         => $this->crt_tm ?? null,
-                //datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-                "invld_flg"      => $this->invld_flg ?? 0,
-
-                "invld_flg_nm" => match ($this->invld_flg) {
-                    1       => '是',
-                    0       => '否',
-                    default => '--',
-                },
-
-                "incprt_into_mng_src"    => $this->incprt_into_mng_src ?? -1,
-                //int COMMENT '纳管来源@1手动纳管/2推荐纳管/3知情同意书签署/4企业微信',
-                "incprt_into_mng_src_nm" => match ($this->incprt_into_mng_src) {
-                    1       => '手动纳管',
-                    2       => '推荐纳管',
-                    3       => '知情同意书签署',
-                    4       => '企业微信',
-                    default => '--',
-                },];
+            "ptt_nm"               => $this->ptt_nm ?? '',
+            "id_crd_no"            => $this->id_crd_no ?? '',
+            "masked_id_crd_no"     => Mask::idcard($this->id_crd_no ?? ''),
+            "masked_slf_tel_no"    => Mask::phone($this->slf_tel_no ?? ''),
+            "user_id"              => $this->user_id ?? '',
+            "bth_dt"               => $this->bth_dt ?? null,
+            "age"                  => $this->age ?? 0,
+            "slf_tel_no"           => $this->slf_tel_no ?? '',
+            "gdr_cd"               => $this->gdr_cd ?? 9,
+            "gdr_nm"               => $this->gdr_nm ?? '',
+            "bld_cd"               => $this->bld_cd ?? '',
+            "bld_nm"               => $this->bld_nm ?? '',
+            "fml_chrnc_dses_hst"   => $this->fml_chrnc_dses_hst ?? '',
+            "fml_hst"              => $this->fml_hst ?? '',
+            "smk_hst"              => $this->smk_hst ?? '',
+            "past_hst"             => $this->past_hst ?? '',
+            "algn_src"             => $this->algn_src ?? '',
+            "liv_hbt"              => $this->liv_hbt ?? '',
+            "hgt"                  => $this->hgt ?? 0.00,
+            "wgt"                  => $this->wgt ?? 0.00,
+            "bmi"                  => $this->bmi ?? '',
+            "curr_addr"            => $this->curr_addr ?? '',
+            "curr_addr_prv_cd"     => $this->curr_addr_prv_cd ?? '',
+            "curr_addr_prv_nm"     => $this->curr_addr_prv_nm ?? '',
+            "curr_addr_cty_cd"     => $this->curr_addr_cty_cd ?? '',
+            "curr_addr_cty_nm"     => $this->curr_addr_cty_nm ?? '',
+            "curr_addr_cnty_cd"    => $this->curr_addr_cnty_cd ?? "",
+            "curr_addr_cnty_nm"    => $this->curr_addr_cnty_nm ?? '',
+            "curr_addr_twn_cd"     => $this->curr_addr_twn_cd ?? '',
+            "curr_addr_twn_nm"     => $this->curr_addr_twn_nm ?? '',
+            "curr_addr_vlg_cd"     => $this->curr_addr_vlg_cd ?? "",
+            "curr_addr_vlg_nm"     => $this->curr_addr_vlg_nm ?? "",
+            "pblc_hlth_flg"        => $this->pblc_hlth_flg ?? '',
+            "dth_flg"              => $this->dth_flg ?? "",
+            "dth_flg_nm"           => match ($this->dth_flg) {
+                0       => '否',
+                1       => '是',
+                default => '--',
+            },
+            "dth_dt"          => $this->dth_dt ?? null,
+            "psn_adtn_flg"    => $this->psn_adtn_flg ?? 0,
+            "psn_adtn_flg_nm" => match ($this->psn_adtn_flg) {
+                0       => '否',
+                1       => '是',
+                default => '--',
+            },
+            "psn_adtn_tm"         => $this->psn_adtn_tm ?? null,
+            "spcl_crt_rcd_flg"    => $this->spcl_crt_rcd_flg ?? 0,
+            "spcl_crt_rcd_flg_nm" => match ($this->spcl_crt_rcd_flg) {
+                0       => '否',
+                1       => '是',
+                default => '--',
+            },
+            "rcd_mng_cmnt_cd"       => $this->rcd_mng_cmnt_cd ?? '',
+            "rcd_mng_cmnt_nm"       => $this->rcd_mng_cmnt_nm ?? '',
+            "rcd_mng_org_cd"        => $this->rcd_mng_org_cd ?? '',
+            "rcd_mng_org_nm"        => $this->rcd_mng_org_nm ?? '',
+            "rcd_mng_team_cd"       => $this->rcd_mng_team_cd ?? '',
+            "rcd_mng_team_nm"       => $this->rcd_mng_team_nm ?? '',
+            "rspsblt_dct_cd"        => $this->rspsblt_dct_cd ?? '',
+            "rspsblt_dct_nm"        => $this->rspsblt_dct_nm ?? '',
+            "rspsblt_dct_id_crd_no" => $this->rspsblt_dct_id_crd_no ?? '',
+            "rspsblt_dct_tel_no"    => $this->rspsblt_dct_tel_no ?? '',
+            "sgn_ctrct_stts_cd"     => $this->sgn_ctrct_stts_cd ?? '',
+            "sgn_ctrct_stts_cd_nm" => match ($this->sgn_ctrct_stts_cd) {
+                3       => '正式签约',
+                5       => '到期',
+                7       => '未签约',
+                default => '--',
+            },
+            "sgn_ctrct_stts_nm"      => $this->sgn_ctrct_stts_nm ?? '',
+            "sgn_ctrct_dt"           => $this->sgn_ctrct_dt ?? null,
+            "sgn_ctrct_org_cd"       => $this->sgn_ctrct_org_cd ?? '',
+            "sgn_ctrct_org_nm"       => $this->sgn_ctrct_org_nm ?? '',
+            "sgn_ctrct_dct_cd"       => $this->sgn_ctrct_dct_cd ?? '',
+            "sgn_ctrct_dct_nm"       => $this->sgn_ctrct_dct_nm ?? '',
+            "sgst_sgn_ctrct_team_cd" => $this->sgst_sgn_ctrct_team_cd ?? '',
+            "sgst_sgn_ctrct_team_nm" => $this->sgst_sgn_ctrct_team_nm ?? '',
+            "spcl_dses_dct_nm"       => $this->spcl_dses_dct_nm ?? '',
+            "cfm_diag_flg"           => $this->cfm_diag_flg ?? -1,
+            "cfm_diag_flg_nm"        => match ($this->cfm_diag_flg) {
+                1       => '是',
+                0       => '否',
+                9       => '其他',
+                default => '--',
+            },
+            "cfm_diag_dt"            => $this->cfm_diag_dt ?? null,
+            "spcl_dses_year_vst_tm"  => $this->spcl_dses_year_vst_tm ?? null,
+            "last_spcl_dses_vst_tm"  => $this->last_spcl_dses_vst_tm ?? null,
+            "rmrk"                   => $this->rmrk ?? '',
+            "rsk_elmt"               => $this->rsk_elmt ?? '',
+            "ptt_crwd_clsf_cd"       => $this->ptt_crwd_clsf_cd ?? '',
+            "ptt_crwd_clsf_nm"       => $this->ptt_crwd_clsf_nm ?? '',
+            "ptt_crwd_clsf_tm"       => $this->ptt_crwd_clsf_tm ?? null,
+            "incprt_into_mng_flg"    => $this->incprt_into_mng_flg ?? -1,
+            "incprt_into_mng_flg_nm" => match ($this->incprt_into_mng_flg) {
+                1       => '已纳管',
+                0       => '待纳管',
+                2       => '推荐纳管',
+                9       => '出组',
+                default => '--',
+            },
+            "incprt_into_mng_tm" => $this->incprt_into_mng_tm ?? '',
+            "out_grp_tm"         => $this->out_grp_tm ?? null,
+            "out_grp_cas"        => $this->out_grp_cas ?? '',
+            "infmd_agr_rcd_stts" => $this->infmd_agr_rcd_stts ?? "",
+            "infmd_agr_rcd_stts_nm" => match ($this->infmd_agr_rcd_stts) {
+                1       => '已签署',
+                0       => '未签署',
+                9       => '其他',
+                default => '--',
+            },
+            "incprt_into_mng_org_cd"      => $this->incprt_into_mng_org_cd ?? '',
+            "incprt_into_mng_org_nm"      => $this->incprt_into_mng_org_nm ?? '',
+            "incprt_into_mng_dct_cd"      => $this->incprt_into_mng_dct_cd ?? '',
+            "incprt_into_mng_dct_nm"      => $this->incprt_into_mng_dct_nm ?? '',
+            "incprt_into_mng_dct_team_cd" => $this->incprt_into_mng_dct_team_cd ?? '',
+            "incprt_into_mng_dct_team_nm" => $this->incprt_into_mng_dct_team_nm ?? '',
+            "fst_vst_tm"                  => $this->fst_vst_tm ?? null,
+            "sbsqt_vst_tm"                => $this->sbsqt_vst_tm ?? null,
+            "next_rvw_tm"                 => $this->next_rvw_tm ?? null,
+            "rvw_flg"                     => $this->rvw_flg ?? 9,
+            "rvw_flg_nm"                  => match ($this->rvw_flg) {
+                1       => '是',
+                0       => '否',
+                9       => '其他',
+                default => '--',
+            },
+            "on_tm_rvw_flg" => $this->on_tm_rvw_flg ?? 9,
+            "on_tm_rvw_flg_nm" => match ($this->on_tm_rvw_flg) {
+                1       => '是',
+                0       => '否',
+                9       => '未知',
+                default => '--',
+            },
+            "cplct_dses_nms" => $this->cplct_dses_nms ?? '',
+            "upd_dt"         => $this->upd_dt ?? null,
+            "crt_tm"         => $this->crt_tm ?? null,
+            "invld_flg"      => $this->invld_flg ?? 0,
+            "invld_flg_nm" => match ($this->invld_flg) {
+                1       => '是',
+                0       => '否',
+                default => '--',
+            },
+            "incprt_into_mng_src"    => $this->incprt_into_mng_src ?? -1,
+            "incprt_into_mng_src_nm" => match ($this->incprt_into_mng_src) {
+                1       => '手动纳管',
+                2       => '推荐纳管',
+                3       => '知情同意书签署',
+                4       => '企业微信',
+                default => '--',
+            },
+        ];
     }
 }
-
 EOT;
 
         // 写入文件
         File::put($targetPath, $content);
 
-        $this->info("Resources installed successfully: App\Http\Resources\LowCode\{$className} 可自定义出参");
+        $this->info("资源文件安装成功: App\Http\Resources\LowCode\LowCodeList\\{$className} 可自定义出参");
     }
 }
