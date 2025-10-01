@@ -3,6 +3,7 @@
 namespace BrightLiu\LowCode\Core\Abstracts;
 
 use Illuminate\Support\Arr;
+use Illuminate\Database\Connection;
 use BrightLiu\LowCode\Enums\Foundation\Logger;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
@@ -588,5 +589,31 @@ abstract class QueryEngineAbstract implements QueryEngineContract
         $this->cacheTtl = max(0, $ttl);
         $this->cacheKey = $cacheKey;
         return $this;
+    }
+
+    public function rawTable(string $table)
+    {
+        $query = clone $this;
+
+        $query->setQueryBuilder(
+            $query->getConnection()->table(DB::raw($table))
+        );
+
+        return $query;
+    }
+
+    public function getConnection(): Connection
+    {
+        return $this->connection;
+    }
+
+    public function setQueryBuilder(Builder $queryBuilder)
+    {
+        $this->queryBuilder = $queryBuilder;
+    }
+
+    public function getQueryBuilder(): Builder
+    {
+        return $this->queryBuilder;
     }
 }

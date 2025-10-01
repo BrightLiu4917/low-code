@@ -85,7 +85,7 @@ class LowCodeList extends LowCodeBaseModel
            "append_top_button_json", "remove_field_json", "remove_filter_json",
            "remove_column_json", "remove_button_json", "remove_top_button_json",'default_order_by_json',
            "creator_id", "updater_id", "created_at", "updated_at",
-           "deleted_at",'list_type'
+           "deleted_at",'list_type','preset_condition_json'
         ];
 
 
