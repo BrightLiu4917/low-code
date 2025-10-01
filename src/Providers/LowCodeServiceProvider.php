@@ -3,8 +3,10 @@ namespace BrightLiu\LowCode\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodeModelsCommand;
+use BrightLiu\LowCode\Console\Commands\CopyLowCodeQueryResourceCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodeQueryEngineCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodeCacheObserverCommand;
+use BrightLiu\LowCode\Console\Commands\CopyLowCodeListControllerCommand;
 
 
 class LowCodeServiceProvider extends ServiceProvider
@@ -31,7 +33,9 @@ class LowCodeServiceProvider extends ServiceProvider
             $this->commands([
                 CopyLowCodeModelsCommand::class,
                 CopyLowCodeCacheObserverCommand::class,
-                CopyLowCodeQueryEngineCommand::class
+                CopyLowCodeQueryEngineCommand::class,
+                CopyLowCodeQueryResourceCommand::class,
+                CopyLowCodeListControllerCommand::class
             ]);
         }
     }

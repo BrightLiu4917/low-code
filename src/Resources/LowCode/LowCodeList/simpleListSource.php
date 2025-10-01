@@ -26,12 +26,12 @@ final class simpleListSource extends JsonResource
                 "admin_name",
                 "code",
                 "parent_code",
-                "crowd_type_code",
+//                "crowd_type_code",
                 "route_group",
             ]),
-            'crowd_type_name' => $this->crowdType->name ?? '',
-            'crowd_type_color' => $this->crowdType->color ?? null,
-            'crowd_type_weight' => $this->crowdType->weight ?? 0,
+//            'crowd_type_name' => $this->crowdType->name ?? '',
+//            'crowd_type_color' => $this->crowdType->color ?? null,
+//            'crowd_type_weight' => $this->crowdType->weight ?? 0,
         ];
     }
 }

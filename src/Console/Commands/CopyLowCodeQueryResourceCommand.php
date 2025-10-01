@@ -1,4 +1,36 @@
 <?php
+namespace BrightLiu\LowCode\Console\Commands;
+
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
+
+class CopyLowCodeQueryResourceCommand extends Command
+{
+    protected $signature = 'lowcode:install-list-query-resource';
+
+    protected $description = '安装列表数据源';
+
+    public function handle()
+    {
+        $className = 'QuerySource';
+        $dir = "Http/Resources/LowCode";
+        $targetPath = app_path($dir . $className . '.php');
+
+        // 确保目录存在
+        if (!File::exists(app_path($dir))) {
+            File::makeDirectory(app_path($dir), 0755, true);
+            $this->info("Created directory: {$dir}");
+        }
+
+        // 检查文件是否已存在
+        if (File::exists($targetPath)) {
+            $this->error("{$className} already exists!");
+            return;
+        }
+
+        // 文件内容
+        $content = <<<'EOT'
+<?php
 
 declare(strict_types = 1);
 
@@ -21,7 +53,9 @@ final class QuerySource extends JsonResource
      */
     public function toArray($request)
     {
-        return ["ptt_nm"               => $this->ptt_nm ?? '',
+        //以下列是数据库字段，请自行修改
+        return [
+        "ptt_nm"               => $this->ptt_nm ?? '',
                 //varchar(255) COMMENT '本人姓名',
                 "id_crd_no"            => $this->id_crd_no ?? '',
                 "masked_id_crd_no"     => Mask::idcard(
@@ -279,5 +313,14 @@ final class QuerySource extends JsonResource
                     4       => '企业微信',
                     default => '--',
                 },];
+    }
+}
+
+EOT;
+
+        // 写入文件
+        File::put($targetPath, $content);
+
+        $this->info("Resources installed successfully: App\Http\Resources\LowCode\{$className} 可自定义出参");
     }
 }

@@ -9,7 +9,10 @@ use App\Models\Foundation\DatabaseSource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin DatabaseSource
+ * @Class
+ * @Description:
+ * @created    : 2025-10-01 13:35:24
+ * @modifier   : 2025-10-01 13:35:24
  */
 final class ListResource extends JsonResource
 {
