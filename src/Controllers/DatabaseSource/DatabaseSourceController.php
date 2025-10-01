@@ -12,27 +12,41 @@ use BrightLiu\LowCode\Resources\DatabaseSource\ListResource;
 use BrightLiu\LowCode\Services\LowCode\LowCodeDatabaseSourceService;
 use BrightLiu\LowCode\Requests\Foundation\DatabaseSourceRequest\DatabaseSourceRequest;
 
+/**
+ * @Class:DatabaseSourceController
+ * @Description:数据库源管理
+ * @created    : 2025-10-01 10:52:20
+ * @modifier   : 2025-10-01 10:52:20
+ */
 final class DatabaseSourceController extends BaseController
 {
     /**
-     * @param DatabaseSourceService $service
+     * @param LowCodeDatabaseSourceService $service
      */
     public function __construct(private readonly LowCodeDatabaseSourceService $service)
     {
 
     }
 
+    /**
+     * @param DatabaseSourceRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function create(DatabaseSourceRequest $request): JsonResponse
     {
-        $args = $request->input();
-        $this->service->create($args);
+        $this->service->create($request->input());
         return $this->responseSuccess();
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function list(): JsonResponse
     {
         $list = DatabaseSource::query()
-            ->byContextDisease()
+            //todo 权限还没确认
+//            ->byContextDisease()
             ->with(
                 ['creator:id,realname', 'updater:id,realname',
                  'disease:code,name']
@@ -44,6 +58,11 @@ final class DatabaseSourceController extends BaseController
         return $this->responseData($list, ListResource::class);
     }
 
+    /**
+     * @param DatabaseSourceRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show(DatabaseSourceRequest $request): JsonResponse
     {
         $id = (int)$request->input('id', 0);
@@ -55,6 +74,11 @@ final class DatabaseSourceController extends BaseController
         );
     }
 
+    /**
+     * @param DatabaseSourceRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function delete(DatabaseSourceRequest $request): JsonResponse
     {
         $id = (int)$request->input('id', 0);
@@ -64,6 +88,11 @@ final class DatabaseSourceController extends BaseController
         return $this->responseError();
     }
 
+    /**
+     * @param DatabaseSourceRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(DatabaseSourceRequest $request): JsonResponse
     {
         $id = (int)$request->input('id', 0);

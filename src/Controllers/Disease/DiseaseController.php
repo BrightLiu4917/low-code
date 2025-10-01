@@ -14,12 +14,15 @@ use BrightLiu\LowCode\Resources\Disease\ListResource;
 use BrightLiu\LowCode\Services\LowCode\LowCodeDiseaseService;
 
 /**
- * 疾病
+ * @Class
+ * @Description: 疾病管理
+ * @created    : 2025-10-01 10:54:45
+ * @modifier   : 2025-10-01 10:54:45
  */
 final class DiseaseController extends BaseController
 {
     /**
-     * @param DiseaseService $diseaseService
+     * @param LowCodeDiseaseService $diseaseService
      */
     public function __construct(private readonly LowCodeDiseaseService $diseaseService,
     ) {
@@ -27,9 +30,9 @@ final class DiseaseController extends BaseController
     }
 
     /**
-     * @param DiseaseRequest $request
+     * @param \BrightLiu\LowCode\Requests\Disease\DiseaseRequest $request
      *
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create(DiseaseRequest $request): JsonResponse
     {
@@ -41,9 +44,9 @@ final class DiseaseController extends BaseController
     }
 
     /**
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      *
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function list(Request $request): JsonResponse
     {
@@ -61,10 +64,9 @@ final class DiseaseController extends BaseController
     }
 
     /**
-     * @param DiseaseRequest $request
+     * @param \BrightLiu\LowCode\Requests\Disease\DiseaseRequest $request
      *
-     * @return JsonResponse
-     * @throws \Gupo\BetterLaravel\Exceptions\ServiceException
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(DiseaseRequest $request): JsonResponse
     {
@@ -73,10 +75,9 @@ final class DiseaseController extends BaseController
     }
 
     /**
-     * @param DiseaseRequest $request
+     * @param \BrightLiu\LowCode\Requests\Disease\DiseaseRequest $request
      *
-     * @return JsonResponse
-     * @throws \Gupo\BetterLaravel\Exceptions\ServiceException
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(DiseaseRequest $request): JsonResponse
     {
@@ -88,10 +89,9 @@ final class DiseaseController extends BaseController
     }
 
     /**
-     * @param DiseaseRequest $request
+     * @param \BrightLiu\LowCode\Requests\Disease\DiseaseRequest $request
      *
-     * @return JsonResponse
-     * @throws \Gupo\BetterLaravel\Exceptions\ServiceException
+     * @return \Illuminate\Http\JsonResponse
      */
     public function delete(DiseaseRequest $request): JsonResponse
     {

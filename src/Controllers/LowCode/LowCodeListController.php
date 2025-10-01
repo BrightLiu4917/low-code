@@ -16,21 +16,25 @@ use BrightLiu\LowCode\Resources\LowCode\LowCodeList\QuerySource;
 use BrightLiu\LowCode\Resources\LowCode\LowCodeList\simpleListSource;
 
 /**
- * 低代码-列表
+ * @Class
+ * @Description:低代码-列表
+ * @created    : 2025-10-01 10:55:45
+ * @modifier   : 2025-10-01 10:55:45
  */
 final class LowCodeListController extends BaseController
 {
+    /**
+     * @param \BrightLiu\LowCode\Services\LowCode\LowCodeListService $service
+     */
     public function __construct(protected LowCodeListService $service)
     {
 
     }
 
     /**
-     * 创建
+     * @param \BrightLiu\LowCode\Requests\LowCode\LowCodeListRequest $request
      *
-     * @param LowCodeListRequest $request
-     *
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create(LowCodeListRequest $request): JsonResponse
     {
@@ -47,16 +51,17 @@ final class LowCodeListController extends BaseController
 
 
     /**
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      *
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function list(Request $request): JsonResponse
     {
         $name = trim($request->input('name', ''));
         $templateCode = trim($request->input('template_code', ''));
         //权限判断
-        $query = LowCodeList::query()->byContextDisease()->byContextDisease()
+        $query = LowCodeList::query()
+//                            ->byContextDisease()->byContextDisease()
             ->orderByRaw("CASE WHEN admin_name = '全部人群' THEN 0 ELSE 1 END asc")
             ->where('list_type', '<>', ListTypeEnum::GENERAL);
         if ($name !== '') {
@@ -80,7 +85,9 @@ final class LowCodeListController extends BaseController
                         "%{$templateCode}%");
             });
         }
-        $list = $query->byContextOrg()->byContextDisease()->with([
+        $list = $query
+            //->byContextOrg()->byContextDisease()
+                                      ->with([
                 'updater:id,realname', 'creator:id,realname',
                 'crowdType:code,name,color,weight',
             ])->select([
@@ -93,10 +100,9 @@ final class LowCodeListController extends BaseController
     }
 
     /**
-     * @param LowCodeListRequest $request
+     * @param \BrightLiu\LowCode\Requests\LowCode\LowCodeListRequest $request
      *
-     * @return JsonResponse
-     * @throws \App\Exceptions\ApiServiceException
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(LowCodeListRequest $request): JsonResponse
     {
@@ -108,9 +114,9 @@ final class LowCodeListController extends BaseController
     }
 
     /**
-     * @param LowCodeListRequest $request
+     * @param \BrightLiu\LowCode\Requests\LowCode\LowCodeListRequest $request
      *
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(LowCodeListRequest $request): JsonResponse
     {
@@ -123,10 +129,9 @@ final class LowCodeListController extends BaseController
     }
 
     /**
-     * @param LowCodeListRequest $request
+     * @param \BrightLiu\LowCode\Requests\LowCode\LowCodeListRequest $request
      *
-     * @return JsonResponse
-     * @throws \App\Exceptions\ApiServiceException
+     * @return \Illuminate\Http\JsonResponse
      */
     public function delete(LowCodeListRequest $request): JsonResponse
     {
@@ -138,9 +143,9 @@ final class LowCodeListController extends BaseController
     }
 
     /**
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      *
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function simpleList(Request $request): JsonResponse
     {
@@ -155,9 +160,9 @@ final class LowCodeListController extends BaseController
     }
 
     /**
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      *
-     * @return JsonResponse
+     * @return mixed
      */
     public function pre(Request $request)
     {
@@ -166,10 +171,9 @@ final class LowCodeListController extends BaseController
     }
 
     /**
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      *
-     * @return JsonResponse
-     * @throws \Gupo\BetterLaravel\Exceptions\ServiceException
+     * @return \Illuminate\Http\JsonResponse
      */
     public function query(Request $request): JsonResponse
     {

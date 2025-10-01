@@ -14,7 +14,10 @@ use BrightLiu\LowCode\Resources\LowCode\LowCodeTemplate\ListSource;
 use BrightLiu\LowCode\Resources\LowCode\LowCodeTemplate\ShowSource;
 
 /**
- * 低代码-模板
+ * @Class
+ * @Description: 模板
+ * @created    : 2025-10-01 10:58:44
+ * @modifier   : 2025-10-01 10:58:44
  */
 final class LowCodeTemplateController extends BaseController
 {
@@ -23,9 +26,9 @@ final class LowCodeTemplateController extends BaseController
     }
 
     /**
-     * @param LowCodeTemplateRequest $request
+     * @param \BrightLiu\LowCode\Requests\LowCode\LowCodeTemplateRequest $request
      *
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create(LowCodeTemplateRequest $request): JsonResponse
     {
@@ -44,11 +47,9 @@ final class LowCodeTemplateController extends BaseController
 
     /**
      * 模板绑定零件
+     * @param \Illuminate\Http\Request $request
      *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     * @throws \App\Exceptions\ApiServiceException
+     * @return \Illuminate\Http\JsonResponse
      */
     public function bindPart(Request $request): JsonResponse
     {
@@ -61,6 +62,11 @@ final class LowCodeTemplateController extends BaseController
         return $this->responseError();
     }
 
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function list(Request $request): JsonResponse
     {
         $name = trim($request->input('name', ''));
@@ -83,6 +89,11 @@ final class LowCodeTemplateController extends BaseController
         return $this->responseData($list, ListSource::class);
     }
 
+    /**
+     * @param \BrightLiu\LowCode\Requests\LowCode\LowCodeTemplateRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(LowCodeTemplateRequest $request): JsonResponse
     {
         $id = (int)$request->input('id', 0);
@@ -93,10 +104,9 @@ final class LowCodeTemplateController extends BaseController
     }
 
     /**
-     * @param LowCodeTemplateRequest $request
+     * @param \BrightLiu\LowCode\Requests\LowCode\LowCodeTemplateRequest $request
      *
-     * @return JsonResponse
-     * @throws \App\Exceptions\ApiServiceException
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(LowCodeTemplateRequest $request): JsonResponse
     {
@@ -108,10 +118,9 @@ final class LowCodeTemplateController extends BaseController
     }
 
     /**
-     * @param LowCodeTemplateRequest $request
+     * @param \BrightLiu\LowCode\Requests\LowCode\LowCodeTemplateRequest $request
      *
-     * @return JsonResponse
-     * @throws \App\Exceptions\ApiServiceException
+     * @return \Illuminate\Http\JsonResponse
      */
     public function delete(LowCodeTemplateRequest $request): JsonResponse
     {
