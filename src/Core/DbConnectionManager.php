@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
-use App\Exceptions\ApiServiceException;
+use App\Exceptions\ServiceException;
 use App\Services\Business\Foundation\DatabaseSourceService;
 use Illuminate\Database\Connection;
 use PDO;
@@ -62,7 +62,7 @@ final class DbConnectionManager
     public function getConnection(string $code = '', array $dbConfig = []): Connection
     {
         if (empty($code) && empty($dbConfig)) {
-            throw new ApiServiceException('动态获取数据库连接失败，请检查参数');
+            throw new ServiceException('动态获取数据库连接失败，请检查参数');
         }
 
         // 优先使用传入配置，不缓存
@@ -80,21 +80,21 @@ final class DbConnectionManager
             $dbConfig = Cache::remember($cacheKey, now()->addMinutes(60), function () use ($code) {
                 $source = DatabaseSourceService::instance()->fetchDataByCode($code);
                 if (empty($source)) {
-                    throw new ApiServiceException("数据源 '{$code}' 不存在");
+                    throw new ServiceException("数据源 '{$code}' 不存在");
                 }
                 return array_merge($source->toArray(), $this->defaultConfig());
             });
 
             return $this->connections[$code] = $this->createConnection($code, $dbConfig);
 
-        } catch (ApiServiceException $e) {
+        } catch (ServiceException $e) {
             throw $e;
         } catch (\Throwable $exception) {
             Log::error("数据库连接失败 [{$code}]：" . $exception->getMessage(), [
                 'code' => $code,
                 'exception' => $exception,
             ]);
-            throw new ApiServiceException("动态数据库连接失败，请稍后再试");
+            throw new ServiceException("动态数据库连接失败，请稍后再试");
         }
     }
 
@@ -148,6 +148,6 @@ final class DbConnectionManager
             }
         }
 
-        throw $lastException ?? new ApiServiceException('连接失败');
+        throw $lastException ?? new ServiceException('连接失败');
     }
 }

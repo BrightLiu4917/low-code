@@ -7,8 +7,8 @@ use BrightLiu\LowCode\Enums\Foundation\Logger;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Query\Builder;
+use BrightLiu\LowCode\Core\DbConnectionManager;
 //use WithDiseaseContext;
-use App\Support\Foundation\DbConnectionManager;
 use Gupo\BetterLaravel\Exceptions\ServiceException;
 use BrightLiu\LowCode\Core\Traits\DynamicWhereTrait;
 use BrightLiu\LowCode\Exceptions\QueryEngineException;
@@ -69,6 +69,7 @@ abstract class QueryEngineAbstract implements QueryEngineContract
             }
 
             // 模式2：自动上下文（常规请求）
+//            $this->getDiseaseCode();
             if (!empty($contextCode = $this->getDiseaseCode())) {
                 // 尝试从上下文获取疾病编码
                 if (empty($contextCode)) {
