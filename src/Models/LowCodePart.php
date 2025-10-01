@@ -2,15 +2,16 @@
 
 namespace App\Models\LowCode;
 
-use BrightLiu\LowCode\Models\Traits\OrgRelation;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use BrightLiu\LowCode\Models\Traits\OrgDiseaseRelation;
-use BrightLiu\LowCode\Models\Traits\UniqueCodeRelation;
-use BrightLiu\LowCode\Models\Traits\AdministratorRelation;
 use BrightLiu\LowCode\Enums\Model\LowCodePart\PartTypeEnum;
 use BrightLiu\LowCode\Enums\Model\LowCodePart\ContentTypeEnum;
+use BrightLiu\LowCode\Models\Traits\OrgDiseaseRelation;
+use BrightLiu\LowCode\Models\Traits\OrgRelation;
 use BrightLiu\LowCode\Models\Traits\Cacheable\CacheableModel;
+use BrightLiu\LowCode\Models\Traits\UniqueCodeRelation;
+use BrightLiu\LowCode\Models\Traits\AdministratorRelation;
+
 
 /**
  * @mixin IdeHelperLowCodePart

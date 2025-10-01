@@ -2,16 +2,17 @@
 
 namespace App\Models\LowCode;
 
-use BrightLiu\LowCode\Models\Traits\OrgRelation;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use BrightLiu\LowCode\Models\Traits\UniqueCodeRelation;
-use BrightLiu\LowCode\Models\Traits\AdministratorRelation;
 use BrightLiu\LowCode\Models\Traits\DiseaseRelationQueries;
 use BrightLiu\LowCode\Enums\Model\LowCodePart\ContentTypeEnum;
-use BrightLiu\LowCode\Enums\Model\LowCodeTemplate\TemplateTypeEnum;
+use BrightLiu\LowCode\Models\Traits\OrgDiseaseRelation;
+use BrightLiu\LowCode\Models\Traits\OrgRelation;
 use BrightLiu\LowCode\Models\Traits\Cacheable\CacheableModel;
+use BrightLiu\LowCode\Models\Traits\UniqueCodeRelation;
+use BrightLiu\LowCode\Models\Traits\AdministratorRelation;
+
 
 /**
  * @mixin IdeHelperLowCodeTemplate
@@ -19,6 +20,12 @@ use BrightLiu\LowCode\Models\Traits\Cacheable\CacheableModel;
 class LowCodeTemplate extends LowCodeBaseModel
 {
 
+    use
+        OrgRelation,
+        SoftDeletes,
+        UniqueCodeRelation,
+        DiseaseRelationQueries,
+        AdministratorRelation;
     /**
      * @var string
      */
@@ -28,13 +35,6 @@ class LowCodeTemplate extends LowCodeBaseModel
      * @var bool
      */
     public bool $incrementing = false;
-
-    use
-        OrgRelation,
-        SoftDeletes,
-        UniqueCodeRelation,
-        DiseaseRelationQueries,
-        AdministratorRelation;
 
     protected array $casts = [
         'id' => 'integer', // bigint(20) unsigned NOT NULL AUTO_INCREMENT
