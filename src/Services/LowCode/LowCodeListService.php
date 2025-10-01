@@ -12,6 +12,7 @@ use BrightLiu\LowCode\Enums\Model\LowCodeList\ListTypeEnum;
 use BrightLiu\LowCode\Core\TemplatePartCacheManager;
 use App\Services\Common\QueryEngine\QueryEngineService;
 use BrightLiu\LowCode\Exceptions\QueryEngineException;
+use App\Services\LowCode\LowCodeQueryEngineService;
 
 /**
  * 低代码-列表
@@ -108,7 +109,7 @@ class LowCodeListService extends LowCodeBaseService
             )->get(['id', 'crowd_type_code', 'default_order_by_json', 'code'])
                 ->keyBy('code')->toArray();
 
-            $query = QueryEngineService::instance()->autoClient();
+            $query = LowCodeQueryEngineService::instance()->autoClient();
             foreach ($inputArgs as $value) {
                 $crowdTypeCode = $list[$value['code']]['crowd_type_code'] ?? '';
                 $filter = $value['filters'] ?? [];
