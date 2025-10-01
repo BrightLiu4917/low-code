@@ -21,13 +21,18 @@ use BrightLiu\LowCode\Models\Traits\AdministratorRelation;
 final class DatabaseSource extends LowCodeBaseModel
 {
     use
-        SoftDeletes, AdministratorRelation, CacheableModel, DiseaseRelation, UniqueCodeRelation,ModelFetch;
+        SoftDeletes,
+        AdministratorRelation,
+        CacheableModel,
+        DiseaseRelation,
+        UniqueCodeRelation,
+        ModelFetch;
 
     /**
-     * @var string[]
+     * @var array|string[]
      */
-    protected array $fillable
-        = [
+    protected array $fillable =
+        [
             "id",//bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
             "disease_code",//varchar(64) NOT NULL DEFAULT '' COMMENT '病种编码',
             "code",//varchar(64) NOT NULL DEFAULT '' COMMENT '编码',
@@ -51,7 +56,7 @@ final class DatabaseSource extends LowCodeBaseModel
         ];
 
     /**
-     * @var string[]
+     * @var array|string[]
      */
     protected array $casts
         = [
@@ -74,13 +79,16 @@ final class DatabaseSource extends LowCodeBaseModel
             'deleted_at'   => 'datetime',
         ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
     public function sourceTypeDefinition(): Attribute
     {
         return SourceTypeEnum::makeAttribute($this);
     }
 
     /**
-     * @return Attribute
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function username(): Attribute
     {
@@ -91,7 +99,7 @@ final class DatabaseSource extends LowCodeBaseModel
     }
 
     /**
-     * @return Attribute
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function password(): Attribute
     {

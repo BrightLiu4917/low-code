@@ -15,7 +15,10 @@ use BrightLiu\LowCode\Models\Traits\AdministratorRelation;
 
 
 /**
- * @mixin IdeHelperLowCodeTemplate
+ * @Class
+ * @Description:
+ * @created    : 2025-10-01 11:51:57
+ * @modifier   : 2025-10-01 11:51:57
  */
 class LowCodeTemplate extends LowCodeBaseModel
 {

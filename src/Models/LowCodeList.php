@@ -13,9 +13,11 @@ use BrightLiu\LowCode\Models\Traits\UniqueCodeRelation;
 use BrightLiu\LowCode\Models\Traits\AdministratorRelation;
 
 
-
 /**
- * @mixin IdeHelperLowCodeList
+ * @Class
+ * @Description:
+ * @created    : 2025-10-01 11:51:47
+ * @modifier   : 2025-10-01 11:51:47
  */
 class LowCodeList extends LowCodeBaseModel
 {
