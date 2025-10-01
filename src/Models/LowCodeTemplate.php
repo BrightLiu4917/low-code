@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use BrightLiu\LowCode\Models\Traits\DiseaseRelationQueries;
 use BrightLiu\LowCode\Models\Traits\Cacheable\NewEloquentBuilder;
+use BrightLiu\LowCode\Enums\Model\LowCodeTemplate\TemplateTypeEnum;
 use BrightLiu\LowCode\Enums\Model\LowCode\LowCodePart\ContentTypeEnum;
 use BrightLiu\LowCode\Models\Traits\OrgDiseaseRelation;
 use BrightLiu\LowCode\Models\Traits\OrgRelation;
@@ -34,14 +35,14 @@ class LowCodeTemplate extends LowCodeBaseModel
     /**
      * @var string
      */
-    protected string  $primaryKey = 'code';
+    protected   $primaryKey = 'code';
 
     /**
      * @var bool
      */
-    public bool $incrementing = false;
+    public  $incrementing = false;
 
-    protected array $casts = [
+    protected  $casts = [
         'id' => 'integer', // bigint(20) unsigned NOT NULL AUTO_INCREMENT
         'name' => 'string', // varchar(64) NOT NULL DEFAULT ''
         'disease_code' => 'string', // varchar(64) NOT NULL DEFAULT ''
@@ -58,7 +59,7 @@ class LowCodeTemplate extends LowCodeBaseModel
         'deleted_at' => 'datetime', // datetime DEFAULT NULL
     ];
 
-    protected array $fillable = [
+    protected  $fillable = [
           "id",//bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
           "name",//varchar(64) NOT NULL DEFAULT '' COMMENT '名字',
           "disease_code",//varchar(64) NOT NULL DEFAULT '' COMMENT '疾病编码',

@@ -32,7 +32,7 @@ final class DatabaseSource extends LowCodeBaseModel
     /**
      * @var array|string[]
      */
-    protected array $fillable =
+    protected  $fillable =
         [
             "id",//bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
             "disease_code",//varchar(64) NOT NULL DEFAULT '' COMMENT '病种编码',
@@ -59,7 +59,7 @@ final class DatabaseSource extends LowCodeBaseModel
     /**
      * @var array|string[]
      */
-    protected array $casts
+    protected  $casts
         = [
             'id'           => 'integer',
             'disease_code' => 'string',
