@@ -9,7 +9,7 @@ composer require bright-liu4917/low-code:dev-master --dev -vvv
 ```
 2. 配置
 ```text
-php artisan vendor:publish --provider="BrightLiu\LowCode\Providers\LowCodeServiceProvider" --tag="lowcode-config"
+php artisan vendor:publish --provider="BrightLiu\LowCode\Providers\LowCodeServiceProvider" --tag="low-code-config"
 ```
 3. 运行
 ```text
