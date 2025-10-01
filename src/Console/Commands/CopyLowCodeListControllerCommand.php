@@ -6,9 +6,10 @@ use Illuminate\Support\Facades\File;
 
 class CopyLowCodeListControllerCommand extends Command
 {
-    protected $signature = 'lowcode:install-list-controller';
+    protected $signature = 'lowcode:install-list-controller 
+                                            {--f : 覆盖现有的文件}';
 
-    protected $description = '安装LowCodeListController';
+    protected $description = '安装低代码-列表控制器';
 
     public function handle()
     {
@@ -20,12 +21,12 @@ class CopyLowCodeListControllerCommand extends Command
         // 确保目录存在
         if (!File::exists($targetDir)) {
             File::makeDirectory($targetDir, 0755, true);
-            $this->info("Created directory: {$targetDir}");
+            $this->info("创建文件夹成功: {$targetDir}");
         }
 
         // 检查文件是否已存在
-        if (File::exists($targetPath)) {
-            $this->error("{$className} already exists at {$targetPath}!");
+        if (File::exists($targetPath) && !$this->option('f')) {
+            $this->error("{$dir} {$className} 已经存在，请勿重复安装。! 使用 --f 选项覆盖。");
             return;
         }
 
@@ -221,6 +222,6 @@ EOT;
         // 写入文件
         File::put($targetPath, $content);
 
-        $this->info("Controller installed successfully: {$targetPath}");
+        $this->info("已安装成功: {$targetPath}");
     }
 }

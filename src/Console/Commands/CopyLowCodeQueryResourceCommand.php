@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\File;
 
 class CopyLowCodeQueryResourceCommand extends Command
 {
-    protected $signature = 'lowcode:install-list-query-resource {--force : 覆盖已存在的文件}';
+    protected $signature = 'lowcode:install-list-query-resource {--f : 覆盖已存在的文件}';
 
     protected $description = '安装列表数据源';
 
@@ -26,8 +26,8 @@ class CopyLowCodeQueryResourceCommand extends Command
         }
 
         // 检查文件是否已存在
-        if (File::exists($targetPath) && !$this->option('force')) {
-            $this->error("{$className} 已存在于 {$targetPath}! 使用 --force 选项覆盖");
+        if (File::exists($targetPath) && !$this->option('f')) {
+            $this->error("{$dir} {$className} 已经存在，请勿重复安装。! 使用 --f 选项覆盖。");
             return;
         }
 
@@ -218,6 +218,6 @@ EOT;
         // 写入文件
         File::put($targetPath, $content);
 
-        $this->info("资源文件安装成功: App\Http\Resources\LowCode\LowCodeList\\{$className} 可自定义出参");
+        $this->info("安装成功: {$className}");
     }
 }
