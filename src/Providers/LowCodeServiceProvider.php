@@ -14,7 +14,10 @@ class LowCodeServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
+        // 合并配置文件
+        $this->mergeConfigFrom(
+            __DIR__.'/../../config/low-code.php', 'low-code'
+        );
     }
 
     /**
@@ -22,6 +25,7 @@ class LowCodeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->publishConfig();
         // 注册命令行
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -31,4 +35,14 @@ class LowCodeServiceProvider extends ServiceProvider
             ]);
         }
     }
+    protected function publishConfig()
+    {
+        // 只在控制台环境下发布资源
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../../config/low-code.php' => config_path('low-code.php'),
+            ], 'low-code-config');
+        }
+    }
+
 }

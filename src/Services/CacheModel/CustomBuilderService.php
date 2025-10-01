@@ -14,26 +14,30 @@ class CustomBuilderService extends Builder
     /**
      * 根据主键查找单个模型实例。
      *
-     * @param int|string $id 要查找的模型主键值
-     * @param array $columns 要查询的列，默认为所有列
+     * @param int|string $id      要查找的模型主键值
+     * @param array      $columns 要查询的列，默认为所有列
+     *
      * @return mixed 返回查找到的模型实例，如果未找到则返回 null
      */
     public function find($id, $columns = ['*'])
     {
         // 如果模型不可缓存或未启用 ID 缓存，则直接调用父类方法
-        if (!$this->isCacheableModel() || !config('cache-model.enable_id_code_cache')) {
+        if (!$this->isCacheableModel() ||
+            !config('low-code.cache-model.enable-id-code-cache')) {
             return parent::find($id, $columns);
         }
 
         // 生成缓存键并缓存查询结果
-        $key = $this->model::class . ":model:id:$id";
-        return CacheModelService::remember($key, $this->model::getTag(), fn() => parent::find($id, $columns));
+        $key = $this->model::class.":model:id:$id";
+        return CacheModelService::remember($key, $this->model::getTag(),
+            fn () => parent::find($id, $columns));
     }
 
     /**
      * 获取查询结果中的第一个模型实例。
      *
      * @param array $columns 要查询的列，默认为所有列
+     *
      * @return mixed 返回查找到的第一个模型实例，如果未找到则返回 null
      */
     public function first($columns = ['*'])
@@ -46,13 +50,14 @@ class CustomBuilderService extends Builder
             $key = $this->matchIdOrCodeFirstKey(
                 $columns
             );                                                // 如果匹配到 ID 或 CODE 且启用了 ID 缓存，则缓存查询结果
-            if ($key && config('cache-model.enable_id_code_cache')) {
+            if ($key && config('low-code.cache-model.enable-id-code-cache')) {
                 return CacheModelService::remember(
                     $key, $this->model::getTag(),
                     fn () => parent::first($columns)
                 );
-            }// 如果未启用查询缓存，则直接调用父类方法
-            if (!config('cache-model.enable_query_cache')) {
+            }
+            // 如果未启用查询缓存，则直接调用父类方法
+            if (!config('low-code.cache-model.enable-query-cache')) {
                 return parent::first($columns);
             }// 生成 SQL 缓存键并缓存查询结果
             $key = $this->generateSqlCacheKey('first', $columns);
@@ -67,24 +72,28 @@ class CustomBuilderService extends Builder
      * 获取查询结果中的所有模型实例。
      *
      * @param array $columns 要查询的列，默认为所有列
+     *
      * @return mixed 返回查找到的模型实例集合
      */
     public function get($columns = ['*'])
     {
         // 如果模型不可缓存或未启用查询缓存，则直接调用父类方法
-        if (!$this->isCacheableModel() || !config('cache-model.enable_query_cache')) {
+        if (!$this->isCacheableModel() ||
+            !config('low-code.cache-model.enable-query-cache')) {
             return parent::get($columns);
         }
 
         // 生成 SQL 缓存键并缓存查询结果
         $key = $this->generateSqlCacheKey('get', $columns);
-        return CacheModelService::remember($key, $this->model::getTag(), fn() => parent::get($columns));
+        return CacheModelService::remember($key, $this->model::getTag(),
+            fn () => parent::get($columns));
     }
 
     /**
      * 根据查询条件匹配 ID 或 CODE 的缓存键。
      *
      * @param array $columns 要查询的列
+     *
      * @return string|null 返回生成的缓存键，如果未匹配到则返回 null
      */
     protected function matchIdOrCodeFirstKey($columns)
@@ -100,11 +109,12 @@ class CustomBuilderService extends Builder
                 $where['operator'] === '='
             ) {
                 if ($where['column'] === 'id') {
-                    return get_class($this->model) . ":model:id:" . $where['value'];
+                    return get_class($this->model).":model:id:".$where['value'];
                 }
 
                 if ($where['column'] === 'code') {
-                    return get_class($this->model) . ":model:code:" . $where['value'];
+                    return get_class($this->model).":model:code:".
+                        $where['value'];
                 }
             }
         }
@@ -119,23 +129,27 @@ class CustomBuilderService extends Builder
      */
     protected function isCacheableModel(): bool
     {
-        return in_array(CacheableModel::class, class_uses_recursive($this->model));
+        return in_array(CacheableModel::class,
+            class_uses_recursive($this->model));
     }
 
     /**
      * 生成 SQL 查询的缓存键。
      *
-     * @param string $action 查询操作类型（如 'first', 'get'）
-     * @param array $columns 要查询的列
+     * @param string $action  查询操作类型（如 'first', 'get'）
+     * @param array  $columns 要查询的列
+     *
      * @return string 返回生成的缓存键
      */
-    protected function generateSqlCacheKey(string $action, array $columns = ['*']): string
-    {
+    protected function generateSqlCacheKey(
+        string $action, array $columns = ['*'],
+    ): string {
         // 获取 SQL 查询语句、绑定参数、预加载关系等信息，并生成唯一的缓存键
-        $sql = $this->toSql();
+        $sql      = $this->toSql();
         $bindings = json_encode($this->getBindings());
-        $with = json_encode($this->getEagerLoads());
-        $model = get_class($this->model);
-        return "{$model}:query:{$action}:" . md5($sql . $bindings . $with . implode(',', $columns));
+        $with     = json_encode($this->getEagerLoads());
+        $model    = get_class($this->model);
+        return "{$model}:query:{$action}:".
+            md5($sql.$bindings.$with.implode(',', $columns));
     }
 }
