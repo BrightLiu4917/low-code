@@ -39,7 +39,7 @@ namespace App\Http\Controllers\LowCode;
 
 use Illuminate\Http\Request;
 use App\Models\LowCode\LowCodeList;
-use App\Http\Resources\LowCode\LowCodeList\QuerySource
+use App\Http\Resources\LowCode\LowCodeList\QuerySource;
 use BrightLiu\LowCode\Requests\LowCode\LowCodeListRequest;
 use Gupo\BetterLaravel\Http\BaseController;
 use Illuminate\Http\JsonResponse;
