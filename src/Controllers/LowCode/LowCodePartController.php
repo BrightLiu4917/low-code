@@ -63,9 +63,11 @@ final class LowCodePartController extends BaseController
             $name !== '', function($query)use($name) {
             $query->where('name', $name);
         }
-        )->orderByDesc('created_at')->with(
-            ['updater:id,realname', 'creator:id,realname']
-        )->customPaginate(true);
+        )->orderByDesc('created_at')
+//         ->with(
+//            ['updater:id,realname', 'creator:id,realname']
+//        )
+         ->customPaginate(true);
 
         return $this->responseData($data, ListSource::class);
 

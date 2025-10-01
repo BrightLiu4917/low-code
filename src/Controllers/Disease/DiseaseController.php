@@ -55,7 +55,7 @@ final class DiseaseController extends BaseController
             ->when($name !== '',function($query)use($name){
             $query->where('name','like',"%{$name}%");
         })
-            ->with(['creator','updater'])
+//            ->with(['creator','updater'])
             ->orderByDesc('weight')
             ->orderByDesc('id')
             ->customPaginate(true);

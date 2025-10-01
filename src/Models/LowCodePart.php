@@ -37,8 +37,9 @@ class LowCodePart extends LowCodeBaseModel
 //        NewEloquentBuilder,
         SoftDeletes,
         OrgRelation,
-        UniqueCodeRelation,
-        AdministratorRelation;
+        //        AdministratorRelation,
+
+    UniqueCodeRelation;
     protected $fillable = [
         "id",//bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
           "name",//varchar(64) NOT NULL DEFAULT '' COMMENT '名字',

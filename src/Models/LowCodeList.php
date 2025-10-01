@@ -24,7 +24,12 @@ class LowCodeList extends LowCodeBaseModel
 {
     use
 //        NewEloquentBuilder,
-        SoftDeletes, UniqueCodeRelation, OrgDiseaseRelation, OrgRelation, AdministratorRelation,CacheableModel;
+        SoftDeletes,
+        UniqueCodeRelation,
+        OrgDiseaseRelation,
+        OrgRelation,
+//        AdministratorRelation,
+        CacheableModel;
 
     protected $casts = [
         'disease_code' => 'string', // varchar(32) NOT NULL DEFAULT ''

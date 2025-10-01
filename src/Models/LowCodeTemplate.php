@@ -29,8 +29,8 @@ class LowCodeTemplate extends LowCodeBaseModel
         OrgRelation,
         SoftDeletes,
         UniqueCodeRelation,
-        DiseaseRelationQueries,
-        AdministratorRelation;
+//        AdministratorRelation,
+        DiseaseRelationQueries;
     /**
      * @var string
      */

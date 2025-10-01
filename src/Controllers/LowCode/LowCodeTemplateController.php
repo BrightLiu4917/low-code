@@ -73,9 +73,11 @@ final class LowCodeTemplateController extends BaseController
         $contentType = (int)$request->input('content_type', 0);
         $templateType = (int)$request->input('template_type', 0);
         $orgCode = (string)$request->input('org_code', '');
-        $list = LowCodeTemplate::query()->with(
-            'creator:id,realname', 'updater:id,realname'
-        )->when(
+        $list = LowCodeTemplate::query()
+//                               ->with(
+//            'creator:id,realname', 'updater:id,realname'
+//        )
+                               ->when(
             $contentType !== 0, function($query) use ($contentType) {
             $query->where('content_type', $contentType);
         }

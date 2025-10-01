@@ -87,10 +87,11 @@ final class LowCodeListController extends BaseController
         }
         $list = $query
             //->byContextOrg()->byContextDisease()
-                                      ->with([
-                'updater:id,realname', 'creator:id,realname',
-                'crowdType:code,name,color,weight',
-            ])->select([
+//                                      ->with([
+//                'updater:id,realname', 'creator:id,realname',
+//                'crowdType:code,name,color,weight',
+//            ])
+                                      ->select([
                 'id', 'admin_name', 'code', 'parent_code', 'crowd_type_code',
                 'route_group', 'admin_weight', 'creator_id', 'updater_id',
             ])->orderByDesc('created_at')->orderByDesc('id')
@@ -154,7 +155,8 @@ final class LowCodeListController extends BaseController
             ->where('list_type', '<>', ListTypeEnum::GENERAL)->select([
                 'id', 'admin_name', 'code', 'parent_code', 'crowd_type_code',
                 'route_group',
-            ])->with(['crowdType:name,code,color,weight'])
+            ])
+//                                                             ->with(['crowdType:name,code,color,weight'])
             ->customPaginate(true);
         return $this->responseData($list, simpleListSource::class);
     }
