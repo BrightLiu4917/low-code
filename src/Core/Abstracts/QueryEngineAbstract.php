@@ -279,6 +279,10 @@ abstract class QueryEngineAbstract implements QueryEngineContract
     public function getPaginateResult(): LengthAwarePaginator
     {
         try {
+            if ($this->printSql || request()?->input('print_sql')) {
+                //打印SQL语句
+                $this->queryBuilder->dd();
+            }
             return $this->queryBuilder->customPaginate(true);
         } catch (\Throwable $e) {
             Log::error('分页查询异常：'.$e->getMessage(), ['exception' => $e]);

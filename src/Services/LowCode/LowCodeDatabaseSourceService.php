@@ -51,7 +51,9 @@ final class LowCodeDatabaseSourceService extends LowCodeBaseService
              'source_type', 'table', 'port', 'options', 'updater_id',
              'username', 'password', 'created_at', 'updated_at', 'creator_id']
         )->with(
-            ['creator:id,realname', 'updater:id,realname', 'disease:code,name']
+            [
+//                'creator:id,realname', 'updater:id,realname',
+                'disease:code,name']
         )->find($id);
     }
 
