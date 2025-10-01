@@ -1,6 +1,6 @@
 <?php
 
-namespace BrightLiu\LowCode\Enums\Model\LowCodeList;
+namespace BrightLiu\LowCode\Enums\Model\LowCode\LowCodeList;
 
 use Gupo\Enum\BaseEnum;
 use Gupo\Enum\Traits\ToRule;

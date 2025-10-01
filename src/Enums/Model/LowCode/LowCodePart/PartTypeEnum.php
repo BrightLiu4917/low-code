@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BrightLiu\LowCode\Enums\Model\LowCodePart;
+namespace BrightLiu\LowCode\Enums\Model\LowCode\LowCodePart;
 
 use Gupo\Enum\BaseEnum;
 use Gupo\Enum\Traits\ToRule;
