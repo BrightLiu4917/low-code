@@ -92,4 +92,26 @@ final class LowCodeDatabaseSourceService extends LowCodeBaseService
         }
         return $result->refresh();
     }
+
+
+    /**
+     * @param string $code
+     *
+     * @return mixed
+     */
+    public function fetchDataByCode(string $code = '')
+    {
+        return \App\Models\Foundation\DatabaseSource::query()->where('code', $code)->select(
+            ['name', 'host', 'database', 'table', 'port', 'options', 'username',
+             'password']
+        )->first();
+
+    }
+
+    public function getDataByDiseaseCode(string $diseaseCode = '')
+    {
+        return DatabaseSource::query()->where(
+            'disease_code', $diseaseCode
+        )->value('code');
+    }
 }

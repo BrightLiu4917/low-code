@@ -90,7 +90,7 @@ abstract class QueryEngineAbstract implements QueryEngineContract
     private function initWithDiseaseCode(string $diseaseCode): void
     {
         try {
-            $sourceCode = DatabaseSourceService::instance()
+            $sourceCode = LowCodeDatabaseSourceService::instance()
                 ->getDataByDiseaseCode($diseaseCode);
             $this->clientConnByCode($sourceCode);
             $this->useTable();
