@@ -4,9 +4,8 @@ declare(strict_types = 1);
 
 namespace BrightLiu\LowCode\Models\Traits;
 
-use App\Models\Foundation\Disease;
-use App\Support\Context\DiseaseContext;
 use App\Models\LowCode\LowCodeDisease;
+use BrightLiu\LowCode\Context\DiseaseContext;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Query\Builder as QueryBuilder;

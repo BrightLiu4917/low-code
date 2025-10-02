@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace  BrightLiu\LowCode\Models\Traits;
 
-use App\Support\Context\OrgContext;
+use BrightLiu\LowCode\Context\OrgContext;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 

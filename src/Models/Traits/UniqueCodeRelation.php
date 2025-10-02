@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace  BrightLiu\LowCode\Models\Traits;
 
-use App\Support\Tools\Uuid;
+use BrightLiu\LowCode\Tools\Uuid;
 
 trait UniqueCodeRelation
 {
