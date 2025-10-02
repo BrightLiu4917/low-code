@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace App\Services\Api\Bmp;
 
 use App\Services\Api\ApiService;
-use App\Traits\Context\WithAuthContext;
-use App\Traits\Context\WithContext;
+use BrightLiu\LowCode\Traits\Context\WithAuthContext;
+use BrightLiu\LowCode\Traits\Context\WithContext;
 use Illuminate\Support\Arr;
 
 /**
  * 业务平台-服务人群工具模块
  */
-final class BmpCheetahMedicalCrowdkitApiService extends ApiService
+final class BmpCheetahMedicalCrowdkitApiService
 {
     use WithContext, WithAuthContext;
 
@@ -30,7 +30,7 @@ final class BmpCheetahMedicalCrowdkitApiService extends ApiService
     public function getPatientCrowdInfo(int $orgId): ?array
     {
         return $this->get(
-            'innerapi/get_patient_crowd_info',
+            $this->baseUriVia().'innerapi/get_patient_crowd_info',
             [
                 'org_code' => $this->getOrgCode(),
                 'sys_code' => $this->getSystemCode(),

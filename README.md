@@ -88,6 +88,8 @@ Route::group([
         Route::post('query-count', [LowCodeListV2Controller::class, 'queryCount']);
         Route::get('optional-columns', [LowCodeListV2Controller::class, 'optionalColumns']);
         Route::get('get-column-preference', [LowCodeListV2Controller::class, 'getColumnPreference']);
+        Route::post('update-column-preference', [LowCodeListV2Controller::class, 'updateColumnPreference']);
+
     });
 
 // 列表部件
@@ -339,10 +341,8 @@ use BrightLiu\LowCode\Context\DiseaseContext;
         //其他代码
     }
      
-     
      获取用户当前信息
      auth()->user();
-     
      
      //初始化病种用户信息等 中间件 DiseaseAuthenticate
      App\Http.Kernel.$routeMiddleware = [
