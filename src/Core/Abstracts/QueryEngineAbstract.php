@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Query\Builder;
 use BrightLiu\LowCode\Core\DbConnectionManager;
+use Illuminate\Support\Facades\DB;
 //use WithDiseaseContext;
 use Gupo\BetterLaravel\Exceptions\ServiceException;
 use BrightLiu\LowCode\Core\Traits\DynamicWhereTrait;
