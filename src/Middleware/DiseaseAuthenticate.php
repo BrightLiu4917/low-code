@@ -39,16 +39,19 @@ final class DiseaseAuthenticate
             if (empty($bmoAccount)){
                 throw new AuthenticateException('BmoAuth Account invalid.');
             }
+
+            // 初始化上下文
+            $this->autoContext($bmoAccount);
+            $bmoApiAccount = new ApiAccount($bmoAccount);
+            auth()->setUser($bmoApiAccount);
         } catch (\Throwable $e) {
             Logger::AUTHING->error(
                 sprintf('DiseaseAuthenticate failed: %s', $e->getMessage()),
                 ['headers' => $request->header()]
             );
+            throw new AuthenticateException($e->getMessage());
         }
-        // 初始化上下文
-        $this->autoContext($bmoAccount);
-        $bmoApiAccount = new ApiAccount($bmoAccount);
-        auth()->setUser($bmoApiAccount);
+
         return $next($request);
     }
 

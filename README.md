@@ -345,5 +345,8 @@ use BrightLiu\LowCode\Context\DiseaseContext;
         $this->app->singleton('context:disease', DiseaseContext::class);
         //其他代码
     }
-       
+     
+     
+     获取用户当前信息
+     auth()->user();
 ```

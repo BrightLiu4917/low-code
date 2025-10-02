@@ -23,7 +23,6 @@ final class DatabaseSource extends LowCodeBaseModel
     use
 //        NewEloquentBuilder,
         SoftDeletes,
-//        AdministratorRelation,
         CacheableModel,
         DiseaseRelation,
         UniqueCodeRelation,
