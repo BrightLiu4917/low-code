@@ -270,5 +270,39 @@ CREATE TABLE `database_sources` (
                                     KEY `idx_disease_code` (`disease_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='数据库源表';
 
+/******************************************/
+/*   DatabaseName = ih_medication_sanya   */
+/*   TableName = pa_admin_preferences   */
+/******************************************/
+CREATE TABLE `pa_admin_preferences` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `disease_code` varchar(32) NOT NULL DEFAULT '' COMMENT '病种编码',
+  `org_code` varchar(32) NOT NULL DEFAULT '' COMMENT '所属机构编码',
+  `admin_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '管理员id',
+  `scene` varchar(32) NOT NULL DEFAULT '' COMMENT '场景',
+  `pkey` varchar(64) NOT NULL DEFAULT '' COMMENT '偏好键',
+  `pvalue` json DEFAULT NULL COMMENT '偏好值',
+  `created_at` datetime DEFAULT NULL COMMENT '创建时间',
+  `updated_at` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_disease_code_org_code` (`disease_code`(8),`org_code`(16))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='管理员-偏好设置'
+;
+
+CREATE TABLE `personalize_modules` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `disease_code` varchar(32) NOT NULL DEFAULT '' COMMENT '病种编码',
+  `title` varchar(32) NOT NULL DEFAULT '' COMMENT '标题',
+  `module_id` varchar(32) NOT NULL DEFAULT '' COMMENT '模块ID',
+  `module_type` varchar(32) NOT NULL DEFAULT '' COMMENT '模块类型',
+  `metadata` json DEFAULT NULL COMMENT '元数据',
+  `weight` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '权重(降序)',
+  `created_at` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_disease_code_org_code` (`disease_code`(8)),
+  KEY `idx_module_id` (`module_id`(8))
+) ENGINE=InnoDB  COMMENT='个性化模块表';
+
+
 
 ```
