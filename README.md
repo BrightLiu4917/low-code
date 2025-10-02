@@ -118,6 +118,9 @@ Route::group(['prefix' => 'init', 'middleware' => ['bmp.disease.auth.inner']], f
         Route::post('query', [LowCodeListV2Controller::class, 'query']);
         Route::post('pre', [LowCodeListV2Controller::class, 'pre']);
         Route::post('query-count', [LowCodeListV2Controller::class, 'queryCount']);
+        
+        Route::get('optional-columns', [LowCodeListV2Controller::class, 'optionalColumns']);
+        Route::get('get-column-preference', [LowCodeListV2Controller::class, 'getColumnPreference']);
     });
 
 //个性化配置

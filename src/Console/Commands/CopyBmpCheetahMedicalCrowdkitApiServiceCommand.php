@@ -19,7 +19,7 @@ class CopyBmpCheetahMedicalCrowdkitApiServiceCommand extends Command
     public function handle()
     {
         $dir = 'Services/Api/Bmp/';
-        $className = 'CopyBmpCheetahMedicalCrowdkitApiServiceCommand';
+        $className = 'BmpCheetahMedicalCrowdkitApiService';
         $targetPath = app_path($dir . $className . '.php');
 
         // 确保目录存在
