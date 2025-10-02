@@ -40,7 +40,7 @@ class CopyCrowdKitServiceCommand extends Command
 
         // 文件内容
         $content = <<<'EOT'
-
+<?php
 declare(strict_types=1);
 
 namespace App\Services\Business;

@@ -173,18 +173,13 @@ final class LowCodeListV2Controller extends BaseController
     /**
      * 查询数据
      */
-    public function query(Request $request, LowCodeListService $srv): JsonResponse
+    public function query(Request $request): JsonResponse
     {
         $inputArgs = $request->input('input_args');
-
-        $params = $request->except(
-            ['input_args', 'undefined', 'per_page', 'page']
-        );
-
-        $codes = $this->covertCrowdPatientCode(array_column($inputArgs, 'code'));
-
+        $codes     = $this->covertCrowdPatientCode(array_column($inputArgs,
+            'code'));
         $inputArgs = array_map(
-            function ($item) use ($codes) {
+            function($item) use ($codes) {
                 // 为人群code时，携带人群code条件
                 if ($item['code'] !== $codes[$item['code']]) {
                     $item['filters'][] = ['crowd_id', '=', $item['code']];
@@ -192,29 +187,50 @@ final class LowCodeListV2Controller extends BaseController
 
                 // 将人群code映射到"通用人群页"
                 $item['code'] = $codes[$item['code']] ?? $item['code'];
-
                 return $item;
             },
             $inputArgs
         );
-
-        $data = $srv->query($inputArgs, $params);
-
-        // TODO: 写法待完善
+        $data      = $this->service->query($inputArgs);
         try {
             // 追加人群分类信息
-            $crowds = CrowdConnection::table('feature_user_detail')
-                                     ->whereIn('user_id', $data->pluck('user_id')->toArray())
-                                     ->get(['user_id', 'group_id', 'group_name'])
-                                     ->mapToGroups(fn ($item) => [$item->user_id => $item])
-                                     ->toArray();
+            $userIds = $data->pluck('user_id')->toArray();
 
-            $data->each(function ($item) use ($crowds) {
-                $item->_crowds = implode(',', array_column($crowds[$item->user_id ?? ''] ?? [], 'group_name'));
+            //查询人群分类表里人群
+            $crowds  = LowCodeQueryEngineService::instance()
+                                                ->useTable('feature_user_detail')
+                                                ->whereMixed([
+                                                    [
+                                                        'user_id', 'in',
+                                                        $userIds,
+                                                    ],
+                                                ])
+                                                ->select([
+                                                    'user_id', 'group_id',
+                                                    'group_name',
+                                                ])
+                                                ->getAllResult();
+            $grouped = [];
+            foreach ($crowds as $item) {
+                $userId = $item->user_id;
+                if (!isset($grouped[$userId])) {
+                    $grouped[$userId] = [];
+                }
+                $grouped[$userId][] = [
+                    'group_id'   => $item->group_id,
+                    'group_name' => $item->group_name,
+                ];
+            }
+
+            //$grouped 将患者的人群分类收集到一起
+
+            $data = $data->each(function($item) use ($grouped) {
+                $res = (array)$grouped[$item->user_id ?? ''];
+                return $item->_crowds = implode(',',
+                    array_column($res ?? [], 'group_name'));
             });
-        } catch (\Throwable) {
+        } catch (\Throwable $exception) {
         }
-
         return $this->responseData($data, QuerySource::class);
     }
 
