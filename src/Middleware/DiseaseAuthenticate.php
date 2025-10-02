@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BrightLiu\LowCode\Middleware;
 
 use App\Models\LowCode\ApiAccount;
+use BrightLiu\LowCode\Context\OrgContext;
 use BrightLiu\LowCode\Enums\Foundation\Logger;
 use BrightLiu\LowCode\Enums\HeaderEnum;
 use BrightLiu\LowCode\Exceptions\AuthenticateException;
@@ -61,6 +62,11 @@ final class DiseaseAuthenticate
         DiseaseContext::init(
             diseaseCode: (string) $request->header(HeaderEnum::DISEASE_CODE, ''),
         );
+
+        OrgContext::init(
+            orgCode: (string) $request->header(HeaderEnum::ORG_ID, ''),
+        );
+
         AuthContext::init(
             systemCode: (string) $request->header(HeaderEnum::SYSTEM_CODE, ''),
             orgId: (int) $request->header(HeaderEnum::ORG_ID, ''),

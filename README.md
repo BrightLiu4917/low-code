@@ -333,9 +333,12 @@ AppServiceProvider.register() 追加以下代码
 
 use BrightLiu\LowCode\Context\AuthContext;
 use BrightLiu\LowCode\Context\DiseaseContext;
+use BrightLiu\LowCode\Context\OrgContext;
+
 
     public function register()
     {
+        $this->app->singleton('context:org', OrgContext::class);
         $this->app->singleton('context:auth', AuthContext::class);
         $this->app->singleton('context:disease', DiseaseContext::class);
         //其他代码
@@ -351,4 +354,7 @@ use BrightLiu\LowCode\Context\DiseaseContext;
      
      创建文件 并配置用户中心请求地址
      config('business.bmo-service.auth.base_uri') 
+     
+     创建文件 并配置业务中台请求地址
+     config('business.api-service.bmp_cheetah_medical_crowdkit.uri', '')
 ```
