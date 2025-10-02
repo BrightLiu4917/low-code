@@ -9,6 +9,7 @@ use BrightLiu\LowCode\Console\Commands\CopyLowCodeQueryResourceCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodeQueryEngineCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodeCacheObserverCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodeListControllerCommand;
+use BrightLiu\LowCode\Console\Commands\CopyLowCodePersonalizeModuleControllerCommand;
 
 
 class LowCodeServiceProvider extends ServiceProvider
@@ -39,7 +40,8 @@ class LowCodeServiceProvider extends ServiceProvider
                 CopyLowCodeQueryResourceCommand::class,
                 CopyLowCodeListControllerCommand::class,
                 CopyLowCodeListServiceCommand::class,
-                LowCodeInitCommand::class
+                LowCodeInitCommand::class,
+                CopyLowCodePersonalizeModuleControllerCommand::class
             ]);
         }
     }
