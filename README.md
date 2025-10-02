@@ -348,4 +348,7 @@ use BrightLiu\LowCode\Context\DiseaseContext;
      App\Http.Kernel.$routeMiddleware = [
          'auth.disease' => DiseaseAuthenticate::class
      ]
+     
+     创建文件 并配置用户中心请求地址
+     config('business.bmo-service.auth.base_uri') 
 ```
