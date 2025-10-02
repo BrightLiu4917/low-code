@@ -51,7 +51,7 @@ use Gupo\BetterLaravel\Service\BaseService;
 use Illuminate\Support\Collection;
 
 /**
- * 服务人群工具模块 处理相关
+ * 服务人群工具模块 处理相关 自己处理
  */
 final class CrowdKitService extends BaseService
 {
