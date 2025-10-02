@@ -19,7 +19,7 @@
     "gupo/laravel-db-query": "^1.0.0",
     "gupo/laravel-debugging": "^1.0",
     "gupo/laravel-enum": "^1.1.0",
-    "guzzlehttp/guzzle": "^7.10"
+    "guzzlehttp/guzzle": "^7.2"
   },
   "autoload": {
     "psr-4": {
