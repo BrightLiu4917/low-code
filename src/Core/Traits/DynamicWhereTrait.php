@@ -4,6 +4,7 @@ namespace BrightLiu\LowCode\Core\Traits;
 
 use Closure;
 use Illuminate\Support\Arr;
+use App\Models\LowCode\LowCodeList;
 
 /**
  * 混合查询
@@ -284,6 +285,27 @@ trait DynamicWhereTrait
     {
         $this->queryBuilder = $this->queryBuilder->where($field, 'like',
             "%{$value}%");
+        return $this;
+    }
+
+    /**
+     * 预设条件
+     * @param string $listCode
+     *
+     * @return \BrightLiu\LowCode\Core\Traits\DynamicWhereTrait|\BrightLiu\LowCode\Core\Abstracts\QueryEngineAbstract
+     */
+    public function whereListPresetCondition(string $listCode): self
+    {
+        if (empty($listCode)) {
+            return $this;
+        }
+
+        $condition = LowCodeList::query()->where('code', $listCode)->value('preset_condition_json');
+
+        if (!empty($condition)) {
+            $this->whereMixed($condition);
+        }
+
         return $this;
     }
 }
