@@ -44,8 +44,8 @@ declare(strict_types=1);
 namespace App\Services\Api\Bmp;
 
 use Illuminate\Support\Facades\Http;
-use App\Traits\Context\WithAuthContext;
-use App\Traits\Context\WithContext;
+use BrightLiu\LowCode\Traits\Context\WithAuthContext;
+use BrightLiu\LowCode\Traits\Context\WithContext;
 use Illuminate\Support\Arr;
 
 /**
