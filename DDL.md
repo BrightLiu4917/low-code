@@ -32,6 +32,7 @@ CREATE TABLE `low_code_lists`
     `remove_button_json`       json                         DEFAULT NULL COMMENT '移除筛选条件，模板多了',
     `remove_top_button_json`   json                         DEFAULT NULL COMMENT '移除表头，模板多了',
     `default_order_by_json`    json                         DEFAULT NULL COMMENT '默认排序字段',
+    `preset_condition_json`    json                         DEFAULT NULL COMMENT '预设条件',
     `list_type`                tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '列表类型0默认，9通用（适配多个人群分类）不可删除',
     `creator_id`               bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '创建人ID',
     `updater_id`               bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '更新人ID',
