@@ -21,7 +21,7 @@ final class CrowdKitService extends LowCodeBaseService
      */
     public function getOptionalColumns(): Collection
     {
-        $columnGroup = BmpCheetahMedicalCrowdkitApiService::make()->getPatientCrowdColGroup();
+        $columnGroup = BmpCheetahMedicalCrowdkitApiService::instance()->getPatientCrowdColGroup();
 
         return $this->formatColumnGroup($columnGroup);
     }

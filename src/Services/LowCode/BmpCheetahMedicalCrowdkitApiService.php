@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Api\Bmp;
 
 use App\Services\Api\ApiService;
+use BrightLiu\LowCode\Services\LowCodeBaseService;
 use BrightLiu\LowCode\Traits\Context\WithAuthContext;
 use BrightLiu\LowCode\Traits\Context\WithContext;
 use Illuminate\Support\Arr;
@@ -12,7 +13,7 @@ use Illuminate\Support\Arr;
 /**
  * 业务平台-服务人群工具模块
  */
-final class BmpCheetahMedicalCrowdkitApiService
+final class BmpCheetahMedicalCrowdkitApiService extends LowCodeBaseService
 {
     use WithContext, WithAuthContext;
 

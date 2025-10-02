@@ -44,6 +44,7 @@ declare(strict_types=1);
 namespace App\Services\Api\Bmp;
 
 use Illuminate\Support\Facades\Http;
+use BrightLiu\LowCode\Services\LowCodeBaseService;
 use BrightLiu\LowCode\Traits\Context\WithAuthContext;
 use BrightLiu\LowCode\Traits\Context\WithContext;
 use Illuminate\Support\Arr;
@@ -51,7 +52,7 @@ use Illuminate\Support\Arr;
 /**
  * 业务平台-服务人群工具模块  自己去实现吧 跟低代码无关
  */
-final class BmpCheetahMedicalCrowdkitApiService
+final class BmpCheetahMedicalCrowdkitApiService extends LowCodeBaseService
 {
     use WithContext, WithAuthContext;
 

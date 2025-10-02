@@ -70,7 +70,7 @@ final class InitOrgDiseaseService extends LowCodeBaseService
     public function fetchDiseaseDataTableName(): string
     {
         try {
-            $data = BmpCheetahMedicalCrowdkitApiService::make()->getPatientCrowdInfo(1);
+            $data = BmpCheetahMedicalCrowdkitApiService::instance()->getPatientCrowdInfo(1);
 
             return $data['db_name'];
         } catch (\Throwable $e) {
