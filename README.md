@@ -53,7 +53,7 @@ use BrightLiu\LowCode\Controllers\LowCode\LowCodeTemplateController;
 use BrightLiu\LowCode\Controllers\Disease\DiseaseController;
 use BrightLiu\LowCode\Controllers\DatabaseSource\DatabaseSourceController;
 Route::group([
-    //    'middleware' => ['auth.api'],
+    //    'middleware' => ['auth.disease'],
 ], function () {
 
     //列表
@@ -101,14 +101,14 @@ Route::group([
         Route::post('delete', [DatabaseSourceController::class, 'delete']);
     });
 });
-
-Route::group(['prefix' => 'init', 'middleware' => ['bmp.disease.auth.inner']], function () {
+Route::group(['prefix' => 'init', 'middleware' => ['auth.disease']], function () {
     Route::post('/org-disease', BrightLiu\LowCode\Controllers\LowCode\InitOrgDiseaseController::class)
         ->comment('基础-初始化:机构病种');
 });
 
 
 
+    //auth.disease 自选中间件
     Route::prefix('v2/low-code/list')->group(function () {
         Route::get('list', [LowCodeListV2Controller::class, 'list']);
         Route::get('show', [LowCodeListV2Controller::class, 'show']);
@@ -123,7 +123,7 @@ Route::group(['prefix' => 'init', 'middleware' => ['bmp.disease.auth.inner']], f
         Route::get('get-column-preference', [LowCodeListV2Controller::class, 'getColumnPreference']);
     });
 
-//个性化配置
+//个性化配置 auth.disease 自选中间件
     Route::prefix('v2/foundation/personalize-module')->group(function () {
         Route::get('list', [LowCodePersonalizeModuleController::class, 'list']);
         Route::get('routes', [LowCodePersonalizeModuleController::class, 'routes']);
@@ -349,4 +349,10 @@ use BrightLiu\LowCode\Context\DiseaseContext;
      
      获取用户当前信息
      auth()->user();
+     
+     
+     //初始化病种用户信息等 中间件 DiseaseAuthenticate
+     App\Http.Kernel.$routeMiddleware = [
+         'auth.disease' => DiseaseAuthenticate::class
+     ]
 ```
