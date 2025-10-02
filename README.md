@@ -60,8 +60,7 @@ Route::group([
         'middleware' => ['auth.disease'],//登陆中间件
 ], function () {
 
-    Route::post('/org-disease', InitOrgDiseaseController::class)
-         ->comment('基础-初始化:机构病种');
+    Route::post('/org-disease', InitOrgDiseaseController::class);
     
     // 列表v1版本
     Route::prefix('v1/low-code/list')->group(function () {
