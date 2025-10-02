@@ -4,7 +4,7 @@
 参考 DDL.md 自己初始化数据库
 
 ### 安装 Composer 包
-```text
+```text 
 composer require bright-liu4917/low-code:dev-master --dev -vvv
 ```
 ### 在 config/app.php配置文件中注册服务提供者：
