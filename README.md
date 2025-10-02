@@ -101,6 +101,24 @@ Route::group([
         Route::post('delete', [DatabaseSourceController::class, 'delete']);
     });
 });
+
+Route::group(['prefix' => 'init', 'middleware' => ['bmp.disease.auth.inner']], function () {
+    Route::post('/org-disease', BrightLiu\LowCode\Controllers\LowCode\InitOrgDiseaseController::class)
+        ->comment('基础-初始化:机构病种');
+});
+
+
+
+    Route::prefix('v2/low-code/list')->group(function () {
+        Route::get('list', [LowCodeListV2Controller::class, 'list']);
+        Route::get('show', [LowCodeListV2Controller::class, 'show']);
+        Route::post('simple-list', [LowCodeListV2Controller::class, 'simpleList']);
+        Route::post('update', [LowCodeListV2Controller::class, 'update']);
+        Route::post('delete', [LowCodeListV2Controller::class, 'delete']);
+        Route::post('query', [LowCodeListV2Controller::class, 'query']);
+        Route::post('pre', [LowCodeListV2Controller::class, 'pre']);
+    });
+
 ```
 
 #### 日志
