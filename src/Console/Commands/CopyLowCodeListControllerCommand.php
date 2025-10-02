@@ -44,7 +44,7 @@ use App\Http\Resources\LowCode\LowCodeList\QuerySource;
 use BrightLiu\LowCode\Requests\LowCode\LowCodeListRequest;
 use Gupo\BetterLaravel\Http\BaseController;
 use Illuminate\Http\JsonResponse;
-use BrightLiu\LowCode\Services\LowCode\LowCodeListService;
+use App\Services\LowCode\LowCodeListService;
 use BrightLiu\LowCode\Enums\Model\LowCode\LowCodeList\ListTypeEnum;
 use BrightLiu\LowCode\Resources\LowCode\LowCodeList\ListSource;
 use BrightLiu\LowCode\Resources\LowCode\LowCodeList\simpleListSource;
