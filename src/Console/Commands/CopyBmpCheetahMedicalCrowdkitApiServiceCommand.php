@@ -12,8 +12,7 @@ use App\Services\LowCode\LowCodeQueryEngineService;
 
 class CopyBmpCheetahMedicalCrowdkitApiServiceCommand extends Command
 {
-    protected $signature = 'lowcode:install-CopyBmpCheetahMedicalCrowdkitApiServiceCommand 
-                             {--f : 覆盖现有的文件}';
+    protected $signature = 'lowcode:install-BmpCheetahMedicalCrowdkitApiService {--f : 覆盖现有的文件}';
 
     protected $description = '安装CopyBmpCheetahMedicalCrowdkitApiServiceService';
 
