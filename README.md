@@ -121,9 +121,9 @@ Route::group(['prefix' => 'init', 'middleware' => ['bmp.disease.auth.inner']], f
 
 //个性化配置
     Route::prefix('v2/foundation/personalize-module')->group(function () {
-        Route::get('list', [PersonalizeModuleController::class, 'list']);
-        Route::get('routes', [PersonalizeModuleController::class, 'routes']);
-        Route::post('save', [PersonalizeModuleController::class, 'save']);
+        Route::get('list', [LowCodePersonalizeModuleController::class, 'list']);
+        Route::get('routes', [LowCodePersonalizeModuleController::class, 'routes']);
+        Route::post('save', [LowCodePersonalizeModuleController::class, 'save']);
       
     });
 ```
