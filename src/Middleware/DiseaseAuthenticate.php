@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BrightLiu\LowCode\Middleware;
 
+use App\Models\LowCode\ApiAccount;
 use BrightLiu\LowCode\Enums\Foundation\Logger;
 use BrightLiu\LowCode\Enums\HeaderEnum;
 use BrightLiu\LowCode\Exceptions\AuthenticateException;
@@ -46,7 +47,8 @@ final class DiseaseAuthenticate
         }
         // 初始化上下文
         $this->autoContext($bmoAccount);
-        auth()->setUser($bmoAccount);
+        $bmoApiAccount = new ApiAccount($bmoAccount);
+        auth()->setUser($bmoApiAccount);
         return $next($request);
     }
 
