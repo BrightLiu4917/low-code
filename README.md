@@ -331,7 +331,19 @@ CREATE TABLE `personalize_modules` (
   KEY `idx_disease_code_org_code` (`disease_code`(8)),
   KEY `idx_module_id` (`module_id`(8))
 ) ENGINE=InnoDB  COMMENT='个性化模块表';
+```
 
+```text
+AppServiceProvider.register() 追加以下代码
 
+use BrightLiu\LowCode\Context\AuthContext;
+use BrightLiu\LowCode\Context\DiseaseContext;
 
+    public function register()
+    {
+        $this->app->singleton('context:auth', AuthContext::class);
+        $this->app->singleton('context:disease', DiseaseContext::class);
+        //其他代码
+    }
+       
 ```
