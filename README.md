@@ -117,6 +117,7 @@ Route::group(['prefix' => 'init', 'middleware' => ['bmp.disease.auth.inner']], f
         Route::post('delete', [LowCodeListV2Controller::class, 'delete']);
         Route::post('query', [LowCodeListV2Controller::class, 'query']);
         Route::post('pre', [LowCodeListV2Controller::class, 'pre']);
+        Route::post('query-count', [LowCodeListV2Controller::class, 'queryCount']);
     });
 
 //个性化配置
