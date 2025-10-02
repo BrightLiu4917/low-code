@@ -2,7 +2,6 @@
 
 namespace BrightLiu\LowCode\Core\Abstracts;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Connection;
 use BrightLiu\LowCode\Enums\Foundation\Logger;
