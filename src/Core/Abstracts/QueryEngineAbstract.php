@@ -530,6 +530,12 @@ abstract class QueryEngineAbstract implements QueryEngineContract
         return $array;
     }
 
+    /**
+     * @param array|null $attributes
+     * @param array|null $fillable
+     *
+     * @return array
+     */
     protected function filterFillableFields(?array $attributes = [],
         ?array $fillable = [],
     ): array {

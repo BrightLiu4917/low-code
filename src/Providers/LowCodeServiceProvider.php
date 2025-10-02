@@ -1,15 +1,19 @@
 <?php
+
 namespace BrightLiu\LowCode\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use BrightLiu\LowCode\Console\Commands\LowCodeInitCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodeModelsCommand;
+use BrightLiu\LowCode\Console\Commands\CopyCrowdKitServiceCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodeListServiceCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodeQueryResourceCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodeQueryEngineCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodeCacheObserverCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodeListControllerCommand;
+use BrightLiu\LowCode\Console\Commands\CopyLowCodeListV2ControllerCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodePersonalizeModuleControllerCommand;
+use BrightLiu\LowCode\Console\Commands\CopyBmpCheetahMedicalCrowdkitApiServiceCommand;
 
 
 class LowCodeServiceProvider extends ServiceProvider
@@ -40,17 +44,24 @@ class LowCodeServiceProvider extends ServiceProvider
                 CopyLowCodeQueryResourceCommand::class,
                 CopyLowCodeListControllerCommand::class,
                 CopyLowCodeListServiceCommand::class,
+                CopyLowCodePersonalizeModuleControllerCommand::class,
+                CopyLowCodeListV2ControllerCommand::class,
+                CopyBmpCheetahMedicalCrowdkitApiServiceCommand::class,
+                CopyCrowdKitServiceCommand::class,
                 LowCodeInitCommand::class,
-                CopyLowCodePersonalizeModuleControllerCommand::class
+
+
             ]);
         }
     }
+
     protected function publishConfig()
     {
         // 只在控制台环境下发布资源
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../../config/low-code.php' => config_path('low-code.php'),
+                __DIR__.
+                '/../../config/low-code.php' => config_path('low-code.php'),
             ], 'low-code-config');
         }
     }

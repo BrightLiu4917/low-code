@@ -23,7 +23,10 @@ class LowCodeInitCommand extends Command
             'lowcode:install-list-service' => $force,
             'lowcode:install-query-engine' => $force,
             'lowcode:install-list-query-resource' => $force,
-            'lowcode:install-personalize-module-controller'=> $force
+            'lowcode:install-personalize-module-controller'=> $force,
+            'lowcode:install-list-v2-controller' => $force,
+            'lowcode:install-crowd-kit-service' => $force,
+            'lowcode:install-BmpCheetahMedicalCrowdkitApiService' => $force,
         ];
 
 
