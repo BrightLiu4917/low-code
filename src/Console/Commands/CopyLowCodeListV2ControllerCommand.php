@@ -52,7 +52,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\LowCode;
 
-use BrightLiu\LowCode\Enums\Model\LowCode\AdminPreference\SceneEnum;//ok
+use BrightLiu\LowCode\Enums\Model\AdminPreference\SceneEnum;//ok
 use App\Services\LowCode\LowCodeQueryEngineService;//ok
 use BrightLiu\LowCode\Enums\Model\LowCode\LowCodeList\ListTypeEnum;//ok
 use App\Http\Resources\LowCode\LowCodeList\QuerySource;//ok
@@ -62,7 +62,7 @@ use App\Models\LowCode\LowCodePersonalizeModule;//ok
 use App\Models\LowCode\LowCodeList;//ok
 use App\Models\LowCode\LowCodePart;//ok
 use App\Models\LowCode\LowCodeTemplateHasPart;//ok
-use App\Services\LowCode\CrowdKitService;//om
+use App\Services\Business\CrowdKitService;//om
 use App\Services\LowCode\LowCodeListService;//ok
 use App\Support\BmpCrowd\CrowdConnection;
 //use AdminContext;
