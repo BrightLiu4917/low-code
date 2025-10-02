@@ -62,7 +62,7 @@ use Illuminate\Http\Request;
 /**
  * 个性化模块
  */
-final class PersonalizeModuleController extends BaseController
+final class LowCodePersonalizeModuleController extends BaseController
 {
     /**
      * 列表
