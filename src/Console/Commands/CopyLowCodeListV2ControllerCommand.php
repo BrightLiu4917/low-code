@@ -77,6 +77,13 @@ use Illuminate\Support\Facades\Cache;
 final class LowCodeListV2Controller extends BaseController
 {
     /**
+     * @param \BrightLiu\LowCode\Services\LowCode\LowCodeListService $service
+     */
+    public function __construct(protected LowCodeListService $service)
+    {
+
+    }
+    /**
      * 简单列表
      */
     public function simpleList(Request $request): JsonResponse
