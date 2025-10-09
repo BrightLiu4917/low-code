@@ -6,7 +6,7 @@ namespace BrightLiu\LowCode\Services\LowCode;
 
 use BrightLiu\LowCode\Services\LowCodeBaseService;
 use App\Services\Api\Bmp\BmpCheetahMedicalCrowdkitApiService;
-use App\Traits\Context\WithAuthContext;
+use BrightLiu\LowCode\Traits\Context\WithAuthContext;
 use Illuminate\Support\Collection;
 
 /**
