@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BrightLiu\LowCode\Controllers\LowCode;
 
-use App\Services\Logic\Foundation\InitOrgDiseaseService;
+use BrightLiu\LowCode\Services\LowCode\InitOrgDiseaseService;
 use Gupo\BetterLaravel\Http\BaseController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
