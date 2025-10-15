@@ -60,7 +60,7 @@ Route::group([
         'middleware' => ['auth.disease'],//登陆中间件
 ], function () {
 
-    Route::post('v1/init-org-disease', InitOrgDiseaseController::class);
+
     
 // 列表v1版本
     Route::prefix('v1/low-code/list')->group(function () {
@@ -126,6 +126,23 @@ Route::group([
         Route::post('delete', [DatabaseSourceController::class, 'delete']);
     });
 });
+```
+
+#### innerapi
+```text
+<?php
+use BrightLiu\LowCode\Controllers\LowCode\InitOrgDiseaseController;
+
+Route::post('v2/init/org-disease', InitOrgDiseaseController::class)
+    ->middleware(['bmp.disease.auth.inner']);
+});
+```
+#### app/Http/Kernel.php 追加参数
+```text
+$routeMiddleware = [
+        'auth.disease' => DiseaseAuthenticate::class,
+        'bmp.disease.auth.inner' => BmpDiseaseAuthenticateInner::class
+]
 ```
 
 #### 日志
