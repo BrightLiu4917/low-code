@@ -72,7 +72,7 @@ abstract class QueryEngineAbstract implements QueryEngineContract
 
             // 模式2：自动上下文（常规请求）
 //            $this->getDiseaseCode();
-            if (!empty($contextCode = request()?->get('disease_code'))) {
+            if (!empty($contextCode = request()?->header('X-Gp-Disease-Code'))) {
                 // 尝试从上下文获取疾病编码
                 if (empty($contextCode)) {
                     throw new ServiceException('无法自动获取疾病编码');

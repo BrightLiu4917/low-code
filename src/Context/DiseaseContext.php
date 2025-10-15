@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace BrightLiu\LowCode\Context;
 
-use App\Models\Foundation\Disease;
+use App\Models\LowCodeDisease;
 
 /**
  * 病种上下文

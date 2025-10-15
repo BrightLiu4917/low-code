@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use BrightLiu\LowCode\Models\Traits\DiseaseRelationQueries;
 use BrightLiu\LowCode\Models\Traits\Cacheable\NewEloquentBuilder;
 use BrightLiu\LowCode\Enums\Model\LowCode\LowCodeTemplate\TemplateTypeEnum;
-use BrightLiu\LowCode\Enums\Model\LowCode\LowCodePart\ContentTypeEnum;
+use BrightLiu\LowCode\Enums\Model\LowCode\LowCodeTemplate\ContentTypeEnum;
 use BrightLiu\LowCode\Models\Traits\OrgDiseaseRelation;
 use BrightLiu\LowCode\Models\Traits\OrgRelation;
 use BrightLiu\LowCode\Models\Traits\Cacheable\CacheableModel;
 use BrightLiu\LowCode\Models\Traits\UniqueCodeRelation;
-use BrightLiu\LowCode\Models\Traits\AdministratorRelation;
+//use BrightLiu\LowCode\Models\Traits\AdministratorRelation;
 
 
 /**
