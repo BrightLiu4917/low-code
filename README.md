@@ -1,7 +1,7 @@
 # low-code
 ### 安装 Composer 包
 ```text 
-composer require bright-liu4917/low-code:dev-master --dev -vvv
+composer require bright-liu4917/low-code:v1.0.0
 ```
 ### 在 config/app.php配置文件中注册服务提供者：
 ```text
@@ -358,6 +358,10 @@ use BrightLiu\LowCode\Context\OrgContext;
      
      创建文件 并配置业务中台请求地址
      config('business.api-service.bmp_cheetah_medical_crowdkit.uri', env('BMP_CHEETAH_MEDICAL_CROWDKIT_URI'))
+     
+     
+     
+
      
      
      
@@ -887,3 +891,34 @@ chmod -R 777 storage
 }
 ```
 ### 执行 localhost/api/v1/org-disease 初始化 数据
+
+
+### 创建 config('business.medical-platform') 追加以下内容
+
+```text 
+<?php
+
+return [
+    'data_warehouse' => [
+        'default' => [
+            'driver' => 'mysql',
+            'host' => env('DB_MEDICAL_PLATFORM_HOST', '127.0.0.1'),
+            'port' => env('DB_MEDICAL_PLATFORM_PORT', '3306'),
+            'database' => env('DB_MEDICAL_PLATFORM_DATABASE', 'forge'),
+            'username' => env('DB_MEDICAL_PLATFORM_USERNAME', 'forge'),
+            'password' => env('DB_MEDICAL_PLATFORM_PASSWORD', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                PDO::ATTR_TIMEOUT => env('DB_MEDICAL_PLATFORM_CONNECTION_TIMEOUT', 10),
+                PDO::ATTR_EMULATE_PREPARES => env('DB_MEDICAL_PLATFORM_PREPARES', false),
+            ]) : [],
+        ],
+    ],
+];
+```
