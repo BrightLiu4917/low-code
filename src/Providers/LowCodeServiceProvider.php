@@ -27,6 +27,10 @@ class LowCodeServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/../../config/low-code.php', 'low-code'
         );
+
+        $this->mergeConfigFrom(
+            __DIR__.'/../../config/medical-platform.php', 'medical-platform'
+        );
     }
 
     /**
@@ -63,6 +67,11 @@ class LowCodeServiceProvider extends ServiceProvider
                 __DIR__.
                 '/../../config/low-code.php' => config_path('low-code.php'),
             ], 'low-code-config');
+
+            $this->publishes([
+                __DIR__.
+                '/../../config/medical-platform.php' => config_path('medical-platform.php'),
+            ], 'medical-platform');
         }
     }
 
