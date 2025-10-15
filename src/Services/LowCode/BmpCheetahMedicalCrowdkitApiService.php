@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Services\Api\Bmp;
 
-use App\Services\Api\ApiService;
+use Illuminate\Support\Facades\Http;
 use BrightLiu\LowCode\Services\LowCodeBaseService;
 use BrightLiu\LowCode\Traits\Context\WithAuthContext;
 use BrightLiu\LowCode\Traits\Context\WithContext;
 use Illuminate\Support\Arr;
 
 /**
- * 业务平台-服务人群工具模块
+ * 业务平台-服务人群工具模块  自己去实现吧 跟低代码无关
  */
 final class BmpCheetahMedicalCrowdkitApiService extends LowCodeBaseService
 {
@@ -28,16 +28,19 @@ final class BmpCheetahMedicalCrowdkitApiService extends LowCodeBaseService
     /**
      * 获取专病的人员宽表
      */
-    public function getPatientCrowdInfo(int $orgId): ?array
+    public function getPatientCrowdInfo(int $orgId = 0): ?array
     {
-        return $this->get(
-            $this->baseUriVia().'innerapi/get_patient_crowd_info',
-            [
+        $data = Http::asJson()
+            ->retry(3)
+            ->timeout(15)
+            ->get($this->baseUriVia().'innerapi/get_patient_crowd_info',[
                 'org_code' => $this->getOrgCode(),
                 'sys_code' => $this->getSystemCode(),
                 'disease_code' => $this->getDiseaseCode(),
-            ]
-        );
+            ])
+            ->throw()
+            ->json();
+        return $data['data'] ?? [];
     }
 
     /**
@@ -45,14 +48,17 @@ final class BmpCheetahMedicalCrowdkitApiService extends LowCodeBaseService
      */
     public function getPatientCrowdColGroup(): ?array
     {
-        return $this->get(
-            'innerapi/get_patient_crowd_col_group',
-            [
-                'org_code' => $this->getOrgCode(),
-                'sys_code' => $this->getSystemCode(),
-                'disease_code' => $this->getDiseaseCode(),
-            ]
-        );
+        $data =  Http::asJson()
+                     ->retry(3)
+                     ->timeout(15)
+                     ->get($this->baseUriVia().'innerapi/get_patient_crowd_col_group',[
+                         'org_code' => $this->getOrgCode(),
+                         'sys_code' => $this->getSystemCode(),
+                         'disease_code' => $this->getDiseaseCode(),
+                     ])
+                     ->throw()
+                     ->json();
+        return $data['data'] ?? [];
     }
 
     /**
@@ -64,24 +70,17 @@ final class BmpCheetahMedicalCrowdkitApiService extends LowCodeBaseService
             return;
         }
 
-        $this->json(
-            'innerapi/personal-crowd/create',
-            [
-                'personal_batch_list' => array_map(
-                    fn ($attributes) => [
-                        'col_values' => array_values(Arr::map(
-                            $attributes,
-                            fn ($value, $key) => ['col_name' => $key, 'col_value' => $value]
-                        )),
-                    ],
-                    $patients
-                ),
+        Http::asJson()
+            ->retry(3)
+            ->timeout(15)
+            ->post($this->baseUriVia().'innerapi/get_patient_crowd_col_group',[
                 'data_source' => 1,
                 'org_code' => $this->getOrgCode(),
                 'sys_code' => $this->getSystemCode(),
                 'disease_code' => $this->getDiseaseCode(),
-            ]
-        );
+            ])
+            ->throw()
+            ->json();
     }
 
     /**
@@ -96,9 +95,10 @@ final class BmpCheetahMedicalCrowdkitApiService extends LowCodeBaseService
             return;
         }
 
-        $this->json(
-            'innerapi/personal-archive/create',
-            [
+        Http::asJson()
+            ->retry(3)
+            ->timeout(15)
+            ->post($this->baseUriVia().'innerapi/personal-archive/create',[
                 'user_id' => $userId,
                 'col_values' => array_values(Arr::map(
                     $attributes,
@@ -108,8 +108,9 @@ final class BmpCheetahMedicalCrowdkitApiService extends LowCodeBaseService
                 'org_code' => $this->getOrgCode(),
                 'sys_code' => $this->getSystemCode(),
                 'disease_code' => $this->getDiseaseCode(),
-            ]
-        );
+            ])
+            ->throw()
+            ->json();
     }
 
     /**
@@ -117,13 +118,15 @@ final class BmpCheetahMedicalCrowdkitApiService extends LowCodeBaseService
      */
     public function getMetricOptional(): array
     {
-        return $this->get(
-            'innerapi/personal-archive/field',
-            [
-                'org_code' => $this->getOrgCode(),
-                'sys_code' => $this->getSystemCode(),
-                'disease_code' => $this->getDiseaseCode(),
-            ]
-        );
+        return Http::asJson()
+                   ->retry(3)
+                   ->timeout(15)
+                   ->get($this->baseUriVia().'innerapi/personal-archive/field',[
+                       'org_code' => $this->getOrgCode(),
+                       'sys_code' => $this->getSystemCode(),
+                       'disease_code' => $this->getDiseaseCode(),
+                   ])
+                   ->throw()
+                   ->json();
     }
 }
