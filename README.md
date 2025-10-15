@@ -60,9 +60,9 @@ Route::group([
         'middleware' => ['auth.disease'],//登陆中间件
 ], function () {
 
-    Route::post('/org-disease', InitOrgDiseaseController::class);
+    Route::post('v1/init-org-disease', InitOrgDiseaseController::class);
     
-    // 列表v1版本
+// 列表v1版本
     Route::prefix('v1/low-code/list')->group(function () {
         Route::get('list', [LowCodeListController::class, 'list']);
         Route::get('show', [LowCodeListController::class, 'show']);
@@ -73,14 +73,14 @@ Route::group([
         Route::post('pre', [LowCodeListController::class, 'pre']);
     });
 
-    // 个性化模板
+// 个性化模板
     Route::prefix('v2/foundation/personalize-module')->group(function () {
         Route::get('list', [LowCodePersonalizeModuleController::class, 'list']);
         Route::get('routes', [LowCodePersonalizeModuleController::class, 'routes']);
         Route::post('save', [LowCodePersonalizeModuleController::class, 'save']);
     });
 
-    // 列表v2版本
+// 列表v2版本
     Route::prefix('v2/low-code/list')->group(function () {
         Route::get('simple-list', [LowCodeListV2Controller::class, 'simpleList']);
         Route::post('query', [LowCodeListV2Controller::class, 'query']);
@@ -886,3 +886,4 @@ chmod -R 777 storage
     ]
 }
 ```
+### 执行 localhost/api/v1/org-disease 初始化 数据
