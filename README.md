@@ -374,7 +374,8 @@ use BrightLiu\LowCode\Context\OrgContext;
     DB_MEDICAL_PLATFORM_CONNECTION_TIMEOUT=10
     DB_MEDICAL_PLATFORM_PREPARES=false
 ```
-将该文件 命名 templates.json 并且放到 storage/json 下
+#### 将该文件 命名 templates.json 并且放到 storage/json 下
+##### 该文件内容随意更改
 chmod -R 777 storage
 ```json
 {
