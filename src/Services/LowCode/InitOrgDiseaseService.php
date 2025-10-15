@@ -13,7 +13,7 @@ use App\Models\LowCode\LowCodeTemplateHasPart;
 use App\Services\Api\Bmp\BmpCheetahMedicalCrowdkitApiService;
 use BrightLiu\LowCode\Services\LowCode\LowCodeDatabaseSourceService;
 use BrightLiu\LowCode\Tools\Uuid;
-use App\Traits\Context\WithContext;
+use BrightLiu\LowCode\Traits\Context\WithContext;
 use Gupo\BetterLaravel\Exceptions\ServiceException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -112,18 +112,18 @@ final class InitOrgDiseaseService extends LowCodeBaseService
     {
         $dataWarehouseConfig = (array) config('business.medical-platform.data_warehouse.default', []);
 
-        $data = DatabaseSourceEntity::make();
+        $data =  [];
 
-        $data->disease_code = $this->getDiseaseCode();
-        $data->name = $this->getDiseaseCode();
-        $data->host = $dataWarehouseConfig['host'] ?? '';
-        $data->database = $dataWarehouseConfig['database'] ?? '';
-        $data->table = $dataTableName;
-        $data->port = $dataWarehouseConfig['port'] ?? 3306;
-        $data->username = $dataWarehouseConfig['username'] ?? '';
-        $data->password = $dataWarehouseConfig['password'] ?? '';
-        $data->options = $dataWarehouseConfig['options'] ?? [];
-        $data->source_type = SourceTypeEnum::NO;
+        $data['disease_code'] = $this->getDiseaseCode();
+        $data['name'] = $this->getDiseaseCode();
+        $data['host'] = $dataWarehouseConfig['host'] ?? '';
+        $data['database'] = $dataWarehouseConfig['database'] ?? '';
+        $data['table'] = $dataTableName;
+        $data['port'] = $dataWarehouseConfig['port'] ?? 3306;
+        $data['username'] = $dataWarehouseConfig['username'] ?? '';
+        $data['password'] = $dataWarehouseConfig['password'] ?? '';
+        $data['options'] = $dataWarehouseConfig['options'] ?? [];
+        $data['source_type'] = SourceTypeEnum::NO;
 
         return LowCodeDatabaseSourceService::instance()->create($data);
     }
@@ -160,8 +160,8 @@ final class InitOrgDiseaseService extends LowCodeBaseService
                     'code' => Uuid::generate(),
                     'disease_code' => $this->getDiseaseCode(),
                     'org_code' => $this->getOrgCode(),
-                    'creator_id' => $this->getAdminId(),
-                    'updater_id' => $this->getAdminId(),
+//                    'creator_id' => $this->getAdminId(),
+//                    'updater_id' => $this->getAdminId(),
                     'created_at' => date('Y-m-d H:i:s'),
                     'updated_at' => date('Y-m-d H:i:s'),
                     'template_code_filter' => $templateMapping['filter']['code'] ?? '',
@@ -191,8 +191,8 @@ final class InitOrgDiseaseService extends LowCodeBaseService
                 'org_code' => $this->getOrgCode(),
                 'part_type' => 1,
                 'content_type' => $templateItem['content_type'],
-                'creator_id' => $this->getAdminId(),
-                'updater_id' => $this->getAdminId(),
+//                'creator_id' => $this->getAdminId(),
+//                'updater_id' => $this->getAdminId(),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
@@ -227,7 +227,7 @@ final class InitOrgDiseaseService extends LowCodeBaseService
     protected function loadTemplates(): array
     {
         try {
-            return json_decode(file_get_contents('./templates.json'), true);
+            return json_decode(file_get_contents(storage_path('templates.json')), true);
         } catch (\Throwable $e) {
             // TODO: ...
         }
