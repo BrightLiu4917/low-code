@@ -16,7 +16,10 @@ use BrightLiu\LowCode\Models\Traits\ModelFetch;
  */
 final class LowCodeDisease extends LowCodeBaseModel
 {
-    use SoftDeletes, ModelFetch, AdministratorRelation;
+    use
+        SoftDeletes,
+//        AdministratorRelation,
+        ModelFetch;
 
 
     /**

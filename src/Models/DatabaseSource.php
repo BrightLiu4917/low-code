@@ -12,7 +12,7 @@ use BrightLiu\LowCode\Models\Traits\Cacheable\CacheableModel;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use BrightLiu\LowCode\Models\Traits\UniqueCodeRelation;
 use BrightLiu\LowCode\Enums\Model\DatabaseSource\SourceTypeEnum;
-use BrightLiu\LowCode\Models\Traits\AdministratorRelation;
+//use BrightLiu\LowCode\Models\Traits\AdministratorRelation;
 use BrightLiu\LowCode\Models\Traits\Cacheable\NewEloquentBuilder;
 /**
  * 数据库源
