@@ -353,8 +353,23 @@ use BrightLiu\LowCode\Context\OrgContext;
      ]
      
      创建文件 并配置用户中心请求地址
-     config('business.bmo-service.auth.base_uri'，'') 
+     config('business.bmo-service.auth.base_uri',env('BMO_AUTH_BASE_URI')) 
      
      创建文件 并配置业务中台请求地址
-     config('business.api-service.bmp_cheetah_medical_crowdkit.uri', 'https://uat-api.group-ds.com/bmp-cheetah-medical-crowdkit/ ')
+     config('business.api-service.bmp_cheetah_medical_crowdkit.uri', env('BMP_CHEETAH_MEDICAL_CROWDKIT_URI'))
+     
+     
+     
+    Env 添加
+    BMP_CHEETAH_MEDICAL_CROWDKIT_URI=
+    BMO_AUTH_BASE_URI=
+
+    DB_MEDICAL_PLATFORM_CONNECTION=mysql
+    DB_MEDICAL_PLATFORM_HOST={}
+    DB_MEDICAL_PLATFORM_PORT=3306
+    DB_MEDICAL_PLATFORM_DATABASE={}
+    DB_MEDICAL_PLATFORM_USERNAME={}
+    DB_MEDICAL_PLATFORM_PASSWORD={}
+    DB_MEDICAL_PLATFORM_CONNECTION_TIMEOUT=10
+    DB_MEDICAL_PLATFORM_PREPARES=false
 ```
