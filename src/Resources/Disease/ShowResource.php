@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BrightLiu\LowCode\Resources\Disease;
 
 use Illuminate\Http\Request;
-use App\Models\Foundation\Disease;
+use App\Models\LowCodeDisease;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -32,8 +32,8 @@ final class ShowResource extends JsonResource
                 'created_at',
                 'updated_at',
             ]),
-            'creator_name'            => $this->creator_name,
-            'updater_name'            => $this->updater_name,
+            'creator_name'            => $this->creator_name ?? '',
+            'updater_name'            => $this->updater_name ?? '',
         ];
     }
 }

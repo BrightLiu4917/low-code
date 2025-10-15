@@ -94,6 +94,7 @@ Route::group([
 
 // 列表部件
     Route::prefix('v1/low-code/part')->group(function () {
+        Route::post('create', [LowCodePartController::class, 'create']);
         Route::get('list', [LowCodePartController::class, 'list']);
         Route::get('show', [LowCodePartController::class, 'show']);
         Route::post('update', [LowCodePartController::class, 'update']);

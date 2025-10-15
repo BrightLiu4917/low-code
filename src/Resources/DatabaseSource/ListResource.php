@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BrightLiu\LowCode\Resources\DatabaseSource;
 
 use Illuminate\Http\Request;
-use App\Models\Foundation\DatabaseSource;
+use App\Models\DatabaseSource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**

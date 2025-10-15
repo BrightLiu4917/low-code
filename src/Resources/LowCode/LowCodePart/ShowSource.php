@@ -35,7 +35,7 @@ final class ShowSource extends JsonResource
             ]),
             'creator_name' => $this->creator_name ?? '',
             'updater_name' => $this->updater_name ?? '',
-            'content_type_definition' => $this->content_type_definition ?? '',
+//            'content_type_definition' => $this->content_type_definition ?? '',
             'part_type_definition' => $this->part_type_definition ?? '',
         ];
     }

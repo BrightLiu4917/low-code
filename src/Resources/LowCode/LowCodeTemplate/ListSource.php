@@ -38,7 +38,7 @@ final class ListSource extends JsonResource
             ]),
             'creator_name' => $this->creator_name ?? '',
             'updater_name' => $this->updater_name ?? '',
-            'content_type_definition' => $this->content_type_definition ?? '',
+//            'content_type_definition' => $this->content_type_definition ?? '',
             'template_type_definition' => $this->template_type_definition ?? '',
         ];
     }

@@ -90,7 +90,7 @@ final class QuerySource extends JsonResource
                 //int COMMENT '公卫标识@0否/1是',
                 "dth_flg"              => $this->dth_flg ?? "",
                 //int COMMENT '死亡标识@0否/1是',
-                "dth_flg_nm"           => match ($this->dth_flg) {
+                "dth_flg_nm"           => match (($this->dth_flg ?? -1)) {
                     0       => '否',
                     1       => '是',
                     default => '--',
@@ -100,7 +100,7 @@ final class QuerySource extends JsonResource
                 //datetime COMMENT '死亡日期',
                 "psn_adtn_flg"    => $this->psn_adtn_flg ?? 0,
                 //int COMMENT '人员新增标识@0否/1是',
-                "psn_adtn_flg_nm" => match ($this->psn_adtn_flg) {
+                "psn_adtn_flg_nm" => match (($this->psn_adtn_flg ?? -1)) {
                     0       => '否',
                     1       => '是',
                     default => '--',
@@ -110,7 +110,7 @@ final class QuerySource extends JsonResource
                 //datetime COMMENT '人员新增时间',
                 "spcl_crt_rcd_flg"    => $this->spcl_crt_rcd_flg ?? 0,
                 //int COMMENT '专项建档标识@0否/1是',
-                "spcl_crt_rcd_flg_nm" => match ($this->spcl_crt_rcd_flg) {
+                "spcl_crt_rcd_flg_nm" => match (($this->spcl_crt_rcd_flg ??-1)) {
                     0       => '否',
                     1       => '是',
                     default => '--',
@@ -139,7 +139,7 @@ final class QuerySource extends JsonResource
                 "sgn_ctrct_stts_cd"     => $this->sgn_ctrct_stts_cd ?? '',
                 //int COMMENT '签约状态编码@3正式签约/5到期/7未签约',
 
-                "sgn_ctrct_stts_cd_nm" => match ($this->sgn_ctrct_stts_cd) {
+                "sgn_ctrct_stts_cd_nm" => match (($this->sgn_ctrct_stts_cd ?? -1)) {
                     3       => '正式签约',
                     5       => '到期',
                     7       => '未签约',
@@ -167,7 +167,7 @@ final class QuerySource extends JsonResource
                 //varchar(255) COMMENT '专病医生',
                 "cfm_diag_flg"           => $this->cfm_diag_flg ?? -1,
                 //int COMMENT '专病确诊标识@0否/1是',
-                "cfm_diag_flg_nm"        => match ($this->cfm_diag_flg) {
+                "cfm_diag_flg_nm"        => match (($this->cfm_diag_flg ?? -1)) {
                     1       => '是',
                     0       => '否',
                     9       => '其他',
@@ -193,7 +193,7 @@ final class QuerySource extends JsonResource
                 //datetime COMMENT '人群分类时间',
                 "incprt_into_mng_flg"    => $this->incprt_into_mng_flg ?? -1,
                 //int COMMENT '纳管标识@0待纳管/1已纳管/2推荐纳管/9出组',
-                "incprt_into_mng_flg_nm" => match ($this->incprt_into_mng_flg) {
+                "incprt_into_mng_flg_nm" => match (($this->incprt_into_mng_flg ?? -1)) {
                     1       => '已纳管',
                     0       => '待纳管',
                     2       => '推荐纳管',
@@ -210,7 +210,7 @@ final class QuerySource extends JsonResource
                 "infmd_agr_rcd_stts" => $this->infmd_agr_rcd_stts ?? "",
                 //int COMMENT '知情同意书签署状态@0未签署/1已签署',
 
-                "infmd_agr_rcd_stts_nm" => match ($this->infmd_agr_rcd_stts) {
+                "infmd_agr_rcd_stts_nm" => match (($this->infmd_agr_rcd_stts ?? -1)) {
                     1       => '已签署',
                     0       => '未签署',
                     9       => '其他',
@@ -238,7 +238,7 @@ final class QuerySource extends JsonResource
                 //datetime COMMENT '下次复查时间',
                 "rvw_flg"                     => $this->rvw_flg ?? 9,
                 //int COMMENT '复查标识@0否/1是/9其他',
-                "rvw_flg_nm"                  => match ($this->rvw_flg) {
+                "rvw_flg_nm"                  => match (($this->rvw_flg ?? -1)) {
                     1       => '是',
                     0       => '否',
                     9       => '其他',
@@ -248,7 +248,7 @@ final class QuerySource extends JsonResource
                 "on_tm_rvw_flg" => $this->on_tm_rvw_flg ?? 9,
                 //int COMMENT '按时复查标识@0否/1是/9未知',
 
-                "on_tm_rvw_flg_nm" => match ($this->on_tm_rvw_flg) {
+                "on_tm_rvw_flg_nm" => match (($this->on_tm_rvw_flg ?? -1)) {
                     1       => '是',
                     0       => '否',
                     9       => '未知',
@@ -264,7 +264,7 @@ final class QuerySource extends JsonResource
                 //datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                 "invld_flg"      => $this->invld_flg ?? 0,
 
-                "invld_flg_nm" => match ($this->invld_flg) {
+                "invld_flg_nm" => match (($this->invld_flg ?? 0)) {
                     1       => '是',
                     0       => '否',
                     default => '--',
@@ -272,7 +272,7 @@ final class QuerySource extends JsonResource
 
                 "incprt_into_mng_src"    => $this->incprt_into_mng_src ?? -1,
                 //int COMMENT '纳管来源@1手动纳管/2推荐纳管/3知情同意书签署/4企业微信',
-                "incprt_into_mng_src_nm" => match ($this->incprt_into_mng_src) {
+                "incprt_into_mng_src_nm" => match (($this->incprt_into_mng_src ?? -1)) {
                     1       => '手动纳管',
                     2       => '推荐纳管',
                     3       => '知情同意书签署',

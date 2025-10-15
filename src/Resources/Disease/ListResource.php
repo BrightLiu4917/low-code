@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace BrightLiu\LowCode\Resources\Disease;
 
 use Illuminate\Http\Request;
-use App\Models\Foundation\Disease;
+use App\Models\LowCodeDisease;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin Disease
+ * @mixin LowCodeDisease
  */
 final class ListResource extends JsonResource
 {
