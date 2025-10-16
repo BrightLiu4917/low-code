@@ -11,7 +11,7 @@ final class OptionalResource extends JsonResource
     {
         return [
             'label' => $this['group_name'] ?? '',
-            'value' => $this['user_group_id'] ?? '',
+            'value' => $this['user_group_id'] ?? $this['id'] ?? '',
         ];
     }
 }
