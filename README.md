@@ -55,14 +55,19 @@ use BrightLiu\LowCode\Controllers\Disease\DiseaseController;
 use BrightLiu\LowCode\Controllers\DatabaseSource\DatabaseSourceController;
 use App\Http\Controllers\LowCode\LowCodePersonalizeModuleController;
 use App\Http\Controllers\LowCode\LowCodeListV2Controller;
-use BrightLiu\LowCode\Controllers\LowCode\InitOrgDiseaseController;
+use BrightLiu\LowCode\Controllers\LowCode\ResidentCrowdController;
+
+/**
+** Route::group(['prefix' => 'v2/resident', 'middleware' => ['bmp.disease.auth.inner']], function () {
+    ** Route::get('resident-crowd/optional', [ResidentCrowdController::class, 'optional']);
+** });
+**/
+
 Route::group([
-        'middleware' => ['auth.disease'],//登陆中间件
+    'middleware' => ['auth.disease'],//登陆中间件
 ], function () {
 
-
-    
-// 列表v1版本
+    // 列表v1版本
     Route::prefix('v1/low-code/list')->group(function () {
         Route::get('list', [LowCodeListController::class, 'list']);
         Route::get('show', [LowCodeListController::class, 'show']);
@@ -73,14 +78,14 @@ Route::group([
         Route::post('pre', [LowCodeListController::class, 'pre']);
     });
 
-// 个性化模板
+    // 个性化模板
     Route::prefix('v2/foundation/personalize-module')->group(function () {
         Route::get('list', [LowCodePersonalizeModuleController::class, 'list']);
         Route::get('routes', [LowCodePersonalizeModuleController::class, 'routes']);
         Route::post('save', [LowCodePersonalizeModuleController::class, 'save']);
     });
 
-// 列表v2版本
+    // 列表v2版本
     Route::prefix('v2/low-code/list')->group(function () {
         Route::get('simple-list', [LowCodeListV2Controller::class, 'simpleList']);
         Route::post('query', [LowCodeListV2Controller::class, 'query']);
@@ -92,17 +97,17 @@ Route::group([
 
     });
 
-// 列表部件
+    // 列表部件
     Route::prefix('v1/low-code/part')->group(function () {
-        Route::post('create', [LowCodePartController::class, 'create']);
         Route::get('list', [LowCodePartController::class, 'list']);
+        Route::post('create', [LowCodePartController::class, 'create']);
         Route::get('show', [LowCodePartController::class, 'show']);
         Route::post('update', [LowCodePartController::class, 'update']);
         Route::post('delete', [LowCodePartController::class, 'delete']);
         Route::get('get-table-fields', [LowCodePartController::class, 'getTableFields']);
     });
 
-// 列表模板
+    // 列表模板
     Route::prefix('v1/low-code/template')->group(function () {
         Route::get('list', [LowCodeTemplateController::class, 'list']);
         Route::get('show', [LowCodeTemplateController::class, 'show']);
@@ -110,15 +115,15 @@ Route::group([
         Route::post('delete', [LowCodeTemplateController::class, 'delete']);
     });
     Route::post('v1/low-code/template-bind-parts', [LowCodeTemplateController::class, 'bindPart']);
-    
-//病种
+
+    //病种
     Route::prefix('v1/disease')->group(function () {
         Route::get('list', [DiseaseController::class, 'list']);
         Route::get('show', [DiseaseController::class, 'show']);
         Route::post('update', [DiseaseController::class, 'update']);
         Route::post('delete', [DiseaseController::class, 'delete']);
     });
-//数据源
+    //数据源
     Route::prefix('v1/database-source')->group(function () {
         Route::get('list', [DatabaseSourceController::class, 'list']);
         Route::get('show', [DatabaseSourceController::class, 'show']);
@@ -126,6 +131,7 @@ Route::group([
         Route::post('delete', [DatabaseSourceController::class, 'delete']);
     });
 });
+
 ```
 
 #### innerapi
