@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Api\Bmp;
+namespace BrightLiu\LowCode\Services\LowCode;
 
 use Illuminate\Support\Facades\Http;
 use BrightLiu\LowCode\Services\LowCodeBaseService;

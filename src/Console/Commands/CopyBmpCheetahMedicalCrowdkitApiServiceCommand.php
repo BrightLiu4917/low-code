@@ -69,7 +69,7 @@ final class BmpCheetahMedicalCrowdkitApiService extends LowCodeBaseService
      */
     public function getPatientCrowdInfo(int $orgId = 0): ?array
     {
-       return Http::asJson()
+       $data =  Http::asJson()
             ->retry(3)
             ->timeout(15)
             ->get($this->baseUriVia().'innerapi/get_patient_crowd_info',[
@@ -79,6 +79,7 @@ final class BmpCheetahMedicalCrowdkitApiService extends LowCodeBaseService
             ])
             ->throw()
             ->json();
+            return $data['data'] ?? [];
     }
 
     /**
@@ -86,7 +87,7 @@ final class BmpCheetahMedicalCrowdkitApiService extends LowCodeBaseService
      */
     public function getPatientCrowdColGroup(): ?array
     {
-        return Http::asJson()
+        $data =  Http::asJson()
                    ->retry(3)
                    ->timeout(15)
                    ->get($this->baseUriVia().'innerapi/get_patient_crowd_col_group',[
@@ -96,6 +97,7 @@ final class BmpCheetahMedicalCrowdkitApiService extends LowCodeBaseService
                    ])
                    ->throw()
                    ->json();
+                   return $data['data'] ?? [];
     }
 
     /**
@@ -155,7 +157,7 @@ final class BmpCheetahMedicalCrowdkitApiService extends LowCodeBaseService
      */
     public function getMetricOptional(): array
     {
-        return Http::asJson()
+        $data =  Http::asJson()
                    ->retry(3)
                    ->timeout(15)
                    ->get($this->baseUriVia().'innerapi/personal-archive/field',[
@@ -165,6 +167,7 @@ final class BmpCheetahMedicalCrowdkitApiService extends LowCodeBaseService
                    ])
                    ->throw()
                    ->json();
+                   return $data['data'] ?? [];
     }
 }
 EOT;
