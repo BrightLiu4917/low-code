@@ -380,7 +380,9 @@ use BrightLiu\LowCode\Context\OrgContext;
      config('business.bmo-service.auth.base_uri',env('BMO_AUTH_BASE_URI')) 
      
      创建文件 并配置业务中台请求地址
+     //有可能 第一个请求 java 第二请求另一个java 所以分开
      config('business.api-service.bmp_cheetah_medical_crowdkit.uri', env('BMP_CHEETAH_MEDICAL_CROWDKIT_URI'))
+     config('business.api-service.bmp_cheetah_medical_platform.uri', env('BMP_CHEETAH_MEDICAL_CROWDKIT_URI'))
      
      
      
