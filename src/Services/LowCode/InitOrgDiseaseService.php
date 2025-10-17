@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace BrightLiu\LowCode\Services\LowCode;
+use BrightLiu\LowCode\Enums\Foundation\Logger;
 use BrightLiu\LowCode\Services\LowCodeBaseService;
 use BrightLiu\LowCode\Enums\Model\DatabaseSource\SourceTypeEnum;
 use App\Models\LowCode\DatabaseSource;
@@ -180,48 +181,115 @@ final class InitOrgDiseaseService extends LowCodeBaseService
         }
     }
 
-    protected function initTemplates(array $templates): Collection
+//    protected function initTemplates(array $templates): Collection
+//    {
+//        return collect($templates)->map(function ($templateItem) {
+//            // 初始化template
+//            $listTemplate = LowCodeTemplate::query()->create($templateItem);
+//
+//            // 预置parts公共信息
+//            $partCommonInfo = [
+//                'org_code' => $this->getOrgCode(),
+//                'part_type' => 1,
+//                'content_type' => $templateItem['content_type'],
+////                'creator_id' => $this->getAdminId(),
+////                'updater_id' => $this->getAdminId(),
+//                'created_at' => date('Y-m-d H:i:s'),
+//                'updated_at' => date('Y-m-d H:i:s'),
+//            ];
+//
+//            $parts = collect($templateItem['parts'] ?? [])
+//                ->map(fn ($item, $index) => [
+//                    ...$item,
+//                    ...$partCommonInfo,
+//                    'content' => json_encode($item['content'] ?? [], JSON_UNESCAPED_UNICODE),
+//                    'code' => Uuid::generate(),
+//                    'weight' => $index,
+//                ]);
+//
+//            // 初始化parts
+//            LowCodePart::query()->insert($parts->toArray());
+//
+//            // 维护template与part的关联关系
+//            LowCodeTemplateHasPart::query()->insert(
+//                $parts->map(fn ($item, $index) => [
+//                    'part_code' => $item['code'],
+//                    'template_code' => $listTemplate['code'],
+//                    'weight' => $index,
+//                    'created_at' => date('Y-m-d H:i:s'),
+//                    'updated_at' => date('Y-m-d H:i:s'),
+//                ])->reverse()->toArray()
+//            );
+//
+//            return $listTemplate;
+//        });
+//    }
+
+
+    protected function initTemplates(array $templates)
     {
-        return collect($templates)->map(function ($templateItem) {
-            // 初始化template
-            $listTemplate = LowCodeTemplate::query()->create($templateItem);
-
-            // 预置parts公共信息
-            $partCommonInfo = [
-                'org_code' => $this->getOrgCode(),
-                'part_type' => 1,
-                'content_type' => $templateItem['content_type'],
-//                'creator_id' => $this->getAdminId(),
-//                'updater_id' => $this->getAdminId(),
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ];
-
-            $parts = collect($templateItem['parts'] ?? [])
-                ->map(fn ($item, $index) => [
-                    ...$item,
-                    ...$partCommonInfo,
-                    'content' => json_encode($item['content'] ?? [], JSON_UNESCAPED_UNICODE),
-                    'code' => Uuid::generate(),
-                    'weight' => $index,
-                ]);
-
-            // 初始化parts
-            LowCodePart::query()->insert($parts->toArray());
-
-            // 维护template与part的关联关系
-            LowCodeTemplateHasPart::query()->insert(
-                $parts->map(fn ($item, $index) => [
-                    'part_code' => $item['code'],
-                    'template_code' => $listTemplate['code'],
-                    'weight' => $index,
+        try {
+            return collect($templates)->map(function ($templateItem) {
+                // 确保所有数组字段都转换为 JSON 字符串
+                $templateData = [
+                    'name' => $templateItem['name'] ?? null,
+                    'description' => $templateItem['description'] ?? null,
+                    'template_type' => $templateItem['template_type'] ?? null,
+                    'content_type' => $templateItem['content_type'] ?? null,
                     'created_at' => date('Y-m-d H:i:s'),
                     'updated_at' => date('Y-m-d H:i:s'),
-                ])->reverse()->toArray()
-            );
+                ];
 
-            return $listTemplate;
-        });
+                // 初始化template
+                $listTemplate = LowCodeTemplate::query()->create($templateData);
+
+                // 预置parts公共信息
+                $partCommonInfo = [
+                    'org_code' => $this->getOrgCode(),
+                    'part_type' => 1,
+                    'content_type' => $templateItem['content_type'],
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ];
+
+                $parts = collect($templateItem['parts'] ?? [])
+                    ->map(function ($item, $index) use ($partCommonInfo) {
+                        return [
+                            'name' => $item['name'] ?? null,
+                            'description' => $item['description'] ?? null,
+                            ...$partCommonInfo,
+                            'content' => json_encode($item['content'] ?? [], JSON_UNESCAPED_UNICODE),
+                            'code' => Uuid::generate(),
+                            'weight' => $index,
+                        ];
+                    });
+
+                // 初始化parts
+                LowCodePart::query()->insert($parts->toArray());
+
+                // 维护template与part的关联关系
+                $templateHasParts = $parts->map(function ($item, $index) use ($listTemplate) {
+                    return [
+                        'part_code' => $item['code'],
+                        'template_code' => $listTemplate['code'],
+                        'weight' => $index,
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ];
+                })->toArray();
+
+                LowCodeTemplateHasPart::query()->insert($templateHasParts);
+
+                return $listTemplate;
+            });
+        } catch (\Throwable $e) {
+            // 更好的错误处理
+            Logger::LOW_CODE_LIST->error('初始化模板失败', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            throw new ServiceException('初始化模板失败: '.$e->getMessage());
+        }
     }
 
     protected function loadTemplates(): array
