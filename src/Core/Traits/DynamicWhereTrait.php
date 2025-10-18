@@ -186,6 +186,16 @@ trait DynamicWhereTrait
     }
 
     /**
+     * @param string $value
+     *
+     * @return \BrightLiu\LowCode\Core\Traits\DynamicWhereTrait|\BrightLiu\LowCode\Core\Abstracts\QueryEngineAbstract
+     */
+    public function whereEmpi(string $value = ''): self
+    {
+        return $this->whereField($value, 'empi');
+    }
+
+    /**
      * 纳管机构
      * @param string $value
      *
