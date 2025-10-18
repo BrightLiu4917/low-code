@@ -171,6 +171,7 @@ $routeMiddleware = [
 CREATE TABLE `low_code_lists`
 (
     `id`                       bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `data_permission_code`     varchar(64) NOT NULL DEFAULT '' COMMENT '数据权限编码',
     `disease_code`             varchar(32)         NOT NULL DEFAULT '' COMMENT '病种编码',
     `code`                     varchar(64)         NOT NULL DEFAULT '' COMMENT '列表编码',
     `parent_code`              varchar(64)         NOT NULL DEFAULT '' COMMENT '上级列表编码',

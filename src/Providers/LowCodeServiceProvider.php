@@ -53,8 +53,6 @@ class LowCodeServiceProvider extends ServiceProvider
                 CopyBmpCheetahMedicalCrowdkitApiServiceCommand::class,
                 CopyCrowdKitServiceCommand::class,
                 LowCodeInitCommand::class,
-
-
             ]);
         }
     }
