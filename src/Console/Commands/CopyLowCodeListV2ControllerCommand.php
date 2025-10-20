@@ -14,6 +14,8 @@ use App\Models\LowCode\LowCodePersonalizeModule;
 use App\Services\LowCode\LowCodeQueryEngineService;
 use App\Http\Resources\LowCode\LowCodeList\QuerySource;
 use BrightLiu\LowCode\Requests\LowCode\LowCodeListRequest;
+use App\Http\Resources\LowCode\LowCodeList\BasicInfoResource;
+use BrightLiu\LowCode\Services\LowCode\LowCodeResidentService;
 use BrightLiu\LowCode\Resources\LowCode\LowCodeList\ListSource;
 use BrightLiu\LowCode\Enums\Model\LowCode\LowCodeList\ListTypeEnum;
 use BrightLiu\LowCode\Resources\LowCode\LowCodeList\simpleListSource;
@@ -343,6 +345,13 @@ final class LowCodeListV2Controller extends BaseController
         }
 
         return $this->responseSuccess();
+    }
+    
+     public function basicInfo(Request $request)
+    {
+        $userId = $request->input('user_id','');
+        $data = LowCodeResidentService::instance()->basicInfo($userId);
+        return $this->responseData($data,BasicInfoResource::class);
     }
 
     /**
