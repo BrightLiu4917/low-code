@@ -18,7 +18,7 @@ class CopyBasicInfoResourceResourceCommand extends Command
 
     public function handle()
     {
-        $className = 'QuerySource';
+        $className = 'BasicInfoResource';
         $dir = "Http/Resources/LowCode/LowCodeList";
 
         // 构建正确的目标路径
