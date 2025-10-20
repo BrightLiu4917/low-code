@@ -8,6 +8,7 @@ use App\Traits\Context\WithContext;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use App\Traits\Context\WithAuthContext;
+use BrightLiu\LowCode\Services\LowCodeBaseService;
 use Gupo\BetterLaravel\Exceptions\ServiceException;
 use App\Services\LowCode\LowCodeQueryEngineService;
 
@@ -43,14 +44,15 @@ declare(strict_types=1);
 
 namespace App\Services\Api\Bmp;
 
-use App\Services\Api\ApiService;
+use Illuminate\Support\Facades\Http;
+use BrightLiu\LowCode\Services\LowCodeBaseService;
 use BrightLiu\LowCode\Traits\Context\WithAuthContext;
 use BrightLiu\LowCode\Traits\Context\WithContext;
 
 /**
  * 业务平台-服务平台模块
  */
-final class BmpCheetahMedicalPlatformApiService extends ApiService
+final class BmpCheetahMedicalPlatformApiService extends LowCodeBaseService
 {
     use WithContext, WithAuthContext;
 
@@ -67,12 +69,13 @@ final class BmpCheetahMedicalPlatformApiService extends ApiService
      */
     public function getCrowds(): array
     {
-        return $this->json('innerapi/user/group/list', [
+        $data = Http::asJson()->post($this->baseUriVia() . 'innerapi/userGroup/page', [
             'org_code' => $this->getOrgCode(),
             'sys_code' => $this->getSystemCode(),
             'disease_code' => $this->getDiseaseCode(),
             'tenant_id' => $this->getTenantId(),
-        ]);
+        ])->throw()->json();
+        return $data['data']['results'] ??[];
     }
 
     /**
@@ -82,19 +85,15 @@ final class BmpCheetahMedicalPlatformApiService extends ApiService
      */
     public function getPatientStatisticsData(array $statisticsTypes = [0, 3]): array
     {
-        return $this->json(
-            'innerapi/stat/queryStatData',
-            [
-                'stat_types' => $statisticsTypes,
-                'org_code' => $this->getOrgCode(),
-                'sys_code' => $this->getSystemCode(),
-                'disease_code' => $this->getDiseaseCode(),
-                'tenant_id' => $this->getTenantId(),
-            ],
-            options: [
-                'timeout' => 3,
-            ]
-        );
+        $data = Http::asJson()->timeout(10)->post($this->baseUriVia() . 'innerapi/stat/queryStatData', [
+            'stat_types' => $statisticsTypes,
+            'org_code' => $this->getOrgCode(),
+            'sys_code' => $this->getSystemCode(),
+            'disease_code' => $this->getDiseaseCode(),
+            'tenant_id' => $this->getTenantId(),
+        ])->throw()->json();
+        return $data['data'] ??[];
+
     }
 
     /**
@@ -102,18 +101,13 @@ final class BmpCheetahMedicalPlatformApiService extends ApiService
      */
     public function getPatientWarningStatisticsData(): int
     {
-        return (int) $this->json(
-            'innerapi/stat/queryWarnCount',
-            [
-                'org_code' => $this->getOrgCode(),
-                'sys_code' => $this->getSystemCode(),
-                'disease_code' => $this->getDiseaseCode(),
-                'tenant_id' => $this->getTenantId(),
-            ],
-            options: [
-                'timeout' => 3,
-            ]
-        );
+        $data = Http::asJson()->timeout(3)->post($this->baseUriVia() . 'innerapi/stat/queryWarnCount', [
+            'org_code' => $this->getOrgCode(),
+            'sys_code' => $this->getSystemCode(),
+            'disease_code' => $this->getDiseaseCode(),
+            'tenant_id' => $this->getTenantId(),
+        ])->throw()->json();
+        return $data['data'] ?? 0;
     }
 }
 
