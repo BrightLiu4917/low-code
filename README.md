@@ -392,9 +392,11 @@ use BrightLiu\LowCode\Context\OrgContext;
      
      
     Env 添加
-    BMP_CHEETAH_MEDICAL_CROWDKIT_URI=
-    BMO_AUTH_BASE_URI=
+    BMP_CHEETAH_MEDICAL_CROWDKIT_URI=业务中台api
+    BMO_AUTH_BASE_URI=用户中心api
 
+
+    //基线表配置
     DB_MEDICAL_PLATFORM_CONNECTION=mysql
     DB_MEDICAL_PLATFORM_HOST={}
     DB_MEDICAL_PLATFORM_PORT=3306

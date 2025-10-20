@@ -27,6 +27,7 @@ class LowCodeInitCommand extends Command
             'lowcode:install-list-v2-controller' => $force,
             'lowcode:install-crowd-kit-service' => $force,
             'lowcode:install-BmpCheetahMedicalCrowdkitApiService' => $force,
+            'lowcode:install-basic-info-resource'=> $force,
         ];
 
 
