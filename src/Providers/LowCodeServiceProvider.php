@@ -12,6 +12,7 @@ use BrightLiu\LowCode\Console\Commands\CopyLowCodeQueryEngineCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodeCacheObserverCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodeListControllerCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodeListV2ControllerCommand;
+use BrightLiu\LowCode\Console\Commands\CopyBasicInfoResourceResourceCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodePersonalizeModuleControllerCommand;
 use BrightLiu\LowCode\Console\Commands\CopyBmpCheetahMedicalCrowdkitApiServiceCommand;
 
@@ -53,6 +54,7 @@ class LowCodeServiceProvider extends ServiceProvider
                 CopyBmpCheetahMedicalCrowdkitApiServiceCommand::class,
                 CopyCrowdKitServiceCommand::class,
                 LowCodeInitCommand::class,
+                CopyBasicInfoResourceResourceCommand::class
             ]);
         }
     }
