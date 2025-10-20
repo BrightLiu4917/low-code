@@ -1,6 +1,7 @@
 <?php
 namespace BrightLiu\LowCode\Console\Commands;
 
+use BrightLiu\LowCode\Services\LowCode\LowCodeResidentService;
 use Illuminate\Http\Request;
 use Illuminate\Console\Command;
 use Illuminate\Http\JsonResponse;
@@ -15,7 +16,6 @@ use App\Services\LowCode\LowCodeQueryEngineService;
 use App\Http\Resources\LowCode\LowCodeList\QuerySource;
 use BrightLiu\LowCode\Requests\LowCode\LowCodeListRequest;
 use App\Http\Resources\LowCode\LowCodeList\BasicInfoResource;
-use BrightLiu\LowCode\Services\LowCode\LowCodeResidentService;
 use BrightLiu\LowCode\Resources\LowCode\LowCodeList\ListSource;
 use BrightLiu\LowCode\Enums\Model\LowCode\LowCodeList\ListTypeEnum;
 use BrightLiu\LowCode\Resources\LowCode\LowCodeList\simpleListSource;
@@ -53,7 +53,7 @@ class CopyLowCodeListV2ControllerCommand extends Command
 declare(strict_types=1);
 
 namespace App\Http\Controllers\LowCode;
-
+use BrightLiu\LowCode\Services\LowCode\LowCodeResidentService;
 use BrightLiu\LowCode\Enums\Model\AdminPreference\SceneEnum;//ok
 use App\Services\LowCode\LowCodeQueryEngineService;//ok
 use BrightLiu\LowCode\Enums\Model\LowCode\LowCodeList\ListTypeEnum;//ok
