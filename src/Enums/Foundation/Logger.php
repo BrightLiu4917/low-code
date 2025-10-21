@@ -80,4 +80,6 @@ enum Logger: string
     //开放接口错误日志
     case OPEN_API_ERROR = 'open-api-error';
 
+    case BUSINESS_MIDDLE_PLATFORM_ERROR = 'business_middle_platform_error';
+
 }
