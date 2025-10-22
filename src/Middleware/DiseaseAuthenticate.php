@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BrightLiu\LowCode\Middleware;
 
 use App\Models\LowCode\ApiAccount;
+use BrightLiu\LowCode\Context\AdminContext;
 use BrightLiu\LowCode\Context\OrgContext;
 use BrightLiu\LowCode\Enums\Foundation\Logger;
 use BrightLiu\LowCode\Enums\HeaderEnum;
@@ -73,5 +74,7 @@ final class DiseaseAuthenticate
             token: (string) $request->header(HeaderEnum::AUTHORIZATION, ''),
             requestSource: (string) $request->header(HeaderEnum::REQUEST_SOURCE, '')
         );
+
+        AdminContext::init($admin);
     }
 }

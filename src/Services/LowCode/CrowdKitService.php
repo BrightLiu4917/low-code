@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace BrightLiu\LowCode\Services\LowCode;
 
 use BrightLiu\LowCode\Services\LowCodeBaseService;
-use App\Services\Api\Bmp\BmpCheetahMedicalCrowdkitApiService;
+use BrightLiu\LowCode\Services\LowCode\BmpCheetahMedicalCrowdkitApiService;
 use BrightLiu\LowCode\Traits\Context\WithAuthContext;
 use Illuminate\Support\Collection;
 
 /**
  * 服务人群工具模块 处理相关
  */
-final class CrowdKitService extends LowCodeBaseService
+class CrowdKitService extends LowCodeBaseService
 {
     use WithAuthContext;
 

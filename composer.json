@@ -22,7 +22,10 @@
   "autoload": {
     "psr-4": {
       "BrightLiu\\LowCode\\": "src/"
-    }
+    },
+    "files": [
+        "src/Support/helpers.php"
+    ]
   },
   "extra": {
     "laravel": {

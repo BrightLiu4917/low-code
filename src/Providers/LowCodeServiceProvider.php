@@ -16,6 +16,9 @@ use BrightLiu\LowCode\Console\Commands\CopyBasicInfoResourceResourceCommand;
 use BrightLiu\LowCode\Console\Commands\CopyLowCodePersonalizeModuleControllerCommand;
 use BrightLiu\LowCode\Console\Commands\CopyBmpCheetahMedicalCrowdkitApiServiceCommand;
 use BrightLiu\LowCode\Console\Commands\CopyBmpCheetahMedicalPlatformApiServiceCommand;
+use Illuminate\Contracts\Foundation\CachesRoutes;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 
 class LowCodeServiceProvider extends ServiceProvider
@@ -33,6 +36,8 @@ class LowCodeServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/../../config/medical-platform.php', 'medical-platform'
         );
+
+        $this->loadDependencies();
     }
 
     /**
@@ -59,6 +64,8 @@ class LowCodeServiceProvider extends ServiceProvider
                 CopyBmpCheetahMedicalPlatformApiServiceCommand::class
             ]);
         }
+
+        $this->registerModuleRoutes();
     }
 
     protected function publishConfig()
@@ -77,4 +84,43 @@ class LowCodeServiceProvider extends ServiceProvider
         }
     }
 
+    /**
+     * 注册模块路由收集
+     */
+    protected function registerModuleRoutes(): void
+    {
+        if ($this->app instanceof CachesRoutes && $this->app->routesAreCached()) {
+            return;
+        }
+
+        $rootPath = __DIR__ . '/../../routes';
+
+        transform(
+            config('low-code.http.modules', []),
+            function ($modules) use ($rootPath) {
+                foreach ($modules as $moduleName => $options) {
+                    Route::group(
+                        $options,
+                        array_map(
+                            fn ($file) => "{$rootPath}/{$file}",
+                            Storage::build($rootPath)->files($moduleName, true)
+                        )
+                    );
+                }
+            }
+        );
+    }
+
+    protected function loadDependencies(): void
+    {
+        $dependencies = (array) config('low-code.dependencies', []);
+
+        foreach ($dependencies as $source => $dependency) {
+            if ($source === $dependency) {
+                continue;
+            }
+
+            $this->app->alias($dependency, $source);
+        }
+    }
 }

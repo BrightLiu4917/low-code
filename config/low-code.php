@@ -14,4 +14,18 @@ return [
         // 缓存有效时间（秒）
         'ttl' => env('LOW_CODE_CACHE_MODEL_TTL',600),
     ],
+
+    /**
+     * Http模块
+     */
+    'http' => [
+        'modules' => [
+            'api' => [
+                'prefix' => 'api',
+                'middleware' => ['api', 'auth.disease'],
+            ]
+        ],
+    ],
+
+    'dependencies' => []
 ];
