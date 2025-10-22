@@ -351,6 +351,27 @@ CREATE TABLE `personalize_modules` (
   KEY `idx_disease_code_org_code` (`disease_code`(8)),
   KEY `idx_module_id` (`module_id`(8))
 ) ENGINE=InnoDB  COMMENT='个性化模块表';
+
+CREATE TABLE `follow_residents` (
+    `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `disease_code` varchar(32) NOT NULL DEFAULT '' COMMENT '病种编码',
+    `admin_id` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT '管理员ID',
+    `resident_user_id` varchar(32) NOT NULL DEFAULT '' COMMENT '居民user_id',
+    `created_at` datetime DEFAULT NULL COMMENT '创建时间',
+    PRIMARY KEY (`id`),
+    KEY `idx_disease_code_org_code` (`disease_code`(8))
+) ENGINE = InnoDB COMMENT = '关注居民表';
+
+CREATE TABLE `resident_monitor_metrics` (
+    `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `disease_code` varchar(32) NOT NULL DEFAULT '' COMMENT '病种编码',
+    `resident_user_id` varchar(32) NOT NULL DEFAULT '' COMMENT '居民user_id',
+    `metric_title` varchar(64) NOT NULL DEFAULT '' COMMENT '指标标题',
+    `metric_id` varchar(64) NOT NULL DEFAULT '' COMMENT '指标ID',
+    `created_at` datetime DEFAULT NULL COMMENT '创建时间',
+    PRIMARY KEY (`id`),
+    KEY `idx_disease_code_org_code` (`disease_code`(8))
+) ENGINE = InnoDB COMMENT = '居民监测指标表';
 ```
 
 ```text
@@ -359,6 +380,7 @@ AppServiceProvider.register() 追加以下代码
 use BrightLiu\LowCode\Context\AuthContext;
 use BrightLiu\LowCode\Context\DiseaseContext;
 use BrightLiu\LowCode\Context\OrgContext;
+use BrightLiu\LowCode\Context\AdminContext;
 
 
     public function register()
@@ -366,6 +388,7 @@ use BrightLiu\LowCode\Context\OrgContext;
         $this->app->singleton('context:org', OrgContext::class);
         $this->app->singleton('context:auth', AuthContext::class);
         $this->app->singleton('context:disease', DiseaseContext::class);
+        $this->app->singleton('context:admin', AdminContext::class);
         //其他代码
     }
      

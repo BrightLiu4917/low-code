@@ -118,7 +118,7 @@ final class BmpCheetahMedicalCrowdkitApiService extends LowCodeBaseService
      */
     public function getMetricOptional(): array
     {
-        return Http::asJson()
+        $data = Http::asJson()
                    ->retry(3)
                    ->timeout(15)
                    ->get($this->baseUriVia().'innerapi/personal-archive/field',[
@@ -128,5 +128,7 @@ final class BmpCheetahMedicalCrowdkitApiService extends LowCodeBaseService
                    ])
                    ->throw()
                    ->json();
+
+        return $data['data'] ?? [];
     }
 }
